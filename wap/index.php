@@ -8,4 +8,3 @@
 error_reporting(E_ALL);
 include '../framework/APPbase.php';
 APPbase::run();
-//WyPhp\Database\DB::fetch_all();
