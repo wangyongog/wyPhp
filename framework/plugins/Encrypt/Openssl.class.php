@@ -1,0 +1,132 @@
+<?php
+namespace WyPhp\Encrypt;
+use WyPhp\Error;
+
+/**
+ * openssl的rsa加密解密
+ * 公钥加密 ->私钥解密
+ * 私钥加密 ->公钥解密
+ */
+class Openssl{
+    private $_privKey;
+    private $_pubKey;
+    private $_keyPath;
+    protected $privPath;
+    protected $pubPath;
+    private $_sResult = '';
+    private $_config = [
+        'digest_alg' => 'sha1',
+        'config' => 'D:\phpStudy\Apache\conf\openssl.cnf',//本地测试用，线上不要
+        'private_key_bits' => 1024,
+        'private_key_type' => OPENSSL_KEYTYPE_RSA
+    ];
+    public function __construct($path=''){
+        extension_loaded('openssl') or Error::error('需要openssl扩展支持');
+        $this->_keyPath = $path ? $path : FWPATH.'/plugins/ssl';
+        $this->privPath = $this->_keyPath.DIRECTORY_SEPARATOR . 'key/rsa_private_key.pem';
+        $this->pubPath = $this->_keyPath.DIRECTORY_SEPARATOR . 'key/rsa_public_key.pem';
+        $this->createKey();
+    }
+    /**
+     *  创建密钥文件
+     */
+    public function createKey(){
+        if(!is_file($this->privPath) || !is_file($this->pubPath)){
+            $res = openssl_pkey_new($this->_config);
+            openssl_pkey_export($res, $privkey, null, $this->_config);
+            if(!is_file($this->privPath)){
+                $privkey and file_put_contents($this->privPath, $privkey);
+            }
+
+            if(!is_file($this->pubPath)){
+                $pubkey = openssl_pkey_get_details($res);
+                $pubkey = isset($pubkey['key']) ? $pubkey['key'] : '';
+                $pubkey and file_put_contents($this->pubPath, $pubkey);
+            }
+        }
+
+    }
+    public function checkKey(){
+        /**
+         * 生成Resource类型的密钥，如果密钥文件内容被破坏，openssl_pkey_get_private函数返回false
+         */
+        $this->_privKey = openssl_pkey_get_private(file_get_contents($this->privPath));
+        if($this->_privKey == false){
+            Error::error('密钥不可用');
+        }
+        /**
+         * 生成Resource类型的公钥，如果公钥文件内容被破坏，openssl_pkey_get_public函数返回false
+         */
+        $this->_pubKey = openssl_pkey_get_public(file_get_contents($this->pubPath));
+        if($this->_pubKey == false){
+            Error::error('公钥不可用');
+        }
+    }
+
+    /**
+     *   私钥加密
+     */
+    public function privEncrypt($str){
+        if(!is_string($str)){
+            return null;
+        }
+        $this->checkKey();
+        $r = openssl_private_encrypt($str, $this->_sResult, $this->_privKey);
+        if($r){
+            return base64_encode($this->_sResult);
+        }
+        return null;
+    }
+
+    /**
+     *   私钥解密
+     */
+    public function privDecrypt($str){
+        if(!is_string($str)){
+            return null;
+        }
+        $this->checkKey();
+        $r = openssl_private_decrypt(base64_decode($str) , $this->_sResult, $this->_privKey);
+        if($r){
+            return $this->_sResult;
+        }
+        return null;
+    }
+
+    /**
+     * 公钥解密
+     * @param $str
+     * @return null|string
+     */
+    public function pubDecrypt($str){
+        if(!is_string($str)){
+            return null;
+        }
+        $this->checkKey();
+        $r = openssl_public_decrypt(base64_decode($str) , $this->_sResult, $this->_pubKey);
+        if($r){
+            return $this->_sResult;
+        }
+        return null;
+    }
+
+    /**
+     * 公钥加密
+     * @param $str
+     * @return null|string
+     */
+    public function pubEncrypt($str){
+        if(!is_string($str)){
+            return null;
+        }
+        $this->checkKey();
+        $r = openssl_public_encrypt($str , $this->_sResult, $this->_pubKey);
+        if($r){
+            return base64_encode($this->_sResult);
+        }
+        return null;
+    }
+    public function __destruct(){
+    }
+
+}

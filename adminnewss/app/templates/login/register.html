@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<head>
+	<title>{$setConfig['sitename']}</title>	
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta charset="UTF-8">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<link rel="stylesheet" href="{$assets}/new_admin/sd/bootstrap.css">
+	<link rel="stylesheet" href="{$assets}/new_admin/css/application.css">
+</head>
+<body class="login">
+
+
+
+<div class="account-container login stacked">
+	
+	<div class="content clearfix">
+
+		
+			<h1>注册</h1>		
+			<form class="login-form" onSubmit="return false;">
+            <input type="hidden" name="formhash" value="{formhash()}">
+			<div class="login-fields">
+				
+				<p>注册您的账号:</p>
+				
+				<div class="field">
+					<label for="username">用户名:</label>
+					<input id="username"  name="username" placeholder="用户名" class="login username-field" type="text">
+				</div> <!-- /field -->
+				
+				<div class="field">
+					<label for="password">密码:</label>
+					<input id="password" name="password" value="" placeholder="密码" class="login password-field" type="password">
+				</div> <!-- /password -->
+                <div class="field">
+					<label for="password">确认密码:</label>
+					<input name="password1" id="password1" placeholder="请重复密码" class="login password-field" type="password">
+				</div> <!-- /password -->
+                <div class="field">
+					<label for="password">手机:</label>
+					<input maxlength="11" name="phone" id="phone" placeholder="手机号将是您找回密码唯一依据" class="login username-field" type="text">
+				</div> <!-- /password -->
+				
+			</div> <!-- /login-fields -->
+			
+			<div class="login-actions">
+				<button class="button btn btn-block btn-primary" style="padding:11px 19px;background-color: #7da64b"  id="register">注册</button>
+			</div> <!-- .actions -->
+		</form>
+	</div> <!-- /content -->
+	
+</div> <!-- /account-container -->
+
+<!-- Text Under Box -->
+<div class="login-extra">
+	已有帐号? <a href="{U('/login')}">登录</a>
+</div> <!-- /login-extra -->
+<script src="{$assets}/common/js/jquery-2.1.4.min.js"></script>
+<script src="{$assets}/common/layer3.02/layer.js"></script>
+<script src="{$assets}/common/js/share.js"></script>
+<script type="text/javascript">
+$(function () {
+	$("#register" ).on('click', function(e) {
+			if($("#username").val() == ''){
+				share.showAlert('请输入用户名！');
+				return false;
+			}
+			if($("#password").val() == ''){
+				share.showAlert('请输入密码！');
+				return false;
+			}
+			
+			if($("#password1").val() == ''){
+				share.showAlert('请确认密码！');
+				return false;
+			}
+			if($("#password1").val() !=$("#password").val()){
+				share.showAlert('2次密码不一致！');
+				return false;
+			}
+			if($("#phone").val() == ''){
+				share.showAlert('请输入请输入手机号！');
+				return false;
+			}
+			if(share.isPhoneNew($("#phone").val()) == false){
+				share.showAlert('手机号有误！');
+				return false;
+			}
+			
+			$.ajax({
+				type:'POST',
+				dataType:'json',
+				url:'{U('login/register')}?t='+(new Date().getTime()),
+				data:$('.login-form').serialize(),
+				success:function(data){
+					if(data.status == 1){
+						layer.msg('注册成功!');
+						setTimeout(function(){
+							window.location.href = data.url;
+						},2000);
+						return;
+					}else{
+						share.showAlert(data.info);
+						return false;
+					}
+				},complete:function(XMLHttpRequest, textStatus){
+					$('#sublogin').attr('disabled',false);
+					$('#sublogin').html('登录');
+				},beforeSend:function(){
+					$('#sublogin').attr('disabled',true);
+					$('#sublogin').html('登录中...');
+				},error:function(){
+					share.showAlert('无效操作！');
+					return ;
+				}
+			});
+			
+		});
+});
+</script>
+</body>
+</html>

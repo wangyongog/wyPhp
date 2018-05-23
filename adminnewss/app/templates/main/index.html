@@ -1,0 +1,44 @@
+{include file="public/header.html"}
+<div class="wrapper">
+	{include file="public/head.html"}
+  
+  <!-- Left side column. contains the logo and sidebar -->
+  	{include file="public/left.html"}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        公告
+        <small>Control panel</small>
+      </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-body no-padding">
+            	<table class="table table-hover">
+              		<tbody>
+                    {foreach from=$data key=k item=val}
+                                            <tr><td><span style="color: rgb(0, 0, 255);">{$val['notice']}</span><span style="color: rgb(156, 156, 148); margin-left:15px">[{date('Y-m-d', $val['addtime'])}]</span></td></tr>             
+                 {/foreach}                    
+                </tbody>
+            </table>
+                
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    <!-- /.content -->
+  </div>
+<!-- /.content-wrapper -->
+{include file="public/footerJs.html"}
+</body>
+</html>

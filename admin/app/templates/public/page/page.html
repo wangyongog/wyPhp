@@ -1,0 +1,20 @@
+<div id="page" align="center">
+</div>
+<script>
+    layui.use(['laypage', 'layer'], function(){
+        var laypage = layui.laypage;
+        laypage.render({
+            elem: 'page'
+            ,count: {$count}
+            ,limit:{$limit}
+            ,theme:'#3C8DBC'
+            ,jump: function(obj, first){
+                //得到了当前页，用于向服务端请求对应数据
+                if(first !=true){
+                    var curr = obj.curr || 1;
+                    formAjax.tbodyLoading(curr);
+                }
+            }
+        });
+    });
+</script>

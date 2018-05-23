@@ -1,0 +1,64 @@
+{include file="public/header.html"}
+<style>
+*, *:before, *:after {
+  box-sizing:content-box;
+}
+</style>
+    <section class="content">
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+          <!-- general form elements -->
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form class="layui-form" action="{U('rate/edit')}">
+            <input type="hidden" value="{$id}" name="id"/>
+            <input type="hidden" value="{formhash()}" name="formhash"/>
+              <div class="layui-form-item">
+                <label class="layui-form-label">时间段</label>
+                <div class="layui-input-inline">
+                  <input type="text" id="endtime" name="timesd" value="{$data['timesd']}" required datatype="s" errormsg="时间段"  lay-verify="required" autocomplete="off" class="layui-input">
+                </div>
+              </div>
+              
+              
+              
+              <div class="layui-form-item">
+                <label class="layui-form-label">用户状态</label>
+                <div class="layui-input-inline">
+                  <select name="staute" lay-verify="required">
+                    {foreach from=$staute key=k item=val}
+                    <option value="{$k}" {if $data['staute'] eq $k}  selected="selected"{/if}>{$val}</option>
+                    {/foreach}
+                  </select>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <div class="layui-input-block">
+                  <button type="button" class="layui-btn ajaxFrom">立即提交</button>
+                  <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+              </div>
+            </form>
+          <!-- /.box -->
+        </div>
+        <!--/.col (right) -->
+      </div>
+      <!-- /.row -->
+    </section>
+{include file="public/footerJs.html"}
+<script>
+//Demo
+layui.use(['form','laydate'], function(){
+  var form = layui.form;
+  var laydate = layui.laydate;
+  //国际版
+  laydate.render({
+    elem: '#endtime'
+    ,type: 'time'
+    ,range: true
+  });
+});
+</script>
+</body>
+</html>

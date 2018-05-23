@@ -1,0 +1,61 @@
+{include file="public/header.html"}
+<div class="wrapper">
+	{include file="public/head.html"}
+  
+  <!-- Left side column. contains the logo and sidebar -->
+  	{include file="public/left.html"}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        在线充值
+        <small>Control panel</small>
+      </h1>
+      
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+      	  <div class="box">
+              <div class="box-body ">
+
+                      <div class="box-body">
+                      <div class="form-group">
+                          <label for="exampleInputPassword1" style="color:#F00; font-size:16px">
+                          
+                        1.首先打开手机支付宝.<br />
+                    	2.扫描下方支付宝二维码，并选择转账功能，收款人（张铭夏）<br />
+                        3.输入转账金额：<span style=" font-size:14px; font-weight:600" class="red">{$money}￥</span><br />
+                        <br />
+                        
+                        4.“添加备注”必须填写  {$payid}，否则将无法自动到账<br /><br />
+                        
+                        5.转账成功后,耐心等待10-20秒钟，返回【首页】刷新自动到账.
+                          </label>
+                          
+                        </div>
+                        <div class="form-group">
+                          <img class="img" src="{$assets}/new_admin/images/0617155720.png" alt="" style="max-width:360px; max-height:400px">
+                        </div>
+                        
+                        
+                       
+                        
+                      </div>
+
+ 
+              </div>
+          </div>
+      </div>
+    </div>
+    </section>
+    <!-- /.content -->
+  </div>
+<!-- /.content-wrapper -->
+{include file="public/footerJs.html"}
+</body>
+</html>

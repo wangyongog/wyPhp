@@ -1,0 +1,103 @@
+{include file="public/header.html"}
+
+<div class="content-wrapper" style="margin-left: 0;min-height: 790px;">
+
+  <section class="content">
+        <!--<div class="box box-default">
+        <div class="box-body">
+        <div class="btn-group">
+        <a href="/Ewww/index.php/Home/Task/task/state/0.html" lang="5" class="btn btn-primary hover ">全部</a>
+        <a href="/Ewww/index.php/Home/Task/task/state/1.html" lang="1" class="btn btn-primary ">待执行</a>
+        <a href="/Ewww/index.php/Home/Task/task/state/2.html" lang="2" class="btn btn-primary ">执行中</a>
+        <a href="/Ewww/index.php/Home/Task/task/state/3.html" lang="3" class="btn btn-primary ">已完成</a>
+        <a href="/Ewww/index.php/Home/Task/task/state/-1.html" lang="4" class="btn btn-primary ">已退单</a>
+        </div>
+        <div class="btn-group">
+                    <form class="form-inline" id="form1" action="" method="get">
+                        标题查询：
+                        <input id="title" class="form-control" name="title" value="" type="text">
+                        链接：
+                        <input id="url" class="form-control" name="url" value="" type="text">
+                        <button type="button" class="btn btn-primary searchForm">搜索</button>
+                    </form>
+                </div>
+      </div>
+    </div>-->
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header with-border">
+            <button type="button" class="btn btn-success" onclick="adminJs.showIframe('新增','{U('sidebar/add')}','700','650')">添加栏目</button>
+            <!--<div class="col-sm-6" style="float: right;">
+    
+              <div class="dataTables_filter" id="example1_filter">
+                <label class="has-feedback">
+                <form role="form" id="commentForm" action="" method="get">
+                  <input aria-controls="example1" placeholder="搜索订单网址或名称" class="form-control input-sm" value=""  name="title" type="search">
+       			</form>
+                  <span class="form-control-feedback" onClick="commentForm.submit()">搜</span>
+                </label>
+              </div>
+            </div>-->
+          </div>
+          
+          <div class="box-body table-responsive mailbox-messages">
+            <div class="dataTables_wrapper form-inline dt-bootstrap no-footer" id="example1_wrapper">
+                    <table id="example1" class="table table-bordered" style="font-size:12px !important">
+                      <thead>
+                        <tr>
+                          <th class="center"><input class="check-all" value="" type="checkbox"></th>
+                          <th>菜单名称</th>
+                          <th>链接</th>
+                          <th>ICON</th>
+                          <th>状态</th>
+                          <th>排序</th>
+                          <th>操作</th>
+                        </tr>
+                      </thead>
+                      <tbody id="tbody_data" data-name="tbody_data"> </tbody>
+                    </table>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+</div>
+<!-- basic scripts -->
+
+ {include file="public/footerJs.html"}
+<script type="text/javascript">
+function GetHeight(){
+	if ($(".sidebar").height() > $(window).height()) {
+		$(".content-wrapper, .right-side").css('min-height', $(".sidebar").height())
+	}
+}
+$(function(){
+	$('.remarksview').click(function(){
+		if($(this).parent().height() >= 50){
+			var oDiv = $(this);
+			if(oDiv.height() == 50){
+			    oDiv.css('max-height',1000);
+			    oDiv.css('max-width',1000);
+			}else{
+			    oDiv.css('max-height',50);
+			    oDiv.css('max-width',200);
+			}
+		}
+	  
+	});
+	$('.sidebar-menu li[two=BUSINESS]').addClass('active');
+	$('.sidebar-menu li[two=BUSINESS]').parent().parent().addClass('active');
+})
+setTimeout(GetHeight,100);
+</script>
+<!--<script type="text/javascript">
+$(function(){
+ $('.sidebar-menu>li').eq(2).addClass('active') 
+ 
+})
+</script>-->
+</body>
+</html>

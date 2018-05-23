@@ -1,0 +1,221 @@
+<include file="Public/head"/>
+<body class="no-skin">
+<include file="Public/header"/>
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <include file="Public/sidebar"/>
+    <div class="main-content">
+        <div class="main-content-inner">
+            <!-- #section:basics/content.breadcrumbs -->
+            <include file="Public/breadcrumbs"/>
+
+            <!-- /section:basics/content.breadcrumbs -->
+            <div class="page-content">
+                <include file="Public/set"/>
+				<style>
+                	#form1 label{ font-size:18px; font-weight:700}
+                </style>
+                <!-- /section:settings.box -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" action="{:U('gaosuadd')}" method="post" id="form1">
+                        <input name="formhash" value="{$formhash}" type="hidden" />
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 任务类型： </label>
+                                <div class="col-sm-9" style="padding-top:10px; ">
+                                    <span class="" style="font-size:16px">{$task_type}</span>
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-6" > 阅读链接： </label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="url" value="" class="rcol-xs-10 col-sm-12" name="url" placeholder="请输入链接地址">
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-6"> 阅读数量： </label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="count" value="" class="rcol-xs-10 col-sm-2" name="count" placeholder="请输入阅读数量">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-6"> 送赞比例： </label>
+                                <div class="col-sm-2">
+                                    <select id="dz" class="form-control" name="dz">
+<option value="0">我不需要赞</option>
+
+<option value="1">千分之一</option>
+
+<option value="2">千分之二</option>
+
+<option value="3">千分之三</option>
+
+<option value="4">千分之四</option>
+
+<option value="5">千分之五</option>
+
+<!--<option value="6">千分之六</option>
+
+<option value="7">千分之七</option>
+
+<option value="8">千分之八</option>
+
+<option value="9">千分之九</option>
+
+<option value="10">千分之十</option>
+
+<option value="11">千分之十一</option>
+
+<option value="12">千分之十二</option>
+
+<option value="13">千分之十三</option>
+
+<option value="14">千分之十四</option>
+
+<option value="15">千分之十五</option>
+
+<option value="16">千分之十六</option>
+
+<option value="17">千分之十七</option>
+
+<option value="18">千分之十八</option>
+
+<option value="19">千分之十九</option>
+
+<option value="20">千分之二十</option>
+
+<option value="21">千分之二十一</option>
+
+<option value="22">千分之二十二</option>
+
+<option value="23">千分之二十三</option>
+
+<option value="24">千分之二十四</option>
+
+<option value="25">千分之二十五</option>
+
+<option value="26">千分之二十六</option>
+
+<option value="27">千分之二十七</option>
+
+<option value="28">千分之二十八</option>
+
+<option value="29">千分之二十九</option>
+
+<option value="30">千分之三十</option>-->
+</select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-6"> 送赞数： </label>
+                                <div class="col-sm-9" style="padding-top:14px; ">
+                                    
+                                    <span class="help-inline" id="szprad">0</span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group ctchang">
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-6"> 阅读来源： </label>
+                                <div class="radio">
+                                    <label>
+                                    <input class="ace" name="isadd" checked="checked"  value="1" type="radio">
+                                    <span class="lbl">随机</span>
+                                    </label>
+                                    <label>
+                                    
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-6"> 预计消费： </label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="cost" value="0" class="rcol-xs-10 col-sm-2" readonly>
+                                </div>
+                            </div>
+                            
+                            <div class="space-4"></div>
+
+                            <div class="col-md-offset-2 col-md-9">
+                                <button class="btn btn-info" type="submit" id="task_submit" disabled>
+                                    <i class="icon-ok bigger-110"></i>
+                                    提交
+                                </button>
+                            </div>
+                        </form>
+                        <!-- PAGE CONTENT ENDS -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+    <include file="Public/footer"/>
+
+</div><!-- /.main-container -->
+<include file="Public/footerjs" />
+<script type="text/javascript">
+    $(function () {
+		$('#url').val('');
+		$('#count').val('');
+		$('#cost').val(0);
+		
+		$('.ctchang').on('click','input[name="isadd"]',function(){
+			if($(this).val() == 2){
+				$('.ishide').show();
+			}else{
+				$('.ishide').hide();
+			}
+			$('#count').change();
+		});
+		
+		$('#dz').change(function(){
+			var count = parseInt($('#count').val());
+			var dzval = $(this).find("option:selected").val();
+			if(count && dzval){
+				$('#szprad').html(parseInt(count * (dzval /1000)));
+			}else{
+				$('#szprad').html(0);
+			}
+		});
+		
+		$('#count').change(function(){
+			var error=false;
+			var task_cost = 0;
+			var count = $(this).val();
+			if(count == '' || count<=0){
+				alert('请输入阅读数！');
+				error = true;
+				//return false;
+			}
+			if(!share.isNumZore(count)){
+				alert('阅读数必须大于0');
+				error = true;
+				//return false;
+			}
+			var price = {$price};
+			
+			task_cost+=(count/1000)*price;
+			$('#dz').change();
+			if(error){
+				alert('任务提交格式错误');
+				return false;
+			}else{
+				$('#task_submit').removeAttr('disabled');
+				$('#cost').val(accounting.formatMoney(task_cost, "", 2, "", "."));
+			}
+		})
+	});
+</script>
+</body>
+</html>

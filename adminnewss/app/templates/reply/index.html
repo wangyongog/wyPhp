@@ -1,0 +1,78 @@
+{include file="public/header.html"}
+<div class="wrapper">
+	{include file="public/head.html"}
+  
+  <!-- Left side column. contains the logo and sidebar -->
+  	{include file="public/left.html"}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        用户反馈
+        <small>Control panel</small>
+      </h1>
+      
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header with-border">
+            <a href="javascript:;" onclick="share.showIframe('反馈', '{U('reply/add')}',500,400);" class="btn btn-success">反馈</a>
+            
+          </div>
+          
+          <div class="box-body table-responsive mailbox-messages">
+            <div class="dataTables_wrapper form-inline dt-bootstrap no-footer" id="example1_wrapper">
+                    <table id="example1" class="table table-bordered" >
+                      <thead>
+                        <tr>
+						  <th>反馈</th>
+                          <th>回复</th>
+            			  <th width="160px">反馈时间</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      	{if $data}  
+                        {foreach from=$data key=k item=val}
+                        <tr>
+                                <td>{$val['notice']}</td>
+                                <td>{$val['reply']}</td>
+                                <td>{date('Y-m-d',$val['create_time']) }</td>
+                              </tr>
+                        {/foreach}
+                        {else}
+                        <tr>
+                        	<td colspan="10" align="center" style="line-height:45px"><i class="fa fa-fw fa-exclamation-triangle"></i>没有查询到符合条件的记录!</td>
+                        </tr>
+                       {/if} 
+                      </tbody>
+                    </table>
+                  
+                </div>
+                <div>{$_page}</div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    <!-- /.content -->
+  </div>
+<!-- /.content-wrapper -->
+{include file="public/footerJs.html"}
+{if $headReply}
+<script type="text/javascript">
+$(function () {
+	$.post("{U('/reply/read')}",{},function(result){
+		
+	});
+});
+</script>
+{/if}
+</body>
+</html>

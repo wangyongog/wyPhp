@@ -1,0 +1,76 @@
+{include file="public/header.html"}
+<div class="wrapper">
+	{include file="public/head.html"}
+  
+  <!-- Left side column. contains the logo and sidebar -->
+  	{include file="public/left.html"}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        在线充值
+        <small>Control panel</small>
+      </h1>
+      
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+      	  <div class="box">
+              <div class="box-body ">
+              		<form class="form-horizontal" method="post" action="{U('/money/pay')}" id="form1">
+                        <input name="formhash" value="{formhash()}" type="hidden" />
+                        <input name="token" value="{creatToken($user['uid'])}" type="hidden" />
+                      <div class="box-body">
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">充值金额</label>
+                          <input type="text" id="moeny" name="money" class="form-control" required="required" placeholder="最低充值1元">
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputPassword1" style="color:#F00">{$setConfig['recharge']}</label>
+                          
+                        </div>
+                        
+                       
+                        
+                      </div>
+                      <!-- /.box-body -->
+        
+                      <div class="box-footer">
+                        <button type="button" id="submitBtn" class="btn btn-primary">确定</button>
+                      </div>
+                    </form>
+              </div>
+          </div>
+      </div>
+    </div>
+    </section>
+    <!-- /.content -->
+  </div>
+<!-- /.content-wrapper -->
+{include file="public/footerJs.html"}
+<script type="text/javascript">
+$(function () {
+	$('#submitBtn').on('click',function(){
+		if ($('#moeny').val() == '') {
+			share.showAlert('请输入金额！',2);
+			return;
+		}
+		if (share.isNum($('#moeny').val())   == '') {
+			share.showAlert('输入金额不正确！',2);
+			return;
+		}
+		if ($('#moeny').val()<1) {
+			share.showAlert('充值金额不能低于1元！',2);
+			return;
+		}
+		$('#form1').submit();
+	});
+});
+</script>
+</body>
+</html>

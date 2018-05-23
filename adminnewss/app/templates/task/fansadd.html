@@ -1,0 +1,149 @@
+{include file="public/header.html"}
+<div class="wrapper">
+	{include file="public/head.html"}
+  
+  <!-- Left side column. contains the logo and sidebar -->
+  	{include file="public/left.html"}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        微信关注下单
+        <small>Control panel</small>
+      </h1>
+      
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+      	  <div class="box">
+              <div class="box-body ">
+              		<form role="form" id="form1" onclick="return false;">
+                      <div class="box-body">
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">公众号</label>
+                          <input type="text" class="form-control" id="url" name="url">
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputPassword1">数量<span class="text-red">（最低下单数：100-{$setConfig['upnum']}，单价：<span id="price">0</span>￥）</span></label>
+                          <input id="count" placeholder="" class="form-control" type="text" name="count">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>付款</label>
+                            <input class="form-control" readonly="" id="money" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label>备注</label>
+                            <textarea class="form-control" id="contont" name="contont" rows="3"></textarea>
+                          </div>
+                      </div>
+                      <!-- /.box-body -->
+        
+                      <div class="box-footer">
+                        <button type="button" id="submitBtn" class="btn btn-primary">确定</button>
+                      </div>
+                    </form>
+              </div>
+          </div>
+      </div>
+    </div>
+    </section>
+    <!-- /.content -->
+  </div>
+<!-- /.content-wrapper -->
+{include file="public/footerJs.html"}
+<script type="text/javascript">
+    $(function () {
+		$('#url').val('');
+		$('#count').val('');
+		calcMoney();
+        $('#submitBtn').on('click',function(){
+			var url = $('#url').val();
+			var count = parseInt($('#count').val());
+			if (url == '') {
+				share.showAlert('链接不能为空' ,2);
+				return;
+			}
+	
+			if (count == '') {
+				share.showAlert('数量不能为空' ,2);
+				return;
+			}
+	
+			if (!/^\d+$/.test(count)) {
+				share.showAlert('数量输入错误' ,2);
+				return;
+			}
+			if (count<100) {
+				share.showAlert('数量不能低于100' ,2);
+				return;
+			}
+			
+			if($('#money').val()==0 || $('#money').val()=='--'){
+				share.showAlert('付款不能为0' ,2);
+				return;
+			}
+			$.ajax({
+				type:'POST',
+				dataType:'json',
+				url:'{U('task/fansadd')}?t='+(new Date().getTime()),
+				data:$('#form1').serialize(),
+				success:function(data){
+					if(data.status == 1){
+						layer.confirm(data.info, {
+						  btn: ['确定'],
+						  icon: 1,
+						}, 
+						function(){
+							window.location.href = data.url;
+						},null
+						);
+						return;
+					}else{
+						share.showAlert(data.info ,2);
+						return false;
+					}
+				},complete:function(XMLHttpRequest, textStatus){
+					$('#submitBtn').attr('disabled',false);
+					$('#submitBtn').html('提交');
+				},beforeSend:function(){
+					$('#submitBtn').attr('disabled',true);
+					$('#submitBtn').html('提交中...');
+				},error:function(){
+					share.showAlert('无效操作!' ,1);
+				}
+			});
+		});
+		$('#count').on('change',function(){
+			var count = $(this).val();
+			if(count == '' || count<=0){
+				share.showAlert('请输入阅读数!' ,1);
+				return ;
+			}
+			if (!/^\d+$/.test(count)) {
+				share.showAlert('数量输入错误!' ,1);
+				$('#money').html('0');
+				return;
+			}
+			calcMoney();
+		});
+    });
+
+    function calcMoney() {
+        var num = parseInt($('#count').val());
+        if (isNaN(num)) {
+            num = 0;
+        }
+        var price = parseFloat({$price});
+        var money = parseFloat(Math.ceil(num * price * 100) / 100.0);
+        $('#price').text('' + price);
+        $('#money').val('￥'+money);
+    }
+</script>
+</body>
+</html>

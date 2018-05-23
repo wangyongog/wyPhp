@@ -1,0 +1,126 @@
+<include file="Public/head"/>
+<body class="no-skin">
+<include file="Public/header"/>
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <include file="Public/sidebar"/>
+    <div class="main-content">
+        <div class="main-content-inner">
+            <!-- #section:basics/content.breadcrumbs -->
+            <include file="Public/breadcrumbs"/>
+
+            <!-- /section:basics/content.breadcrumbs -->
+            <div class="page-content">
+                <include file="Public/set"/>
+				<style>
+                	#form1 label{ font-size:18px; font-weight:700}
+                </style>
+                <!-- /section:settings.box -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form class="form-horizontal" action="{:U('gaosuaddAll')}" method="post" id="form1">
+                        <input name="formhash" value="{$formhash}" type="hidden" />
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 任务类型： </label>
+                                <div class="col-sm-9" style="padding-top:10px; ">
+                                    
+                                    <span class="" style="font-size:16px">{$task_type}</span>
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-6" > 批量下单： </label>
+                                <div class="col-sm-9">
+                                    <textarea id="tasks" name="tasks" class="form-control"  rows="10" placeholder=""></textarea>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-bottom:20px; margin-left:150px"> <span style="font-weight:700">格式说明</span>：每一行一个任务，用空格分割，支持EXCEL粘贴<br><span style="font-weight:700">如</span>：<span style="color:#F00">文章链接&nbsp;&nbsp;&nbsp;阅读数量&nbsp;&nbsp;&nbsp;赞比&nbsp;&nbsp;&nbsp;</span><br><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;http://mp.weixin.qq.com/...&nbsp;&nbsp;&nbsp;1000&nbsp;&nbsp;&nbsp;10&nbsp;&nbsp;&nbsp;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;http://mp.weixin.qq.com/...&nbsp;&nbsp;&nbsp;1000&nbsp;&nbsp;&nbsp;10&nbsp;&nbsp;&nbsp;
+         
+          <br><br> <span style="font-weight:700">字段说明</span>： <br><span style="color:#F00">文章链接：必填   <br>   阅读数量：必填 <br>    点赞数量：必填 <br></span>
+<br><span style="font-weight:700">注意</span>：<span style="color:#F00">自定义不能批量下单</span>
+</div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right" for="form-field-6"> 预计消费： </label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="cost" value="0" class="rcol-xs-10 col-sm-2" readonly>
+                                </div>
+                            </div>
+                            
+                            <div class="space-4"></div>
+
+                            <div class="col-md-offset-2 col-md-9">
+                                <button class="btn btn-info" type="submit" id="task_submit" disabled>
+                                    <i class="icon-ok bigger-110"></i>
+                                    提交
+                                </button>
+                            </div>
+                        </form>
+                        <!-- PAGE CONTENT ENDS -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+    <include file="Public/footer"/>
+
+</div><!-- /.main-container -->
+<include file="Public/footerjs" />
+<script type="text/javascript">
+    $(function () {
+		$('#tasks').val('');
+		$('#cost').val(0);
+		$('#tasks').change(function(){
+			var error=false;
+			var task_cost=0;
+			var tasks=$(this).val();
+			var tasks_arr=tasks.split("\n");
+			$.each(tasks_arr,function(key,value){
+				var task_each=value.split(/[ \t]/);
+				if($.trim(value)!=''){
+					var task_each_arr=[];
+					$.each(task_each,function(k,item){
+						if(item!=''){
+							task_each_arr.push(item)
+						}
+					});
+					if(isNaN(parseInt(task_each_arr[1]))){
+						error=true;
+						return false;
+					}
+					
+					if(task_each_arr[2]>30||task_each_arr[2]<0){
+						error=true;
+						alert('点赞不能超过千分之30');
+						return false;
+					}
+					
+					task_cost+=(task_each_arr[1]/1000)*{$price};
+					
+				}
+				
+			});
+			
+			if(error){
+				$('#cost').val('任务提交格式错误');
+				$('#task_submit').attr('disabled','true');
+			}else{
+				$('#task_submit').removeAttr('disabled');
+				$('#cost').val(accounting.formatMoney(task_cost, "", 2, "", "."));
+			}
+		});
+	});
+</script>
+</body>
+</html>

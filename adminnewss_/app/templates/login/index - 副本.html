@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<head>
+	<title>Login One</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="stylesheet" href="{$assets}/common/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{$assets}/common/font_awesome/css/font-awesome.min.css">
+	<link href="{$assets}/common/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+	<link href="{$assets}/www/css/login.css" rel="stylesheet" type="text/css">	
+    <meta name="csrf-token" content="{formhash()}">
+</head>
+<body class="templatemo-bg-gray">
+	<div class="container">
+		<div class="col-md-12">
+			<h1 class="margin-bottom-15">登 录</h1>
+			<form class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30 login-form" role="form" action="#" method="post" onSubmit="return false;">
+            	<input type="hidden" name="formhash" id="formhash" class="form-control" value="{formhash()}">
+		        <div class="form-group">
+		          <div class="col-xs-12">		            
+		            <div class="control-wrapper">
+		            	<label for="username" class="control-label fa-label"><i class="fa fa-user " style="font-size:22px"></i></label>
+		            	<input type="text" class="form-control" name="username" id="username" placeholder="用户名">
+		            </div>		            	            
+		          </div>              
+		        </div>
+		        <div class="form-group">
+		          <div class="col-md-12">
+		          	<div class="control-wrapper">
+		            	<label for="password" class="control-label fa-label"><i class="fa fa-lock " style="font-size:22px"></i></label>
+		            	<input type="password" class="form-control" name="password" id="password" placeholder="密码">
+		            </div>
+		          </div>
+		        </div>
+		        <div class="control-wrapper msgErr" style="margin-bottom:10px; color:#F00"></div>
+		        <div class="form-group">
+		          <div class="col-md-12">
+		          	<div class="control-wrapper">
+		          		<input type="button" value="登 录" class="btn btn-block  btn-info" id="sublogin" _url="{U('login/login')}">
+		          		<!--<a href="forgot-password.html" class="text-right pull-right">Forgot password?</a>-->
+		          	</div>
+		          </div>
+		        </div>
+
+		      </form>
+		      <div class="text-center">
+		      	<a href="{U('login/register')}" class="templatemo-create-new">注 册 <i class="fa fa-arrow-circle-o-right"></i></a>	
+		      </div>
+		</div>
+	</div>
+    <script src="{$assets}/common/js/jquery-2.1.4.min.js"></script>
+    <script src="{$assets}/www/js/login.js"></script>
+</body>
+</html>

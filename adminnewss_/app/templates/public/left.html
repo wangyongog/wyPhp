@@ -1,0 +1,49 @@
+<aside class="main-sidebar">
+    <section class="sidebar">
+      <ul class="sidebar-menu">
+        <li class="header"></li>
+        <li class=" {if $act eq 'main/index'} active {/if} treeview">
+          <a href="{U('/main')}">
+            <i class="fa fa-dashboard"></i> <span>首页</span>
+            <!--<span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>-->
+          </a>
+          
+        </li>
+        {foreach from=$taskshow key=k item=val}
+            {if $val neq 'gaosu' }
+            <li class="{if in_array(ACTION, array($val))} active {/if} treeview">
+              <a href="{U('task/')}{$val}">
+                <i class="fa fa-wechat"></i>
+                <span>{$menu_types[$val]}</span>
+                
+              </a>
+            </li>
+            {/if}
+        {/foreach}
+        <li class=" {if $act eq 'money/index'} active {/if} treeview">
+          <a href="{U('/money')}">
+            <i class="fa fa-money"></i> <span>在线充值</span>
+            
+          </a>
+        </li>
+        <li class=" {if $act eq 'money/list'} active {/if} treeview">
+          <a href="{U('/money/list')}">
+            <i class="fa fa-pie-chart"></i> <span>资金明细</span>
+            
+          </a>
+        </li>
+        <li  class=" {if $act eq 'reply/index'} active {/if} treeview">
+          <a href="{U('/reply')}">
+            <i class="fa fa-th"></i> <span>用户反馈</span>
+            <span class="pull-right-container">
+            	{if $headReply} <small class="label pull-right bg-red">{count($headReply)}</small>{/if}
+            </span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+  </aside>
+

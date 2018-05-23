@@ -1,0 +1,164 @@
+{include file="public/header.html"}
+	<div class="wrapper">
+		{include file="public/head.html"}
+		{include file="public/left.html"}
+<div class="content-wrapper" >
+  <section class="content-header">
+  	<h1>
+        微信自定义平台下单
+        <small>Control panel</small>
+      </h1>
+  </section>
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box box-primary">
+
+          <form role="form" id="form1" action="" onSubmit="return false;" method="post">
+            <div class="box-body">
+              <div class="form-group">
+                <label>地址</label>
+                <input class="form-control" name="url" id="url" type="text">
+                </div>
+                <div class="form-group ishide">
+                <label>阅读来源</label>
+                <table id="example1" class="table table-bordered" style="font-size:12px !important">
+                      <thead>
+                        <tr>
+							<td>
+                            	<div>
+                                     <label style="font-size:16px; margin-left:8px; float:left"> 公众号会话： </label>
+                                     <input value="" class="form-control" style="width:200px" name="data[gzhh]" placeholder="" type="text">
+                                 </div>
+                                 <div style="margin-top:8px">
+                                     <label style="font-size:16px; margin-left:8px; float:left"> 好友转发： </label>
+                                     <input value="" class="form-control" width="" name="data[hyzf]" style="width:200px"  placeholder="" type="text">
+                                 </div>
+                                 <div style="margin-top:8px">
+                                     <label style="font-size:16px; margin-left:8px; float:left"> 朋友圈： </label>
+                                     <input value="" class="form-control"  name="data[pyq]" placeholder="" style="width:200px"  type="text">
+                                 </div>
+                                 <div style="margin-top:8px">
+                                     <label style="font-size:16px; margin-left:8px; float:left"> 历史消息： </label>
+                                     <input value="" class="form-control"  name="data[lsxx]" placeholder="" style="width:200px" type="text">
+                                 </div>
+
+                            </td>
+                        </tr>
+                      </thead>
+                    </table>           
+              </div>  
+                
+              <div class="form-group">
+                <label>合计下单数量<span class="text-red">（最低下单数：500-{$setConfig['upnum']}，单价：<b id="price" class="text-red">--</b>）</span></label>
+                <input class="form-control" readonly name="count" id="count" type="text" value="100"></div>
+                <div  class="form-group">
+                <label>付款</label>
+                <input class="form-control" readonly id="money" type="text"></div>
+              <div class="form-group">
+                <label>备注</label>
+                <textarea class="form-control" id="contont" name="contont" rows="3"></textarea>
+              </div>
+            </div>
+            <div class="box-footer">
+              <button type="button" id="submitBtn" class="btn btn-primary">下单</button>
+              <button type="reset" class="btn btn-default pull-right">重置</button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+</div>
+{include file="public/footerJs.html"}
+<script type="text/javascript">
+	function sumNum(){
+		var count = 0;
+		$('.ishide input').each(function(i){
+			if (/^\d+$/.test($(this).val())) {
+				count+=parseInt($(this).val());
+			}
+		});
+		$('#count').val(count);
+		calcMoney();
+	}
+    $(function () {
+		$('#url').val('');
+		$('#count').val('');
+		sumNum();
+		$('.ishide input').on('change',function(){
+			sumNum();
+		});
+        $('#submitBtn').on('click',function(){
+			var url = $('#url').val();
+			var count = parseInt($('#count').val());
+			if (url == '') {
+				share.showAlert('链接不能为空' ,2);
+				return;
+			}
+	
+			if (count == '') {
+				share.showAlert('数量不能为空' ,2);
+				return;
+			}
+	
+			if (!/^\d+$/.test(count)) {
+				share.showAlert('数量输入错误' ,2);
+				return;
+			}
+			if (count<500) {
+				share.showAlert('数量合计不能低于500' ,2);
+				return;
+			}
+			
+			if($('#money').val()<=0 || $('#money').val()=='--'){
+				share.showAlert('付款不能为0' ,2);
+				return;
+			}
+			$.ajax({
+				type:'POST',
+				dataType:'json',
+				url:'{U('Task/taocanadd')}?t='+(new Date().getTime()),
+				data:$('#form1').serialize(),
+				success:function(data){
+					if(data.status == 1){
+						layer.confirm(data.info, {
+						  btn: ['确定'],
+						  icon: 1,
+						}, 
+						function(){
+							window.location.href = data.url;
+						},null
+						);
+						return;
+					}else{
+						share.showAlert(data.info ,2);
+						return false;
+					}
+				},complete:function(XMLHttpRequest, textStatus){
+					$('#submitBtn').attr('disabled',false);
+					$('#submitBtn').html('提交');
+				},beforeSend:function(){
+					$('#submitBtn').attr('disabled',true);
+					$('#submitBtn').html('提交中...');
+				},error:function(){
+					share.showAlert('无效操作!' ,2);
+				}
+			});
+		});
+    });
+
+    function calcMoney() {
+        var num = parseInt($('#count').val());
+        if (isNaN(num)) {
+            num = 0;
+        }
+        var price = parseFloat({$price});
+        var money = parseFloat(Math.ceil(num * price * 100) / 100.0);
+        $('#price').text('' + price);
+        $('#money').val('￥' + money);
+    }
+</script>
+</body>
+</html>

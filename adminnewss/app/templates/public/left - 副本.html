@@ -1,0 +1,22 @@
+<div class="mod-user-menu">
+    <ul class="mod-menu-bar">
+        <li>
+            <a href="{U('/main')}"  {if $act eq 'main/index'} class="current" {/if}><i class="fa fa-home"></i>管理首页</a>
+        </li>
+        <li>
+        {foreach from=$taskshow key=k item=val}
+        	{if $val neq 'gaosu' }
+            <a href="{U('task/')}{$val}" {if in_array(ACTION, array($val))} class="current" {/if}><i class="fa fa-tasks"></i>{$menu_types[$val]}</a>
+            {/if}
+        {/foreach}
+        </li>
+        <li>
+            <a href="{U('/user')}" {if $act eq 'user/index'} class="current" {/if}><i class="fa fa-user"></i>个人信息</a>
+            <a href="{U('/money')}" {if $act eq 'money/index'} class="current" {/if}><i class="fa fa-money"></i>充值</a>
+            
+            <a href="{U('/money/list')}" {if $act eq 'money/list'} class="current" {/if}><i class="fa fa-bar-chart"></i>资金明细</a>
+            <a href="{U('/main/reply')}" {if $act eq 'main/reply'} class="current" {/if}><i class="fa fa-question-circle"></i>反馈</a>
+        </li>
+    </ul>
+</div>
+

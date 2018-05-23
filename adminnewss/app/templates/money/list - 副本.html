@@ -1,0 +1,53 @@
+	{include file="public/header.html"}
+    {include file="public/left.html"}
+    <div class="mod-user-main">
+        <div class="mod-nav-bar">
+            管理中心&nbsp;&nbsp;&raquo;&raquo;&nbsp;&nbsp;资金明细
+        </div>
+        <div class="mod-content">
+            <h3 class="title">
+                资金明细
+                
+            </h3>
+            <div class="pb20">
+            <form class="form-inline" method="get" id="searchForm">
+                                <label class="inline">&nbsp;&nbsp;状态：</label>
+                                <select name="type" class="form-control">
+                                    <option  value="">全部</option>
+       
+               	<option {if I('type') eq 1}selected="selected" {/if} value="1">充值</option>
+                <option  {if I('type') eq 2}selected="selected" {/if} value="2">消费</option>
+                <option  {if I('type') eq 3}selected="selected" {/if} value="3">退款</option>		
+                <option  {if I('type') eq 8}selected="selected" {/if} value="8">调整金额</option>
+                                </select>
+                                <button type="button"  class="btn btn-green searchForm">
+                                    
+                                    搜索
+                                </button>
+                            </form>
+			</div>
+            <div>
+                <div id="page_data">
+                    <table class="mod-table-list">
+                    <tr>
+                    <th width="12%">类型</th>
+                    <th  width="12%">金额</th>
+                    <th width="12%">余额</th>
+                    <th width="50%">备注</th>
+                    <th class="txt-c" width="12%">时间</th>
+                    </tr>
+                    
+                   <tbody id="tbody_data" data-name="tbody_data"></tbody>       
+                    
+                    </table>
+                </div>
+                <div class="pagin" data-name="pagin" ></div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+{include file="public/footerJs.html"}
+</body>
+</html>

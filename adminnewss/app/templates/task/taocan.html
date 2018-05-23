@@ -1,0 +1,108 @@
+{include file="public/header.html"}
+<div class="wrapper">
+	{include file="public/head.html"}
+  
+  <!-- Left side column. contains the logo and sidebar -->
+  	{include file="public/left.html"}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        微信自定义
+        <small>Control panel</small>
+      </h1>
+      
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="box box-default">
+      <div class="box-body">
+        <div class="btn-group">
+        <a href="{U('task/taocan')}" lang="5" class="btn btn-primary hover  ">全部</a>
+        <a href="{U('task/taocan',['status'=>1])}" lang="1" class="btn btn-primary ">待执行</a>
+        <a href="{U('task/taocan',['status'=>2])}" lang="2" class="btn btn-primary ">执行中</a>
+        <a href="{U('task/taocan',['status'=>3])}" lang="3" class="btn btn-primary ">已完成</a>
+        <a href="{U('task/taocan',['status'=>-1])}" lang="4" class="btn btn-primary ">已退单</a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header with-border">
+            <a href="{U('task/taocanadd')}" class="btn btn-success">下单</a>
+            <div class="" style="float: right;">
+    
+              <div class="dataTables_filter" id="example1_filter">
+                <label class="has-feedback">
+                <form role="form" id="searchForm" action="{U('task/taocan')}" method="get">
+                  <input aria-controls="example1" placeholder="请输入标题" class="form-control input-sm" value="{I('title')}" name="title" type="search">
+       			</form>
+                  <span class="form-control-feedback" style="pointer-events:auto" id="formSubmit">搜</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="box-body table-responsive mailbox-messages">
+            <div class="dataTables_wrapper form-inline dt-bootstrap no-footer" id="example1_wrapper">
+                    <table id="example1" class="table table-bordered" >
+                      <thead>
+                        <tr>
+                        {foreach from=$show_list key=k item=val}
+                          {if empty($val.hidden) and empty($val.showhead)}
+                          <th style="word-break:break-all;  width:{$val.width}px;">
+                                {$val.title}
+                          </th>
+                          {/if}
+                        {/foreach} 
+            			<th style="width:80px">操作</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      	{if $data}  
+                        {foreach from=$data key=k item=val}
+                        <tr>
+                                <td><a href="{$val['url']}" target="_blank">{$val['title']}</a></td>
+                                <td>{$val['gzhh']}</td>
+                                <td>{$val['hyzf']}</td>
+                                <td>{$val['pyq']}</td>
+                                <td>{$val['lsxx']}</td>
+                                <td>{$val['count']}</td>
+                                <td>{$val['cost']}</td>
+                                <td>{$val['tmoney']}</td>
+                                <td>{$val['create_time']}</td>
+                                <td>{$val['contont']}</td>
+                                <td>{$val['status_text']}</td>
+                                <td>
+                                {if $val['status'] eq 0 and $val['isclose'] eq 0}  
+                                	<a href="javascript:;" class="tipClose" _url="{U('task/del',['tid'=>$val['tid'],'token'=>creatToken($val['tid'])])}">关闭</a>
+                                {/if} 
+                                </td>
+                              </tr>
+                        {/foreach}
+                        {else}
+                        <tr>
+                        	<td colspan="10" align="center" style="line-height:45px"><i class="fa fa-fw fa-exclamation-triangle"></i>没有查询到符合条件的记录</td>
+                        </tr>
+                       {/if} 
+                      </tbody>
+                    </table>
+                  
+                </div>
+                <div>{$_page}</div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    <!-- /.content -->
+  </div>
+<!-- /.content-wrapper -->
+{include file="public/footerJs.html"}
+</body>
+</html>

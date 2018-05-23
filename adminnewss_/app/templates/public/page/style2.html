@@ -1,0 +1,18 @@
+<div class="text-center">
+    <ul id="visible-pages-example" class="pagination">
+    	{if $_p['currpage'] neq 1}
+    	<li class="first " data-page="1"><a href="{if $_p['currpage'] == 1} javascript:; {else} {$_p['first']} {/if}">首页</a></li>
+    	<li class="prev " data-page="{$_p['prepg_1']}"><a href="{if $_p['currpage'] == 1} javascript:; {else} {$_p['prepg']} {/if}">上一页</a></li>
+        {/if}
+        {if $_p['pages']}
+        {foreach from=$_p['pages'] key=key item=item }
+        <li class="page {if $_p['currpage'] == $item['page']}active{/if}" data-page="{$item['page']}"><a href="{if $_p['currpage'] == $item['page']} javascript:; {else} {$item['url']} {/if}">{$item['page']}</a></li>
+        {/foreach}
+        {/if}
+        
+        {if $_p['currpage'] neq $_p['pagenum']}
+        <li class="next" data-page="{$_p['nextpg_1']}"><a href="{if $_p['currpage'] == $_p['pagenum']} javascript:; {else} {$_p['nextpg']} {/if}">下一页</a></li>
+        <li class="last" data-page="{$_p['pagenum']}"><a href="{if $_p['currpage'] == $_p['pagenum']} javascript:; {else} {$_p['last']} {/if}">最后页</a></li>
+        {/if}
+    </ul>
+</div>

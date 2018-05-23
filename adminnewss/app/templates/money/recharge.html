@@ -1,0 +1,90 @@
+{include file="public/header.html"}
+<div class="wrapper">
+	{include file="public/head.html"}
+  
+  <!-- Left side column. contains the logo and sidebar -->
+  	{include file="public/left.html"}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        资金明细
+        <small>Control panel</small>
+      </h1>
+      
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header with-border">
+            	<form class="form-inline" action="" method="get">
+                                <label class="inline">&nbsp;&nbsp;状态：</label>
+                                <select name="status" class="form-control">
+                                    <option value="">全部</option>
+                                    <option {if I('status') eq 1}selected="selected" {/if} value="1">审核中</option>
+                                    <option {if I('status') eq 2}selected="selected" {/if} value="2">驳回</option>
+                                    <option {if I('status') eq 3}selected="selected" {/if} value="3">通过</option>		
+                                </select>
+                                <button type="submit" class="btn btn-success">
+                                    
+                                    搜索
+                                </button>
+                            </form>
+          </div>
+          
+          <div class="box-body table-responsive mailbox-messages">
+            <div class="dataTables_wrapper form-inline dt-bootstrap no-footer" id="example1_wrapper">
+                    <table id="example1" class="table table-bordered" >
+                      <thead>
+                        <tr>
+            			<th>支付宝订单号</th>
+            <th>金额</th>
+            <th>充值时间</th>
+			<th>状态</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      	{if $data}  
+                        {foreach from=$data key=k item=val}
+                        <tr>
+                            <td>{$val['alipay_number']}</td>
+                            <td>{$val['cost']}</td>
+                            <td>{date('Y-m-d', $val['create_time'])}</td>
+                            <td>
+                            {if $val['status'] eq 1}
+                            审核中
+                            {elseif $val['status'] eq 2}
+                            驳回
+                            {else}
+                            通过
+                            {/if}
+                            </td>
+                         </tr>
+                        {/foreach}
+                        {else}
+                        <tr>
+                        	<td colspan="10" align="center" style="line-height:45px"><i class="fa fa-fw fa-exclamation-triangle"></i>没有查询到符合条件的记录</td>
+                        </tr>
+                       {/if} 
+                      </tbody>
+                    </table>
+                  
+                </div>
+                <div>{$_page}</div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    <!-- /.content -->
+  </div>
+<!-- /.content-wrapper -->
+{include file="public/footerJs.html"}
+</body>
+</html>

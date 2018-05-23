@@ -1,0 +1,116 @@
+{include file="public/header.html"}
+<div class="wrapper">
+	{include file="public/head.html"}
+  
+  <!-- Left side column. contains the logo and sidebar -->
+  	{include file="public/left.html"}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        在线充值
+        <small>Control panel</small>
+      </h1>
+      
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+      	  <div class="box">
+
+          		<div class="box-body ">
+                          <div class="row ">
+                          	<div class="col-md-6">
+                                <form class="form-horizontal" method="post" id="form1">
+                                    <input name="formhash" value="{formhash()}" type="hidden" />
+                                    <input name="token" value="{creatToken($user['uid'])}" type="hidden" />
+                                  <div class="box-body">
+                                    <div class="form-group">
+                                      <label for="exampleInputEmail1">支付宝订单号</label>
+                                      <input name="alipay_number" id="alipay_number" class="form-control" type="text" placeholder="请输入支付宝订单号">
+                                    </div>  
+                                    <div class="form-group">
+                                      <label for="exampleInputEmail1">充值金额</label>
+                                      <input id="moeny" class="form-control" name="moeny" placeholder="请输入充值金额" type="text">
+                                    </div>     
+                                    <div class="form-group">
+                                    
+                                      <label for="exampleInputPassword1" style="color:#F00">{$setConfig['recharge']}</label>
+                                      
+                                    </div>
+                                    
+                                   
+                                    
+                                  </div>
+                                  <!-- /.box-body -->
+                    
+                                  <div class="box-footer">
+                                    <button type="button" id="submitBtn" class="btn btn-primary">确定</button>
+                                    <a class="btn btn-primary" href="{U('Money/recharge')}" style="float:right">充值记录</a>
+                                    
+                                  </div>
+                      
+                    	</form>
+                    </div>
+                    
+                    <div  class="col-md-6"><img src="{$assets}/www/images/QR.png"/></div>
+                    </div>
+              </div>
+          
+              
+          </div>
+      </div>
+    </div>
+    </section>
+    <!-- /.content -->
+  </div>
+<!-- /.content-wrapper -->
+{include file="public/footerJs.html"}
+<script type="text/javascript">
+$(function () {
+	$('#submitBtn').on('click',function(){
+		if ($('#moeny').val() == '') {
+			share.showAlert('请输入金额！',2);
+			return;
+		}
+		if (share.isNum($('#moeny').val())   == '') {
+			share.showAlert('输入金额不正确！',2);
+			return;
+		}
+		if ($('#moeny').val()<1) {
+			share.showAlert('充值金额不能低于1元！',2);
+			return;
+		}
+		$.ajax({
+			type:'POST',
+			dataType:'json',
+			url:'{U('money/postalipay')}?t='+(new Date().getTime()),
+			data:$('#form1').serialize(),
+			success:function(data){
+				if(data.status == 1){
+					share.showAlert('提交成功',1);
+					window.location.href = data.url;
+					return;
+				}else{
+					share.showAlert(data.info,2);
+					return false;
+				}
+			},complete:function(XMLHttpRequest, textStatus){
+				$('#submitBtn').attr('disabled',false);
+				$('#submitBtn').html('提交');
+			},beforeSend:function(){
+				$('#submitBtn').attr('disabled',true);
+				$('#submitBtn').html('提交中...');
+			},error:function(){
+				share.showAlert('无效操作!' ,1);
+			}
+		});
+	});
+});
+</script>
+</body>
+</html>
