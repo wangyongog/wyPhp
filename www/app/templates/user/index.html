@@ -1,0 +1,114 @@
+	{include file="public/header.html"}
+    {include file="public/left.html"}
+    <div class="mod-user-main">
+        <div class="mod-nav-bar">
+            用户信息&nbsp;&nbsp;&raquo;&raquo;&nbsp;&nbsp;修改密码
+        </div>
+        <div class="mod-content">
+            <h3 class="title">修改密码</h3>
+            <form class="form-horizontal" method="post" onsubmit="return false;" id="form1">
+                        <input name="formhash" value="{formhash()}" type="hidden" />
+                        <input name="token" value="{creatToken($user['uid'])}" type="hidden" />
+            <table class="mod-table-basic">
+                <tr>
+                    <td class="title" width="20%">原始密码：</td>
+                    <td><input type="password" id="oldpasword" name="oldpasword" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td class="title">新密码：</td>
+                    <td>
+                        <input type="password" id="pasword" name="pasword" class="form-control">
+                        <span class="tips">必须6-16位字符，不能全为数字</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">确认密码：</td>
+                    <td>
+                        <input type="password" id="pasword1" name="pasword1" class="form-control">
+                        <span class="tips">必须与新密码一致</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <button type="button" id="submitBtn" class="btn btn-green">提交</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">余额：</td>
+                    <td>
+                        {$user['leftmoney']}￥
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="title">注册时间：</td>
+                    <td>
+                        {date('Y-m-d H:i:s', $user['addtime'])}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">登录时间：</td>
+                    <td>
+                        {date('Y-m-d H:i:s', $user['lasttime'])}
+                    </td>
+                </tr>
+            </table>
+            </form>
+    	</div>
+</div>
+{include file="public/footerJs.html"}
+<script>
+$('#submitBtn').on('click',function(){
+	if ($('#oldpasword').val() == '') {
+		share.showAlert('请输入原始密码！',2);
+		return;
+	}
+
+	if ($('#pasword').val() == '') {
+		share.showAlert('请输入新密码！',2);
+		return;
+	}
+
+	if ($('#pasword1').val() == '') {
+		share.showAlert('请却认密码！',2);
+		return;
+	}
+	if ($('#pasword1').val() != $('#pasword').val()) {
+		share.showAlert('2次密码不一致！',2);
+		return;
+	}
+	$.ajax({
+		type:'POST',
+		dataType:'json',
+		url:'{U('user/pwd')}?t='+(new Date().getTime()),
+		data:$('#form1').serialize(),
+		success:function(data){
+			if(data.status == 1){
+				layer.confirm(data.info, {
+				  btn: ['确定'],
+				  icon: 1,
+				}, 
+				function(){
+					window.location.href = data.url;
+				},null
+				);
+				return;
+			}else{
+				share.showAlert(data.info,2);
+				return false;
+			}
+		},complete:function(XMLHttpRequest, textStatus){
+			$('#submitBtn').attr('disabled',false);
+			$('#submitBtn').html('提交');
+		},beforeSend:function(){
+			$('#submitBtn').attr('disabled',true);
+			$('#submitBtn').html('提交中...');
+		},error:function(){
+			share.showAlert('无效操作!',2);
+		}
+	});
+});
+</script>
+</body>
+</html>

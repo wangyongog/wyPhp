@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+
+    <meta charset="utf-8"/>
+    <title>{$setConfig['sitename']}</title>
+	<link rel="stylesheet" href="{$assets}/common/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{$assets}/common/font_awesome/css/font-awesome.min.css">
+    
+    <link rel="stylesheet" href="{$assets}/common/layui/css/layui.css">
+    <script type="text/javascript">
+	var userAgentInfo = navigator.userAgent;
+	var Agents = ["Android", "iPhone",
+				"SymbianOS", "Windows Phone",
+				"iPad", "iPod"];
+	var flag = true;
+	for (var v = 0; v < Agents.length; v++) {
+		if (userAgentInfo.indexOf(Agents[v]) != -1) {
+			flag = false;
+			break;
+		}
+	}
+	var head = document.getElementsByTagName('head')[0];
+    var link = document.createElement('link');
+	link.href = flag == true ? '{$assets}/www/css/sr/base.css' : '{$assets}/www/css/sr/mbase.css';
+	
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    head.appendChild(link);
+    </script>
+    <style>
+     .btn:hover{
+		color:#FFF 
+}
+    </style>
+    <meta name="CSRF-token" content="{random(30)}">
+</head>
+<body>
+<div class="page-user-center">
+    <div class="mod-user-header">
+		<div class="header">
+        	<div class="logo" style="font-size:18px">{$setConfig['sitename']}</div>
+            	
+                <div class="fr nav">
+                    <a href="javascript:;">您好，{$user['username']}</a>
+                    <a href="{U('/logout')}">退出</a>
+                </div>
+    	</div>
+</div>

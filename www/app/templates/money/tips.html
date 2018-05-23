@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+
+    <meta charset="utf-8"/>
+    <title>微数据</title>
+	<link rel="stylesheet" href="{$assets}/common/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{$assets}/common/font_awesome/css/font-awesome.min.css">
+    
+    <link rel="stylesheet" href="{$assets}/common/layui/css/layui.css">
+    <script type="text/javascript">
+	var userAgentInfo = navigator.userAgent;
+	var Agents = ["Android", "iPhone",
+				"SymbianOS", "Windows Phone",
+				"iPad", "iPod"];
+	var flag = true;
+	for (var v = 0; v < Agents.length; v++) {
+		if (userAgentInfo.indexOf(Agents[v]) != -1) {
+			flag = false;
+			break;
+		}
+	}
+	var head = document.getElementsByTagName('head')[0];
+    var link = document.createElement('link');
+	link.href = flag == true ? '{$assets}/www/css/sr/base.css' : '{$assets}/www/css/sr/mbase.css';
+	
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    head.appendChild(link);
+    </script>
+    <style>
+     .btn:hover{
+		color:#FFF 
+}
+    </style>
+</head>
+<body>
+<div class="page-user-center">
+    
+    <div class="mod-user-main" style="left:0">
+        
+        <div class="mod-content">
+            
+            <form class="form-horizontal" method="post">
+      
+            <table class="mod-table-basic">
+                <tr>
+                    <td class="title" width="18%"></td>
+                    
+                    <td  align="center">
+                        支付宝扫一扫转账
+                    </td>
+                </tr>
+                
+                
+                <tr>
+                    <td class="title"></td>
+                     <td rowspan="4" align="center">
+                    	
+    <img class="img" src="__PUBLIC__/www/images/3199602666841552794322.png" alt="13532689286(余定营)" >
+                        
+                    </td>
+                </tr>
+                
+                
+            </table>
+            </form>
+    	</div>
+</div>
+</body>
+</html>

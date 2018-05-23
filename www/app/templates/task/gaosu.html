@@ -1,0 +1,142 @@
+<include file="Public/head"/>
+<body class="no-skin">
+<include file="Public/header"/>
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <include file="Public/sidebar"/>
+    <div class="main-content">
+        <div class="main-content-inner">
+            <!-- #section:basics/content.breadcrumbs -->
+            <include file="Public/breadcrumbs"/>
+
+            <!-- /section:basics/content.breadcrumbs -->
+            <div class="page-content">
+                <include file="Public/set"/>
+
+                <!-- /section:settings.box -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <div class="row">
+                        	
+                            <form class="form-inline" action="" method="get">
+                            
+                            	<a class="btn btn-info" href="{:U('Task/gaosuadd')}" >新建任务</a>
+               					<a class="btn btn-info" href="{:U('Task/gaosuaddAll')}" >批量下单</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label class="inline">标题：</label>
+								<input class="form-control" name="title" value="{:I('get.title')}" type="text" style="width:250px" placeholder="请输入标题">
+                            	<label class="inline">链接：</label>
+								<input class="form-control" name="url" value="{:I('get.url')}" type="text" style="width:550px" placeholder="请输入链接地址">
+                                <label class="inline">&nbsp;&nbsp;状态：</label>
+                                <select name="status" class="form-control">
+                                    <option  value="">全部</option>
+                                    	<option <if condition="I('get.status') eq 1"> selected="selected" </if> value="1">调度中</option>
+                                        <option  <if condition="I('get.status') eq 2"> selected="selected" </if> value="2">执行中</option>
+                                        <option  <if condition="I('get.status') eq 3"> selected="selected" </if> value="3">已完成</option>
+                                        <option  <if condition="I('get.status') eq -1"> selected="selected" </if> value="-1">已关闭</option>
+                                </select>
+                                <button type="submit" class="btn btn-purple btn-sm">
+                                    <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+                                    搜索
+                                </button>
+                            </form>
+                        </div>
+                        <div class="space-4"></div>
+                        <div class="row">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                       <volist name="show_list" id="vo">
+                                          <if condition="empty($vo['hidden'])">
+                                          <th style="word-break:break-all; width:{$vo.width}px;">
+                                                {$vo.title}
+                                          </th>
+                                          </if>
+                                        </volist>
+                                        <th style="width:80px">
+                                           操作
+                                           </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    
+                                    <volist name="tasks" id="task">
+                                        <tr>
+                                            <volist name="show_list" id="vo">
+                                                <if condition="empty($vo['hidden'])">
+                                                
+                                                                        
+                                                <td style="word-break:break-all; width:{$vo.width}px;">
+                                                <if condition="$key eq 'remark'">
+                                                <elseif condition="in_array($key,['weixin_no','title'])"/>
+                                                	<a href="{$task.url}" target="_blank">
+                                                    {$task[$key]}
+                                                    </a>
+                                                <else />
+                                               		{$task[$key]}
+                                                </if>
+                                                </td>
+                                                </if>
+                                            </volist>                  
+                                          <td>
+                                          <div class="hidden-sm hidden-xs action-buttons">
+                                              <if condition="in_array($task['status'],[0,1]) and $task['isclose'] eq 0">
+                                                    <a title="关闭" val="{:U('Task/close_task',array('status'=>-1,'id'=>$task['oid'],'token'=>creatToken($task['oid'])))}" class="red del" href="javascript:;">
+                                                    <i class="ace-icon fa fa-times bigger-130"></i>
+                                                    </a>                                            
+                                                        
+                                              </if>
+                                          </div>
+                                          </td>
+                                        </tr>
+                                      </volist>
+                                    </tbody>
+                                </table>
+
+                            {$_page}
+                        </div>
+                        <!-- PAGE CONTENT ENDS -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+    <include file="Public/footer"/>
+
+</div><!-- /.main-container -->
+
+<include file="Public/footerjs"/>
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+    $(function () {
+        $(".del").click(function () {
+            var url = $(this).attr('val');
+			var msg = $(this).attr('title') || '是否要操作？';
+            bootbox.confirm({
+                title: "系统提示",
+                message: "是否要"+msg+"该任务?",
+                callback: function (result) {
+                    if (result) {
+                        window.location.href = url;
+                    }
+                },
+                buttons: {
+                    "cancel": {"label": "取消"},
+                    "confirm": {
+                        "label": "确定",
+                        "className": "btn-danger"
+                    }
+                }
+            });
+        });
+		
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+{include file="public/header.html"}
+{include file="public/left.html"}
+    <div class="mod-user-main">
+        <div class="mod-nav-bar">
+            阅读&nbsp;&nbsp;&raquo;&raquo;&nbsp;&nbsp;阅读列表
+        </div>
+        <div class="mod-content">
+            <h3 class="title">
+                阅读                <div class="fr fs14 ml20">
+<a class="btn btn-green" href="{U('task/taskBatch')}">批量创建</a>
+</div>
+                <div class="fr fs14">
+<a class="btn btn-green" href="{U('task/taskadd')}">创建新任务</a>
+</div>
+            </h3>
+            <div class="pb20">
+            <form class="form-inline" method="get" id="searchForm">
+
+            标题查询：
+            <input id="title"  class="form-control" name="title" type="text" value="">
+                <button type="button" class="btn btn-green searchForm">
+                   
+                    搜索
+                </button>
+            </form>
+			</div>
+            <div>
+                <div id="page_data">
+                    <table class="mod-table-list">
+                    <tr>
+                    {foreach from=$show_list key=k item=val}
+              {if empty($val.hidden) and empty($val.showhead)}
+              <th style="word-break:break-all;  width:{$val.width}px;">
+                    {$val.title}
+              </th>
+              {/if}
+            {/foreach} 
+            <th style="width:80px">操作</th>
+           </tr>
+                    
+                    <tbody id="tbody_data" data-name="tbody_data"></tbody>               
+                    </table>
+                </div>
+                
+			<div class="pagin" data-name="pagin" ></div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="public/footerJs.html"}
+</body>
+</html>

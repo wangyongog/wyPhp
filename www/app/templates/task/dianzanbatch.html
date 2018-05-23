@@ -1,0 +1,132 @@
+{include file="public/header.html"}
+{include file="public/left.html"}
+    <div class="mod-user-main">
+        <div class="mod-nav-bar">
+            微信点赞&nbsp;&nbsp;»»&nbsp;&nbsp;新建任务
+        </div>
+        <div class="mod-content">
+            <h3 class="title">
+                批量添加
+                <div class="fr fs14"><a class="btn btn-green" href="{U('/task/dianzan')}">返回任务列表</a></div>
+            </h3>
+            <form class="form-horizontal" action="{U('taskadd')}" method="post" id="form1" onSubmit="return false">
+                        <input name="formhash" value="{formhash()}" type="hidden" />
+            <table class="mod-table-basic">
+                <tbody><tr>
+                    <td class="title" width="150">批量下单：</td>
+                    <td><textarea id="tasks" class="form-control" rows="10" name="tasks" placeholder=""></textarea></td>
+                </tr>
+                <tr>
+                    <td class="title">单价：</td>
+                    <td><b id="price" class="red">--</b>元/点赞</td>
+                </tr>
+                <tr>
+                    <td class="title">付款：</td>
+                    <td><b id="money" class="red">--</b>元</td>
+                </tr>
+                
+                
+                <tr>
+                    <td class="title">备注：</td>
+                    <td><input id="contont" name="contont" style="width: 600px;" type="text"></td>
+                </tr>
+                <tr>
+                    <td class="title" style="color:#F00">说明(100赞起刷)：</td>
+                    <td>
+                    	<div style="margin-bottom:20px"> <span style="font-weight:700">格式说明</span>：每一行一个任务，点击“Enter”	，进行下一个任务<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;链接、点赞数量、中间用空格（可多个空格）隔开，支持直接从excel复制<br /><span style="font-weight:700">如</span>：<span style="color:#F00">文章链接&nbsp;&nbsp;&nbsp;点赞数量</span><br /><br />
+          &nbsp;&nbsp;&nbsp;&nbsp;http://mp.weixin.qq.com/&nbsp;&nbsp;&nbsp;1000
+         
+          <br /><br /> <span style="font-weight:700">字段说明</span>： <span style="color:#F00">文章链接：必填 &nbsp;&nbsp;&nbsp;&nbsp;点赞数量：必填 </span>
+
+</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title"></td>
+                    <td>
+                        <button id="submitBtn" class="btn btn-green">提交</button>
+                    </td>
+                </tr>
+            </tbody></table></form>
+        </div>
+    </div>
+</div>
+{include file="public/footerJs.html"}
+<script type="text/javascript">
+var priceArr = Array();
+priceArr[1] = {$price};
+$(function () {
+	$('#tasks').val('');
+	$('#money').val('--');
+	var price = parseFloat(priceArr[1]);
+	$('#price').text('' + price);
+	
+    $('#tasks').on('change',function(){
+		var task_cost=0;
+		var tasks=$(this).val();
+		var tasks_arr=tasks.split("\n");
+		$.each(tasks_arr,function(key,value){
+			var task_each=value.split(/[ \t]/);
+			if($.trim(value)!=''){
+				var task_each_arr=[];
+				$.each(task_each,function(k,item){
+					if(item!=''){
+						task_each_arr.push(item)
+					}
+				});
+				if (!/^\d+$/.test(task_each_arr[1])) {
+					task_each_arr[1] = 0;
+				}
+				task_cost+= Math.ceil(task_each_arr[1] * parseFloat(priceArr[1]) * 100) / 100.0;
+			}
+			
+		});
+		$('#money').text(task_cost.toFixed(2));
+	});
+	
+	$('#submitBtn').on('click',function(){
+		var tasks = $('#tasks').val();
+		if (tasks == '') {
+			share.showAlert('请输入连接和数量',2);
+			return;
+		}
+		if($('#money').html()==0 || $('#money').html()=='--'){
+			share.showAlert('付款不能为0',2);
+			return;
+		}
+		$.ajax({
+			type:'POST',
+			dataType:'json',
+			url:'{U('Task/dianzanBatch')}?t='+(new Date().getTime()),
+			data:$('#form1').serialize(),
+			success:function(data){
+				if(data.status == 1){
+					layer.confirm(data.info, {
+						  btn: ['确定'],
+						  icon: 1,
+						}, 
+						function(){
+							window.location.href = data.url;
+						},null
+						);
+					return;
+				}else{
+					share.showAlert(data.info,2);
+					return false;
+				}
+			},complete:function(XMLHttpRequest, textStatus){
+				$('#submitBtn').attr('disabled',false);
+				$('#submitBtn').html('提交');
+			},beforeSend:function(){
+				$('#submitBtn').attr('disabled',true);
+				$('#submitBtn').html('提交中...');
+			},error:function(){
+				share.showAlert('无效操作!',2);
+			}
+		});
+	});
+});
+
+</script>
+</body>
+</html>

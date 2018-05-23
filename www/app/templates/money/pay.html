@@ -1,0 +1,78 @@
+	{include file="public/header.html"}
+    {include file="public/left.html"}
+    <div class="mod-user-main">
+        <div class="mod-nav-bar">
+            管理中心&nbsp;&nbsp;&raquo;&raquo;&nbsp;&nbsp;充值
+        </div>
+        <div class="mod-content">
+            <h3 class="title">
+                充值
+                
+            </h3>
+            <table class="mod-table-basic">
+                <tr>
+                    <td class="title" width="18%">付款金额：</td>
+                    <td class="red">
+                        {$money}￥
+                    </td>
+                    
+                </tr>
+                <tr>
+                    <td class="title">收款账号（姓名）：</td>
+                    <td  class="red">
+                        yuanqilong0402@qq.com（袁麒龙）
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">付款说明：</td>
+                    <td  class="red">
+                        {$payid}
+                    </td>
+                </tr>
+            </table>
+
+			<table class="mod-table-basic" style="margin-top:20px">
+                <tr>
+                    <td class="title" width="18%">充值流程：</td>
+                    <td >
+						<h4><span  style="font-size:14px">确认充值账号后,打开手机支付宝扫描二维码向本站支付宝转账.</span></h4>
+                    </td>
+                    <td  align="center">
+                        支付宝扫一扫转账
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="title"></td>
+                    <td>
+                    	1.首先打开手机支付宝钱包.<br />
+                    	2.扫描本站支付宝二维码,并选择<span style=" font-size:14px; font-weight:600" class="red">转账功能</span><br />
+                        3.输入充值金额<span style=" font-size:14px; font-weight:600" class="red">{$money}￥</span><br />
+                        4.付款说明填写:<span style=" font-size:14px; font-weight:600" class="red">{$payid}</span><br /><br />
+                        
+                        到账时间：付款成功后,耐心等待10秒钟.
+                    </td>
+                    <td rowspan="4" align="center">
+                    	
+    <img class="img" src="{$assets}/www/images/QR.png" alt="" >
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title"><span style=" font-size:14px; font-weight:600" class="red">注意事项：</span></td>
+                    <td>
+                        <span style=" font-size:14px; font-weight:600" class="red">1.请正确填写付款说明和金额,否则无法自动到账</span><br />
+                        <span style=" font-size:14px; font-weight:600" class="red">2.此次二维码支付有效时间为10分钟，过期请重新提交充值申请</span><br />
+                        <span style=" font-size:14px; font-weight:600" class="red">3.本站支付宝账户会不定期更换,每次充值前请务必核对支付宝账号</span>
+                    </td>
+                </tr>
+                
+                
+            </table>
+    	</div>
+        
+</div>
+</div>
+{include file="public/footerJs.html"}
+</body>
+</html>

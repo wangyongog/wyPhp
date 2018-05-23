@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<head>
+	<title>Login One</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="stylesheet" href="{$assets}/common/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{$assets}/common/font_awesome/css/font-awesome.min.css">
+	<link href="{$assets}/common/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+	<link href="{$assets}/www/css/login.css" rel="stylesheet" type="text/css">	
+</head>
+<body class="templatemo-bg-gray">
+	<div class="container">
+		<div class="col-md-12">
+			<h1 class="margin-bottom-15">注 册</h1>
+			<form class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30 login-form" role="form" action="#" method="post" onSubmit="return false;">
+            	<input type="hidden" name="formhash" id="formhash" class="form-control" value="{formhash()}">
+		        <div class="form-group">
+		          <div class="col-xs-12">		            
+		            <div class="control-wrapper">
+		            	<label for="username" class="control-label fa-label"><i class="fa fa-user " style="font-size:22px"></i></label>
+		            	<input type="text" class="form-control" id="username" name="username" placeholder="用户名">
+		            </div>		            	            
+		          </div>              
+		        </div>
+		        <div class="form-group">
+		          <div class="col-md-12">
+		          	<div class="control-wrapper">
+		            	<label for="password" class="control-label fa-label"><i class="fa fa-lock " style="font-size:22px"></i></label>
+		            	<input type="password" class="form-control" name="password" id="password" placeholder="密码">
+		            </div>
+		          </div>
+		        </div>
+                <div class="form-group">
+		          <div class="col-md-12">
+		          	<div class="control-wrapper">
+		            	<label for="password" class="control-label fa-label"><i class="fa fa-lock " style="font-size:22px"></i></label>
+		            	<input type="password" class="form-control" name="password1" id="password1" placeholder="请重复密码">
+		            </div>
+		          </div>
+		        </div>
+                <div class="form-group">
+		          <div class="col-md-12">
+		          	<div class="control-wrapper">
+		            	<label for="password" class="control-label fa-label"><i class="fa fa-phone" style="font-size:22px"></i></label>
+		            	<input type="text" class="form-control" maxlength="11" name="phone" id="phone" placeholder="请填写有效的手机号，这将是您找回密码唯一依据">
+		            </div>
+		          </div>
+		        </div>
+                <div class="form-group">
+		          <div class="col-md-12">
+		          	<div class="control-wrapper">
+		            	<label for="password" class="control-label fa-label"><i class="fa fa-qq " style="font-size:22px"></i></label>
+		            	<input type="text" class="form-control" name="qq" id="qq" placeholder="请填写qq">
+		            </div>
+		          </div>
+		        </div>
+		        <div class="control-wrapper msgErr" style="margin-bottom:10px; color:#F00"></div>
+		        <div class="form-group">
+		          <div class="col-md-12">
+		          	<div class="control-wrapper">
+		          		<input type="button" value="注 册" class="btn btn-block  btn-info" id="register" _url="{U('login/register')}">
+		          	</div>
+		          </div>
+		        </div>
+
+		      </form>
+		      <div class="text-center">
+		      	<a href="{U('/login')}" class="templatemo-create-new"><i class="fa fa-arrow-circle-o-left"></i>已有帐号，登录 </a>	
+		      </div>
+		</div>
+	</div>
+    {include file="public/footerJs.html"}
+    <script src="{$assets}/www/js/login.js"></script>
+</body>
+</html>

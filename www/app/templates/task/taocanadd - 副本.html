@@ -1,0 +1,213 @@
+<include file="Public/head"/>
+<body>
+<div class="page-user-center">
+    <include file="Public/header"/>
+    <include file="Public/sidebar"/>
+    <div class="mod-user-main">
+        <div class="mod-nav-bar">
+            管理中心&nbsp;&nbsp;»»&nbsp;&nbsp;自定义阅读&nbsp;&nbsp;»»&nbsp;&nbsp;新建任务
+        </div>
+        <div class="mod-content">
+            <h3 class="title">
+                新建任务
+                <div class="fr fs14"><a class="btn btn-green" href="{:U('Task/taocan')}">返回任务列表</a></div>
+            </h3>
+            <form class="form-horizontal" action="{:U('taocanadd')}" method="post" id="form1" onSubmit="return false">
+                        <input name="formhash" value="{:formhash()}" type="hidden" />
+            <table class="mod-table-basic">
+                <tbody><tr>
+                    <td class="title" width="100">链接：</td>
+                    <td><input id="url" style="width: 800px;" type="text" name="url"></td>
+                </tr>
+                <!--<tr>
+                    <td class="title">数量：</td>
+                    <td>
+                        <input id="count" placeholder="" type="text" name="count">
+                        <span class="ml10">数量区间为1000-100000</span>
+                    </td>
+                </tr>-->
+                <tr>
+                    <td class="title">阅读来源：</td>
+                    <td>
+                        <div class="form-group ishide" >
+                                 <div>
+                                     <label style="font-size:16px; text-align:right; margin-left:8px"> 公众号会话： </label>
+                                     <input value="" name="data[gzhh]" placeholder="" type="text">
+                                 </div>
+                                 <div style="margin-top:8px">
+                                     <label style="font-size:16px;  margin-left:8px; text-align:right"> 好友转发： </label>
+                                     <input value="" name="data[hyzf]" placeholder="" type="text">
+                                 </div>
+                                 <div style="margin-top:8px">
+                                     <label style="font-size:16px; margin-left:8px; text-align:right"> 朋友圈： </label>
+                                     <input value="" name="data[pyq]" placeholder="" type="text">
+                                 </div>
+                                 <div style="margin-top:8px">
+                                     <label style="font-size:16px; margin-left:8px ;text-align:right"> 历史消息： </label>
+                                     <input value="" name="data[lsxx]" placeholder="" type="text">
+                                 </div>
+                                 <!--<div style="margin-top:8px">
+                                     <label style="font-size:16px; margin-left:8px; text-align:right"> 未知： </label>
+                                     <input value="" name="data[wz]" placeholder="" type="text">
+                                 </div>-->
+                            </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">数量合计：</td>
+                    <td>
+                        <input id="count" placeholder="" type="text" name="count" readonly>
+                        <span class="ml10">数量区间为500-100000</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">模式：</td>
+                    <td>
+                        <select id="mosi" name="mosi">
+                            	
+                                    <option value="1" >标准模式</option>
+                        </select>
+                        <span id="modelTips" class="ml10"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title">单价：</td>
+                    <td><b id="price" class="red">--</b>元/阅读量</td>
+                </tr>
+                <tr>
+                    <td class="title">付款：</td>
+                    <td><b id="money" class="red">--</b>元</td>
+                </tr>
+                
+                
+                <tr>
+                    <td class="title">备注：</td>
+                    <td><input id="contont" name="contont" style="width: 600px;" type="text"></td>
+                </tr>
+                <tr>
+                    <td class="title"></td>
+                    <td>
+                        <button id="submitBtn" class="btn btn-green">提交</button>
+                    </td>
+                </tr>
+            </tbody></table></form>
+        </div>
+    </div>
+</div>
+<script>
+    var priceArr = Array();
+	priceArr[1] = {$price};
+	priceArr[2] = {$price1};
+    var modelTips = Array();
+	modelTips[1] = '该模式下将依次执行，但会被优先执行模式插队';
+	modelTips[2] = '该模式具有快速优先执行特权，但价格相对较贵，适用于较急的方案';
+	function sumNum(){
+		var count = 0;
+		$('.ishide input').each(function(i){
+			if (/^\d+$/.test($(this).val())) {
+				count+=parseInt($(this).val());
+			}
+		});
+		$('#count').val(count);
+		calcMoney();
+	}
+    $(function () {
+		$('#url').val('');
+		$('#count').val('');
+		sumNum();
+		$('.ishide input').on('change',function(){
+			sumNum();
+		});
+        $('#submitBtn').on('click',function(){
+			var url = $('#url').val();
+			var count = parseInt($('#count').val());
+			var mosi = $('#mosi').find("option:selected").val();
+			if (url == '') {
+				alert('链接不能为空');
+				return;
+			}
+	
+			if (count == '') {
+				alert('数量不能为空');
+				return;
+			}
+	
+			if (!/^\d+$/.test(count)) {
+				alert('数量输入错误');
+				return;
+			}
+			if (count<500) {
+				alert('数量合计不能低于500');
+				return;
+			}
+			if(mosi == ''){
+				alert('请选择模式');
+				return;
+			}
+			if($('#money').html()==0 || $('#money').html()=='--'){
+				alert('付款不能为0');
+				return;
+			}
+			$.ajax({
+				type:'POST',
+				dataType:'json',
+				url:'{:U('Task/taocanadd')}?t='+(new Date().getTime()),
+				data:$('#form1').serialize(),
+				success:function(data){
+					if(data.status == 1){
+						alert('提交成功!')
+						window.location.href = data.url;
+						return;
+					}else{
+						alert(data.info);
+						return false;
+					}
+				},complete:function(XMLHttpRequest, textStatus){
+					$('#submitBtn').attr('disabled',false);
+					$('#submitBtn').html('提交');
+				},beforeSend:function(){
+					$('#submitBtn').attr('disabled',true);
+					$('#submitBtn').html('提交中...');
+				},error:function(){
+					setTimeout(function(){alert('无效操作！');}, 3000);return;
+				}
+			});
+		});
+		/*$('#count').on('change',function(){
+			var count = $(this).val();
+			if(count == '' || count<=0){
+				alert('请输入阅读数！');
+				return ;
+			}
+			if (!/^\d+$/.test(count)) {
+				alert('数量输入错误');
+				$('#money').html('0');
+				return;
+			}
+			calcMoney();
+		});
+        $('#mosi').on('change',function(){
+			calcMoney();
+		});*/
+    });
+
+    function calcMoney() {
+        var num = parseInt($('#count').val());
+		var level = $('#mosi').find("option:selected").val();
+        if (isNaN(num)) {
+            num = 0;
+        }
+		if(level==''){
+			$('#price').text('--');
+        	$('#money').text('--');
+			return false;
+		}
+        var price = parseFloat(priceArr[1]);
+        var money = Math.ceil(num * price * 100) / 100.0;
+        $('#modelTips').text(modelTips[level]);
+        $('#price').text('' + price);
+        $('#money').text('' + money);
+    }
+</script>
+</body>
+</html>

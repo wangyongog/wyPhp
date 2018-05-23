@@ -1,0 +1,147 @@
+{include file="public/header.html"}
+{include file="public/left.html"}
+    <div class="mod-user-main">
+        <div class="mod-nav-bar">
+            微信点赞&nbsp;&nbsp;»»&nbsp;&nbsp;新建任务
+        </div>
+        <div class="mod-content">
+            <h3 class="title">
+                新建任务
+                <div class="fr fs14"><a class="btn btn-green" href="{U('task/dianzan')}">返回任务列表</a></div>
+            </h3>
+            <form class="form-horizontal" action="{U('taskadd')}" method="post" id="form1" onSubmit="return false">
+                        <input name="formhash" value="{formhash()}" type="hidden" />
+            <table class="mod-table-basic">
+                <tbody><tr>
+                    <td class="title" width="100">链接：</td>
+                    <td><input id="url" style="width: 800px;" type="text" name="url"></td>
+                </tr>
+                <tr>
+                    <td class="title">点赞数量：</td>
+                    <td>
+                        <input id="count" placeholder="" type="text" name="count">
+                        <span class="ml10">数量区间为100-100000</span>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="title">单价：</td>
+                    <td><b id="price" class="red">--</b>元/点赞</td>
+                </tr>
+                <tr>
+                    <td class="title">付款：</td>
+                    <td><b id="money" class="red">--</b>元</td>
+                </tr>
+                
+                
+                <tr>
+                    <td class="title">备注：</td>
+                    <td><input id="contont" name="contont" style="width: 600px;" type="text"></td>
+                </tr>
+                <tr>
+                    <td class="title"></td>
+                    <td>
+                        <button id="submitBtn" class="btn btn-green">提交</button>
+                    </td>
+                </tr>
+            </tbody></table></form>
+        </div>
+    </div>
+</div>
+{include file="public/footerJs.html"}
+<script>
+    var priceArr = Array();
+	priceArr[1] = {$price};
+    $(function () {
+		$('#url').val('');
+		$('#count').val('');
+		calcMoney();
+        $('#submitBtn').on('click',function(){
+			var url = $('#url').val();
+			var count = parseInt($('#count').val());
+			if (url == '') {
+				share.showAlert('链接不能为空',2);
+				return;
+			}
+	
+			if (count == '') {
+				share.showAlert('数量不能为空',2);
+				return;
+			}
+	
+			if (!/^\d+$/.test(count)) {
+				share.showAlert('数量输入错误',2);
+				return;
+			}
+			if (count<100) {
+				share.showAlert('数量不能低于100',2);
+				return;
+			}
+			
+			if($('#money').html()==0 || $('#money').html()=='--'){
+				share.showAlert('付款不能为0',2);
+				return;
+			}
+			$.ajax({
+				type:'POST',
+				dataType:'json',
+				url:'{U('Task/dianzanadd')}?t='+(new Date().getTime()),
+				data:$('#form1').serialize(),
+				success:function(data){
+					if(data.status == 1){
+						layer.confirm(data.info, {
+						  btn: ['确定'],
+						  icon: 1,
+						}, 
+						function(){
+							window.location.href = data.url;
+						},null
+						);
+						return;
+					}else{
+						share.showAlert(data.info,2);
+						return false;
+					}
+				},complete:function(XMLHttpRequest, textStatus){
+					$('#submitBtn').attr('disabled',false);
+					$('#submitBtn').html('提交');
+				},beforeSend:function(){
+					$('#submitBtn').attr('disabled',true);
+					$('#submitBtn').html('提交中...');
+				},error:function(){
+					share.showAlert('无效操作!',2);
+				}
+			});
+		});
+		$('#count').on('change',function(){
+			var count = $(this).val();
+			if(count == '' || count<=0){
+				share.showAlert('请输入阅读数',2);
+				return ;
+			}
+			if (!/^\d+$/.test(count)) {
+				share.showAlert('数量输入错误',2);
+				$('#money').html('0');
+				return;
+			}
+			calcMoney();
+		});
+       
+    });
+
+    function calcMoney() {
+        var num = parseInt($('#count').val());
+        if (isNaN(num)) {
+            num = 0;
+        }
+        var price = parseFloat(priceArr[1]);
+        var money = Math.ceil(num * price * 100) / 100.0;
+        if(num == 0){
+			money = '--';
+		}
+        $('#price').text('' + price);
+        $('#money').text('' + money);
+    }
+</script>
+</body>
+</html>
