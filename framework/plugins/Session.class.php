@@ -46,8 +46,8 @@ class Session{
      * @return  Bool  true/FALSE
      */
     private function _init(){
-        !empty($this->config['sess_name']) and session_name($this->config['sess_name']);
-        !empty($this->config['sess_path']) and session_save_path($this->config['sess_path']);
+        if($this->config['sess_name'])  session_name($this->config['sess_name']);
+        if($this->config['sess_path'])  session_save_path($this->config['sess_path']);
         //不使用 GET/POST 变量方式
         ini_set('session.use_trans_sid', 0);
         //设置垃圾回收最大生存时间
@@ -59,7 +59,7 @@ class Session{
         ini_set('session.use_cookies', 1);
         ini_set('session.cookie_path', '/');
         //多主机共享保存 SESSION ID 的 COOKIE
-        $this->config['sess_domain'] and ini_set('session.cookie_domain', $this->config['sess_domain']);
+        if($this->config['sess_domain']) ini_set('session.cookie_domain', $this->config['sess_domain']);
         //将 session.save_handler 设置为 user，而不是默认的 files
         //session_module_name('user');
         //定义 SESSION 各项操作所对应的方法名
