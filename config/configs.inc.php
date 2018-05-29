@@ -8,7 +8,6 @@
 return [
     'DEFAULT_DB' =>'nf_',//默认数据库,表前缀区分
     'RW_SEPARATE' =>false, //true 开启,false读写分离是否开启
-    'COOKIE_DOMAIN' =>'.cqwtsw.local',//cookie作用域
     'DOMAIN' =>[
         'web' =>'www.my.local',//pc主域名
         'wap' =>'wap.my.local',//wap主域名
@@ -33,7 +32,7 @@ return [
     'SESSION_CACHE'  => 'dbsession', //dbsession,redis  SESSION缓存类型
     'SESSION_TABLE'  => 'session', //session数据表
     'LIFT_TIME'  => 24*3600, //session,Cookie有效时间
-    'COOKIE_DOMAIN' => '.wy.local', //session,Cookie作用域
+    'COOKIE_DOMAIN' => '.my.local', //session,Cookie作用域
     'COOKIE_HASH'  => false, //session,Cookie是否加密
     'SESSION_ID' =>'session_id',
 
