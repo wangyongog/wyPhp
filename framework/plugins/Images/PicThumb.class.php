@@ -30,8 +30,8 @@
  *        GD库不支持透明度水印,如果必须使用透明水印,请将水印图片做成有透明度。
  *        GD库输出gif如加透明水印，会有问题。
  */
-
-class PicThumb{ // class start
+namespace WyPhp\Images;
+class PicThumb{
 
     private $_log = null;            // log file
     private $_handler = null;        // 进行图片处理的程序,imagemagick/gd库
@@ -339,7 +339,30 @@ class PicThumb{ // class start
 
         return array($pic_w, $pic_h);
     }
-
+    /*private function get_size(){
+        list($owidth, $oheight) = getimagesize($this->_source);
+        $width = (int)($this->_width);
+        $height = (int)($this->_height);
+        switch($this->_type){
+            case 'fit':
+                $pic_w = $width;
+                $pic_h = (int)($pic_w*$oheight/$owidth);
+                if($pic_h>$height){
+                    $pic_h = $height;
+                    $pic_w = (int)($pic_h*$owidth/$oheight);
+                }
+                break;
+                case 'crop':
+                    $pic_w = $width;
+                    $pic_h = (int)($pic_w*$oheight/$owidth);
+                    if($pic_h<$height){
+                        $pic_h = $height;
+                        $pic_w = (int)($pic_h*$owidth/$oheight);
+                    }
+                    break;
+        }
+        return array($pic_w, $pic_h);
+    }*/
 
     /** 获取截图的偏移量
      * @param int $pic_w 图宽度
