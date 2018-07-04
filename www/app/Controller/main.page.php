@@ -8,6 +8,9 @@
 namespace App\Controller;
 use WyPhp\DB;
 use WyPhp\Encrypt;
+use WyPhp\Images\EasyPhpThumbnail\PHP5\easyphpthumbnail;
+use WyPhp\Images\PicThumb;
+
 class main extends baseController{
     public function actionIndex(){
         $data = DB::fetch_all('notice','*', ['map'=>0], 'id DESC', 30,$this->page);
@@ -60,5 +63,34 @@ class main extends baseController{
         /*$b = $s->pubEncrypt('发生的woerKjks');
         echo $b.'<br>';
         echo $s->privDecrypt($b);*/
+    }
+    public function actionThumb(){
+        $param = array(
+            'type' => 'fit',
+            'width' => 320,
+            'height' => 320,
+            'bgcolor' => '#FFF'
+        );
+        $source1 = ROOT.'/attaches/uploads/1704893933937459903.jpg';
+        $dest1 = ROOT.'/attaches/uploads/'.md5('image').uniqid().'.jpg';
+        $obj = new PicThumb();
+        $obj->set_config($param);
+        $flag = $obj->create_thumb($source1, $dest1);
+
+        if($flag){
+            echo '<img src="'.$dest1.'">';
+        }else{
+            echo 'create thumb fail';
+        }
+    }
+    public function actionThumb1(){
+        $thumb = new easyphpthumbnail;
+        //$thumb -> Thumbheight = 200;
+        //$thumb -> Thumbwidth = 200;
+        $thumb -> Thumbsize = 80;
+        $thumb ->Thumblocation = ROOT.'/attaches/uploads/';
+        $thumb ->Thumbprefix = 'thumb_';
+        $thumb ->Thumbfilename = md5('ssdf').uniqid().'.jpg';
+        $thumb->Createthumb(ROOT.'/attaches/uploads/1704893933937459903.jpg','file');
     }
 }

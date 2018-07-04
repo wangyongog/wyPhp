@@ -11,7 +11,7 @@ class baseController extends Controller {
      public $uid = 0;
      public $user = [];
      public function _initialize(){
-         $this->_checkLogin();
+        /* $this->_checkLogin();
          $set = D('Admin/Setting');
          $setConfig = $set->get_setting('', 'all');
          $this->assign('setConfig', $setConfig[0]);
@@ -32,7 +32,7 @@ class baseController extends Controller {
 
          $this->assign('menu_types', F('TASK_TYPE'));
          $this->assign('act',CONTROLLER.'/'.ACTION);
-         $this->assign('user', $this->user);
+         $this->assign('user', $this->user);*/
      }
 
     /**

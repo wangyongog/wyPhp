@@ -20,7 +20,7 @@ class websocket extends Controller {
         $this->render();
     }
     public function actionStart(){
-        require_once FWPATH . '/plugins/Workerman/Autoloader.php';
+        require_once FWPATH . '/plugins/Vendor/Workerman/Autoloader.php';
         // 创建一个Worker监听2346端口，使用websocket协议通讯
 
         $ws_worker = new Worker("websocket://0.0.0.0:8080");
@@ -28,8 +28,8 @@ class websocket extends Controller {
         // 启动4个进程对外提供服务
         $ws_worker->count = 4;
         Worker::$daemonize = true;
-        Worker::$stdoutFile = 'D:/WWW/webSocket/stdout.log';
-        Worker::$logFile = 'D:/WWW/webSocket/workerman.log';
+        Worker::$stdoutFile = ROOT.'/webSocket_stdout.log';
+        Worker::$logFile = ROOT.'/webSocket_workerman.log';
         /*$ws_worker->onConnect = function($connection) {
     //echo "new connection from ip " . $connection->getRemoteIp() . "\n";
     $connection->onWebSocketConnect = function($connection , $http_header) {
