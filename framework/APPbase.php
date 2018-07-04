@@ -178,13 +178,13 @@ class APPbase{
      *产生唯一ID
      */
     static function runBefore(){
-        $ssid = getCookie('ssid');
+        /*$ssid = getCookie('ssid');
         $ssid = $ssid ? $ssid : '';
         if(!$ssid){
             $ssid = random(13,3);
             makeCookie('ssid', $ssid);
         }
-        self::$sessid = $ssid;
+        self::$sessid = $ssid;*/
     }
     /**
      * 设置应用程序路径
