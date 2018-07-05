@@ -236,11 +236,11 @@ class PicThumb{
             case 3: imagepng($new_img, $this->_dest, (int)(($this->_quality-1)/10)); break;
         }
 
-        if(isset($source_img)){
+        if(!empty($source_img)){
             imagedestroy($source_img);
         }
 
-        if(isset($new_img)){
+        if(!empty($new_img)){
             imagedestroy($new_img);
         }
 
