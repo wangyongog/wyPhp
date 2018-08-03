@@ -73,7 +73,7 @@ class Openssl{
         $this->checkKey();
         $r = openssl_private_encrypt($str, $this->_sResult, $this->_privKey);
         if($r){
-            return base64_encode($this->_sResult);
+            return $this->urlsafe_b64encode($this->_sResult);
         }
         return null;
     }
@@ -86,7 +86,7 @@ class Openssl{
             return null;
         }
         $this->checkKey();
-        $r = openssl_private_decrypt(base64_decode($str) , $this->_sResult, $this->_privKey);
+        $r = openssl_private_decrypt($this->urlsafe_b64decode($str) , $this->_sResult, $this->_privKey);
         if($r){
             return $this->_sResult;
         }
@@ -103,7 +103,7 @@ class Openssl{
             return null;
         }
         $this->checkKey();
-        $r = openssl_public_decrypt(base64_decode($str) , $this->_sResult, $this->_pubKey);
+        $r = openssl_public_decrypt($this->urlsafe_b64decode($str) , $this->_sResult, $this->_pubKey);
         if($r){
             return $this->_sResult;
         }
@@ -122,14 +122,14 @@ class Openssl{
         $this->checkKey();
         $r = openssl_public_encrypt($str , $this->_sResult, $this->_pubKey);
         if($r){
-            return base64_encode($this->_sResult);
+            return $this->urlsafe_b64encode($this->_sResult);
         }
         return null;
     }
     public function __destruct(){
     }
     /**
-     * 通过url参数传值转换加密
+     * 以参数形式 通过 base64_encode加密替换url 或使用urlencode
      * @param $string
      * @return mixed|string
      */
@@ -140,7 +140,7 @@ class Openssl{
     }
 
     /**
-     *通过url参数传值解密出
+     *通过url参数传值base64_decode解密出
      * @param $string
      * @return bool|string
      */
