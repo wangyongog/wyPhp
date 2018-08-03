@@ -128,5 +128,29 @@ class Openssl{
     }
     public function __destruct(){
     }
+    /**
+     * 通过url参数传值转换加密
+     * @param $string
+     * @return mixed|string
+     */
+    function urlsafe_b64encode($string) {
+        $data = base64_encode($string);
+        $data = str_replace(array('+','/','='),array('-','_',''),$data);
+        return $data;
+    }
+
+    /**
+     *通过url参数传值解密出
+     * @param $string
+     * @return bool|string
+     */
+    function urlsafe_b64decode($string) {
+        $data = str_replace(array('-','_'),array('+','/'),$string);
+        $mod4 = strlen($data) % 4;
+        if ($mod4) {
+            $data .= substr('====', $mod4);
+        }
+        return base64_decode($data);
+    }
 
 }
