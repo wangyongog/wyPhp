@@ -10,6 +10,7 @@ use WyPhp\DB;
 use WyPhp\Encrypt;
 use WyPhp\Images\EasyPhpThumbnail\PHP5\easyphpthumbnail;
 use WyPhp\Images\PicThumb;
+use Zxing\QrReader;
 
 class main extends baseController{
     public function actionIndex(){
@@ -92,5 +93,18 @@ class main extends baseController{
         $thumb ->Thumbprefix = 'thumb_';
         $thumb ->Thumbfilename = md5('ssdf').uniqid().'.jpg';
         $thumb->Createthumb(ROOT.'/attaches/uploads/1704893933937459903.jpg','file');
+    }
+    public function actionUploaders(){
+        $this->render();
+    }
+    public function actionUpfile(){
+        $this->printJson([]);
+    }
+    public function actionWxurl(){
+        //解析二维码图片信息
+        require FWPATH . "/plugins/vendor/autoload.php";
+        $qrcode = new QrReader(ROOT.'/assets/www/images/QR.png');
+        $url = $qrcode->text(); //return decoded text from QR Code
+        echo $url;
     }
 }

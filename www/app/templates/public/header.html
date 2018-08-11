@@ -5,10 +5,8 @@
 
     <meta charset="utf-8"/>
     <title>{$setConfig['sitename']}</title>
-	<link rel="stylesheet" href="{$assets}/common/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{$assets}/common/font_awesome/css/font-awesome.min.css">
-    
-    <link rel="stylesheet" href="{$assets}/common/layui/css/layui.css">
+
+    {loadCss_js(['common/bootstrap/css/bootstrap.min.css','common/font_awesome/css/font-awesome.min.css','common/layui/css/layui.css'])}
     <script type="text/javascript">
 	var userAgentInfo = navigator.userAgent;
 	var Agents = ["Android", "iPhone",
