@@ -240,12 +240,12 @@ function post($url, $param=array()){
     }*/
     curl_setopt($httph, CURLOPT_POST, 1);//设置为POST方式
     curl_setopt($httph, CURLOPT_POSTFIELDS, $param);
-    curl_setopt($httph, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/json; charset=utf-8',
-            'Content-Length: ' . strlen($param),
-            'Accept: application/json, text/javascript, */*; q=0.01'
-        )
-    );
+    //curl_setopt($httph, CURLOPT_HTTPHEADER, array(
+    //        'Content-Type: application/json; charset=utf-8',
+    //        'Content-Length: ' . strlen($param),
+    //        'Accept: application/json, text/javascript, */*; q=0.01'
+    //    )
+    //);
     curl_setopt($httph, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($httph, CURLOPT_HEADER, 0);
     $rst = curl_exec($httph);
@@ -261,9 +261,6 @@ function post($url, $param=array()){
  * @return bool
  */
 function check_formhash($formhash=''){
-    /*if(!$formhash){
-        return false;
-    }*/
     $formhash = I('formhash') ? I('formhash') : $_SERVER['HTTP_X_CSRF_TOKEN'];
     $user = APP::$user;
     $uid =isset($user['uid']) ? $user['uid'] : '';
