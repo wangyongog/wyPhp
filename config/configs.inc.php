@@ -9,10 +9,10 @@ return [
     'DEFAULT_DB' =>'nf_',//默认数据库,表前缀区分
     'RW_SEPARATE' =>false, //true 开启,false读写分离是否开启
     'DOMAIN' =>[
-        'web' =>'www.my.local',//pc主域名
-        'wap' =>'wap.my.local',//wap主域名
+        'web' =>'http://www.wyPhp.local',//pc主域名
+        'wap' =>'http://wap.my.local',//wap主域名
         'ADMINWEN' =>'http://admin.my.local',//wap主域名
-        'assets' =>'http://static.my.local',//js+css
+        'assets' =>'http://static.wyPhp.local',//js+css
     ],
     'LOAD_CONFIG' =>'task', //扩展配置文件
     'SYSTEM_USERID' => [1,2], //超级管理员
