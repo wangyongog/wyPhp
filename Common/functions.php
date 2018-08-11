@@ -30,6 +30,17 @@ function sort_time($tm, $month = false, $year = false, $format = 'Y-m-d') {
     }
     return $str;
 }
+
+/**
+ * 动态加载css js
+ * @param $path
+ * @return mixed
+ */
+function loadCss_js($path = []){
+    $css_js = NEW \WyPhp\CssJs();
+    echo $css_js->loadCss_js($path);
+}
+
 function edie($msg=''){
     die($msg);
 }
