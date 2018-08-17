@@ -18,7 +18,7 @@ class Trace{
 
         // 系统默认显示信息
         $_trace['请求脚本'] = $_SERVER['SCRIPT_NAME'];
-        $_trace['请求方法'] = \APPbase::$app;
+        $_trace['请求方法'] = CONTROLLER.'/'. ACTION;
         $_trace['USER_AGENT'] = $_SERVER['HTTP_USER_AGENT'];
         $_trace['HTTP版本'] = $_SERVER['SERVER_PROTOCOL'];
         $_trace['请求时间'] = date('Y-m-d H:i:s', TIMESTAMP);
@@ -92,7 +92,7 @@ HTMLS;
      *
      * @return string
      */
-    protected function getMerTime(){
+    public function getMerTime(){
         $runtime = $this->runtime();
         // 显示运行时间
         $showTime = '执行时间: ' . $runtime['time'];
@@ -104,7 +104,7 @@ HTMLS;
      * 获取资源消耗
      * @return array
      */
-    function runtime(){
+    public function runtime(){
         // 显示运行时间
         $return['time'] = number_format((microtime(true)-\APPbase::$env['start']),4).'s';
         $startMem = array_sum(explode(' ',\APPbase::$env['mem']));
