@@ -195,10 +195,10 @@ class DB{
         return self::$_link->multi_insert($table ,$data);
     }
     static function queryTimes(){
-        return self::$_link->getQueryTimes();
+        return empty(self::$_link) ? 0 : self::$_link->getQueryTimes();
     }
     static function executeTimes(){
-        return self::$_link->getExecuteTimes();
+        return empty(self::$_link) ? 0 : self::$_link->getExecuteTimes();
     }
     public static function affectedRrows(array $params=[]) {
 
