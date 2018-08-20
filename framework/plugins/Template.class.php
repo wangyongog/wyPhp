@@ -17,8 +17,9 @@ class Template extends \Smarty{
         $this->template_dir = APPATH.'/templates';
         $this->compile_dir = ROOT. self::$_cache_data. APP_ROOT.'/templates_c'; //放置模板编译后的文件
         $this->cache_dir = ROOT. self::$_cache_data .APP_ROOT.'/cache'; //放置缓存文件
-        $this->config_dir = ROOT. self::$_cache_data .'/data'.APP_ROOT.'/configs/';
+        $this->config_dir = ROOT. self::$_cache_data .APP_ROOT.'/configs/';
         $this->caching = F('CACHING');
+        $this->debugging = F('CACHING');
         $this->left_delimiter = '{';
         $this->right_delimiter = '}';
     }
