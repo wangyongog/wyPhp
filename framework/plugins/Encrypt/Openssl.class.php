@@ -44,7 +44,7 @@ class Openssl{
                 $pubkey and file_put_contents($this->pubPath, $pubkey);
             }
         }
-
+        $this->checkKey();
     }
     public function checkKey(){
         /**
@@ -70,7 +70,6 @@ class Openssl{
         if(!is_string($str)){
             return null;
         }
-        $this->checkKey();
         $r = openssl_private_encrypt($str, $this->_sResult, $this->_privKey);
         if($r){
             return $this->urlsafe_b64encode($this->_sResult);
@@ -85,7 +84,6 @@ class Openssl{
         if(!is_string($str)){
             return null;
         }
-        $this->checkKey();
         $r = openssl_private_decrypt($this->urlsafe_b64decode($str) , $this->_sResult, $this->_privKey);
         if($r){
             return $this->_sResult;
@@ -102,7 +100,6 @@ class Openssl{
         if(!is_string($str)){
             return null;
         }
-        $this->checkKey();
         $r = openssl_public_decrypt($this->urlsafe_b64decode($str) , $this->_sResult, $this->_pubKey);
         if($r){
             return $this->_sResult;
@@ -119,14 +116,38 @@ class Openssl{
         if(!is_string($str)){
             return null;
         }
-        $this->checkKey();
         $r = openssl_public_encrypt($str , $this->_sResult, $this->_pubKey);
         if($r){
             return $this->urlsafe_b64encode($this->_sResult);
         }
         return null;
     }
+    /**
+     * 生成签名
+     *
+     * @param string 签名材料
+     * @param string 签名编码（base64/hex/bin）
+     * @return 签名值
+     */
+    public function sign($data){
+        if (openssl_sign($data, $sign, $this->_privKey,OPENSSL_ALGO_SHA1)) {
+            $sign = $this->urlsafe_b64encode($sign);
+        }
+        return $sign;
+    }
+    /**
+     * RSA验签
+     * $data待签名数据
+     * $sign需要验签的签名
+     * return 验签是否通过 bool值
+     */
+    public function verify($data, $sign){
+        return openssl_verify($data, $this->urlsafe_b64decode($sign), $this->_pubKey,OPENSSL_ALGO_SHA1);
+    }
+
     public function __destruct(){
+        openssl_free_key($this->_privKey);
+        openssl_free_key($this->_pubKey);
     }
     /**
      * 以参数形式 通过 base64_encode加密替换url 或使用urlencode
