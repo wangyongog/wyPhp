@@ -38,7 +38,7 @@ function sort_time($tm, $month = false, $year = false, $format = 'Y-m-d') {
  */
 function loadCss_js($path = []){
     $css_js = NEW \WyPhp\CssJs();
-    echo $css_js->loadCss_js($path);
+    return $css_js->loadCss_js($path);
 }
 
 function edie($msg=''){
