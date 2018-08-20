@@ -22,22 +22,24 @@ abstract class Controller extends Template{
     public $show_num = 5;
     public $totalPage = 0;  //总页数
     public function __construct() {
-        $this->_initialize();
-        parent::__construct();
         // ajax 信息输出 处理
-        $this->outData['append'] = [];     // 追加
-        $this->outData['html'] = [];       // 替换内容
-        $this->outData['remove'] = [];     // 删除
-        $this->outData['data'] = '';            // 方法中的数据
-        $this->outData['runFunction'] = '';            // 方法中的数据
-        $this->outData['method'] = 'write';     // write需要写入    alert 只做提示
+        //$this->outData['append'] = [];     // 追加
+        //$this->outData['html'] = [];       // 替换内容
+        //$this->outData['remove'] = [];     // 删除
+        //$this->outData['data'] = '';            // 方法中的数据
+        //$this->outData['runFunction'] = '';            // 方法中的数据
+        //$this->outData['method'] = 'write';     // write需要写入    alert 只做提示
+        //$this->outData['url'] = '';
         $this->outData['status'] = 0;
-        $this->outData['url'] = '';
+        $this->outData['msg'] = '';
+        if(method_exists($this,'_initialize')){
+            $this->_initialize();
+        }
+        parent::__construct();
         $this->inajax = I('inajax','int',0);
         $this->page = max(1, I('page','int',1));
         $this->assign(F('DOMAIN'));
     }
-    abstract function _initialize();
 
     /**
      * @param array $par
@@ -115,6 +117,7 @@ abstract class Controller extends Template{
      */
     function printJson($data = null, $type='JSON') {
         $data = !empty($data) ? $data : $this->outData;
+        print_r($this->outData) ;exit;
         $jcb = I('jsoncallback');
         if($type == 'JSON' && !$jcb){
             header('Content-Type:application/json; charset=utf-8');
@@ -163,19 +166,19 @@ abstract class Controller extends Template{
     }
 
     /**
-     * @param string $message
+     * @param string $msg
      * @param string $jumpUrl
      */
-    public function success($message='', $jumpUrl='', $data=[]){
-        $this->dispatchJump($message, 1, $jumpUrl,$data);
+    public function success($msg=''){
+        $this->dispatchJump($msg, 1);
     }
 
     /**
      * @param string $message
      * @param string $jumpUrl
      */
-    public function error($message='', $jumpUrl=''){
-        $this->dispatchJump($message, 0, $jumpUrl);
+    public function error($msg=''){
+        $this->dispatchJump($msg, 0);
     }
 
     /**
@@ -183,11 +186,13 @@ abstract class Controller extends Template{
      * @param int $status
      * @param string $jumpUrl
      */
-    private function dispatchJump($message='', $status=1, $jumpUrl='',$rdata=[]) {
-        $data = empty($rdata) ? [] : $rdata;
-        $data['info']   =   $message;
+    private function dispatchJump($msg='', $status=1) {
+        /*$data = empty($rdata) ? [] : $rdata;
+        $data['msg']   =   $msg;
         $data['status'] =   $status;
-        $data['url']    =   $jumpUrl;
-        $this->printJson($data);
+        $data['url']    =   $jumpUrl;*/
+        $this->outData['msg'] = $msg;
+        $this->outData['status'] = $status;
+        $this->printJson();
     }
 }

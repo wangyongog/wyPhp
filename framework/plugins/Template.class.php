@@ -7,33 +7,36 @@ namespace WyPhp;
  * Time: 15:45
  */
 include FWPATH . '/plugins/smarty/libs/Smarty.class.php';
-class Template extends \Smarty{
+class Template {
     //缓存时间
     protected $cache_life = 3600;
     private static $_cache_data = '/data';
-
-    function __construct(){
-        parent::__construct();
-        $this->template_dir = APPATH.'/templates';
-        $this->compile_dir = ROOT. self::$_cache_data. APP_ROOT.'/templates_c'; //放置模板编译后的文件
-        $this->cache_dir = ROOT. self::$_cache_data .APP_ROOT.'/cache'; //放置缓存文件
-        $this->config_dir = ROOT. self::$_cache_data .APP_ROOT.'/configs/';
-        $this->caching = F('CACHING');
-        $this->debugging = F('CACHING');
-        $this->left_delimiter = '{';
-        $this->right_delimiter = '}';
+    public $smarty = null;
+    public function __construct(){
+        $this->smarty = new \Smarty();
+        $this->smarty->template_dir = APPATH.'/templates';
+        $this->smarty->compile_dir = ROOT. self::$_cache_data. APP_ROOT.'/templates_c'; //放置模板编译后的文件
+        $this->smarty->cache_dir = ROOT. self::$_cache_data .APP_ROOT.'/cache'; //放置缓存文件
+        $this->smarty->config_dir = ROOT. self::$_cache_data .APP_ROOT.'/configs/';
+        $this->smarty->caching = F('CACHING');
+        $this->smarty->debugging = F('CACHING');
+        //$this->cache_lifetime = 120;
+        $this->smarty->left_delimiter = '{';
+        $this->smarty->right_delimiter = '}';
     }
     function __init(){
-        $this->clear_all_assign();
+        $this->smarty->clear_all_assign();
     }
-
+    public function assign($vars, $value = null, $nocache = false){
+        $this->smarty->assign($vars, $value, $nocache);
+    }
     /**
      * 开启缓存模式 并设置缓存时间
      * @param int $cache_life 缓存时间
      */
     function set_cache(){
         //$this->debugging = true;
-        $this->caching = true;
+        $this->smarty->caching = true;
     }
     /**
      * 输出模板
@@ -44,7 +47,7 @@ class Template extends \Smarty{
      */
     function render($template = null, $cache_id = null, $complile_id = null, $parent=null){
         $template = $template == null ? $this->parseTemplate() : $template;
-        parent::display($template, $cache_id, $complile_id, $parent);
+        $this->smarty->display($template, $cache_id, $complile_id, $parent);
     }
 
     /**
@@ -56,7 +59,7 @@ class Template extends \Smarty{
      */
     public function fetch($template = null, $cache_id = null, $complile_id = null, $parent=null){
         $template = $template == null ? $this->parseTemplate() : $template;
-        return parent::fetch($template, $cache_id, $complile_id, $parent);
+        return $this->smarty->fetch($template, $cache_id, $complile_id, $parent);
     }
     /**
      * 生成静态页面
@@ -81,7 +84,7 @@ class Template extends \Smarty{
      */
     public function parseTemplate($template='') {
         // 如果模板文件名为空 按照默认规则定位
-        $template = (is_array($this->template_dir) ? $this->template_dir[0] :$this->template_dir.'/') . CONTROLLER. '/' .ACTION . '.html' ;
+        $template = (is_array($this->smarty->template_dir) ? $this->smarty->template_dir[0] : $this->smarty->template_dir.'/') . CONTROLLER. '/' .ACTION . '.html' ;
         if(!is_file($template)){
             Error::debug(CONTROLLER. '/' .ACTION . '.html Template not find exist');
         }

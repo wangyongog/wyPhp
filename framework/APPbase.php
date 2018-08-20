@@ -34,7 +34,7 @@ class APPbase{
         }
         //修正时区
         if (version_compare(PHP_VERSION, '5.1' ,'>')) {
-            date_default_timezone_set('Etc/GMT-8');
+            date_default_timezone_set('Asia/Shanghai');
         }
         if($_SERVER['SERVER_PORT'] == '443') define('HTTPS', true);
         define('APP_ROOT', strtolower(strrchr($_SERVER['DOCUMENT_ROOT'], '\\')) );
