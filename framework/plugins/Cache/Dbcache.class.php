@@ -38,9 +38,9 @@ class DBCache extends WyPhp\Cache{
         $condition['`key`'] = $key;
         $condition['expire'] = ['gt', TIMESTAMP];
         $result = DB::fetch_first($this->options['table'],'value,sid,`key`', $condition);
-        if(isset($result['value'])){
-            $jsonData = json_decode( WyPhp\Sutil::stripslashes($result['value']) , true);
-            return is_null($jsonData) ? $result['value'] : $jsonData;
+        if(!empty($result['value'])){
+            $jsonData = unserialize( $result['value']);
+            return empty($jsonData) ? $result['value'] : $jsonData;
         }
         return '';
     }
@@ -54,7 +54,7 @@ class DBCache extends WyPhp\Cache{
      */
     function set($key, $value, $expire = 0){
         $condition['`key`'] = $key;
-        $data['value'] = is_array($value) ? json_encode($value) : $value;
+        $data['value'] = is_array($value) ? serialize($value) : $value;
         $data['sid'] = '';
         $expire = $expire ? $expire : WyPhp\CF::get('DATA_CACHE_TIME');
         $data['expire'] = $expire==0 ? (3600*24*360000)+ TIMESTAMP : TIMESTAMP+$expire;
