@@ -22,20 +22,13 @@ abstract class Controller extends Template{
     public $show_num = 5;
     public $totalPage = 0;  //总页数
     public function __construct() {
-        // ajax 信息输出 处理
-        //$this->outData['append'] = [];     // 追加
-        //$this->outData['html'] = [];       // 替换内容
-        //$this->outData['remove'] = [];     // 删除
-        //$this->outData['data'] = '';            // 方法中的数据
-        //$this->outData['runFunction'] = '';            // 方法中的数据
-        //$this->outData['method'] = 'write';     // write需要写入    alert 只做提示
-        //$this->outData['url'] = '';
         $this->outData['status'] = 0;
         $this->outData['msg'] = '';
+        parent::__construct();
         if(method_exists($this,'_initialize')){
             $this->_initialize();
         }
-        parent::__construct();
+
         $this->inajax = I('inajax','int',0);
         $this->page = max(1, I('page','int',1));
         $this->assign(F('DOMAIN'));
@@ -117,7 +110,6 @@ abstract class Controller extends Template{
      */
     function printJson($data = null, $type='JSON') {
         $data = !empty($data) ? $data : $this->outData;
-        print_r($this->outData) ;exit;
         $jcb = I('jsoncallback');
         if($type == 'JSON' && !$jcb){
             header('Content-Type:application/json; charset=utf-8');
@@ -169,16 +161,16 @@ abstract class Controller extends Template{
      * @param string $msg
      * @param string $jumpUrl
      */
-    public function success($msg=''){
-        $this->dispatchJump($msg, 1);
+    public function success($msg='',$url=''){
+        $this->dispatchJump($msg, $url, 1);
     }
 
     /**
      * @param string $message
      * @param string $jumpUrl
      */
-    public function error($msg=''){
-        $this->dispatchJump($msg, 0);
+    public function error($msg='',$url=''){
+        $this->dispatchJump($msg, $url,0);
     }
 
     /**
@@ -186,12 +178,13 @@ abstract class Controller extends Template{
      * @param int $status
      * @param string $jumpUrl
      */
-    private function dispatchJump($msg='', $status=1) {
+    private function dispatchJump($msg='',$url, $status=1) {
         /*$data = empty($rdata) ? [] : $rdata;
         $data['msg']   =   $msg;
         $data['status'] =   $status;
         $data['url']    =   $jumpUrl;*/
         $this->outData['msg'] = $msg;
+        $this->outData['url'] = $url;
         $this->outData['status'] = $status;
         $this->printJson();
     }

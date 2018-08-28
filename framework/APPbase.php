@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2016/6/22
- * Time: 17:15
- */
 class APPbase{
     public static $app = [];     //应用名称
-    private static $_debug = true;
     protected static $_map = [];
     public static $domain = [];   // 域名
     public static $view = 'Index';
@@ -22,7 +15,6 @@ class APPbase{
         self::__init();
         define('NL', PHP_OS == 'WINNT' ? "\r\n" : "\n");
         define('TIMESTAMP', $_SERVER['REQUEST_TIME']);
-        define('DEBUG', self::$_debug);
         define('FWPATH', __DIR__);//框架目录
         define('ROOT', substr(__DIR__,0, -10));  //根目录
         define('MAGIC_QUOTES_GPC', get_magic_quotes_gpc());
@@ -47,9 +39,9 @@ class APPbase{
         //自定义异常处理
         set_exception_handler('WyPhp\Error::WebException');
         self::loadApi();
+        define('DEBUG', F('DEBUG')); //是否开启错误调试，true开启，false关闭
         self::rules();
         WyPhp\Filter::loadGetPost();
-
         APP::runBefore();
         define('REQUEST_METHOD', $_SERVER['REQUEST_METHOD']);
         define('IS_GET', REQUEST_METHOD =='GET' ? true : false);

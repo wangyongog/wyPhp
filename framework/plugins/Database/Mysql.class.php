@@ -608,7 +608,7 @@ class Mysql extends Driver{
             $message .= NL."Raw SQL : " . $sql;
         }
         DEBUG and die($message);
-        Error::write($message, $sql);
+        Error::write($message, 'sql');
         die($exception);
     }
 }

@@ -28,7 +28,7 @@ class Template {
         $this->smarty->clear_all_assign();
     }
     public function assign($vars, $value = null, $nocache = false){
-        $this->smarty->assign($vars, $value, $nocache);
+         $this->smarty->assign($vars, $value, $nocache);
     }
     /**
      * 开启缓存模式 并设置缓存时间
