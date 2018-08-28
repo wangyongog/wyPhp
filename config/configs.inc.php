@@ -9,10 +9,10 @@ return [
     'DEFAULT_DB' =>'nf_',//默认数据库,表前缀区分
     'RW_SEPARATE' =>false, //true 开启,false读写分离是否开启
     'DOMAIN' =>[
-        'web' =>'http://www.wyPhp.local',//pc主域名
-        'wap' =>'http://wap.my.local',//wap主域名
-        'ADMINWEN' =>'http://admin.my.local',//wap主域名
-        'assets' =>'http://static.wyPhp.local',//js+css
+        'web' =>'http://www.wyphp.local',//pc主域名
+        'wap' =>'http://wap.wyphp.local',//wap主域名
+        'adminweb' =>'http://admin.wyphp.local',//后端
+        'assets' =>'http://static.wyphp.local',//js+css
     ],
     'LOAD_CONFIG' =>'task', //扩展配置文件
     'SYSTEM_USERID' => [1,2], //超级管理员
@@ -32,17 +32,17 @@ return [
     'SESSION_CACHE'  => 'dbsession', //dbsession,redis  SESSION缓存类型
     'SESSION_TABLE'  => 'session', //session数据表
     'LIFT_TIME'  => 24*3600, //session,Cookie有效时间
-    'COOKIE_DOMAIN' => '.my.local', //session,Cookie作用域
+    'COOKIE_DOMAIN' => '.wyphp.local', //session,Cookie作用域
     'COOKIE_HASH'  => false, //session,Cookie是否加密
     'SESSION_ID' =>'session_id',
 
-    'CACHE_TYPE'  => 'Filecache', //   redis,Dbcache,Filecache,memcache缓存类型
+    'CACHE_TYPE'  => 'Dbcache', //   redis,Dbcache,Filecache,memcache缓存类型
     'DATA_CACHE_TABLE'  => 'cache_data', //数据库缓存表名
     'DATA_CACHE_TIME'  => 24*3600, //数据缓时间
     'CACHE_PATH'  => '/data/cachefile', //文件缓存目录
     'ERROR_PATH'  => '/data/logs', //日志目录
     'ERROR_TYPE'  => 'file', //错误记录类型 file,db
-
+    'DEBUG' =>true, //发布后建议false
     'CACHING'  => false, //是否开启模版缓存,发布后建议开启
     'CACHE_HTML' =>'cache/html',
     'URL_HTML_FIX' =>'.html'
