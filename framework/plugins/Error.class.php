@@ -137,6 +137,19 @@ class Error extends \Exception{
         }
         //数据库日志记录
         if($stype == 'db'){
+            /*CREATE TABLE `log_error` (
+                    `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+                    `ltype` VARCHAR(50) NOT NULL DEFAULT '',
+                    `url` VARCHAR(350) NOT NULL DEFAULT '',
+                    `msg` TEXT NOT NULL,
+                    `error` VARCHAR(50) NOT NULL DEFAULT '',
+                    `addtime` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+                    PRIMARY KEY (`id`)
+                )
+                COLLATE='utf8_general_ci'
+                ENGINE=MyISAM
+                AUTO_INCREMENT=3
+                ;*/
             $data['ltype'] = $type;
             $data['url'] = $_SERVER['REQUEST_URI'];
             $data['addtime'] = TIMESTAMP;
