@@ -1,0 +1,66 @@
+{include file="public/header.html"}
+<style>
+*, *:before, *:after {
+  box-sizing:content-box;
+}
+</style>
+    <section class="content">
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+          <!-- general form elements -->
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form class="layui-form" action="{U('User/leftmoney')}">
+            <input type="hidden" value="{formhash()}" name="formhash"/>
+            <input type="hidden" value="{creatToken($uid)}" name="token"/>
+            <input type="hidden" value="{$uid}" name="uid"/>
+              <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-inline">
+               	  <input type="text" value="{$uname}" class="layui-input" readonly="readonly">
+                </div>
+              </div>
+              
+
+              <div class="layui-form-item">
+                <label class="layui-form-label">变动类型</label>
+                <div class="layui-input-inline">
+                  <input type="radio" name="status" value="余额" checked="checked" title="余额">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">金额</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="money" value="" required  placeholder="请输入用金额" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                  <textarea name="content" placeholder="请输入内容" class="layui-textarea"></textarea>
+                </div>
+              </div>
+              
+              <div class="layui-form-item">
+                <div class="layui-input-block">
+                  <button type="button" class="layui-btn ajaxFrom">立即提交</button>
+    
+                </div>
+              </div>
+            </form>
+          <!-- /.box -->
+        </div>
+        <!--/.col (right) -->
+      </div>
+      <!-- /.row -->
+    </section>
+{include file="public/footerJs.html"}
+<script>
+//Demo
+layui.use('form', function(){
+  var form = layui.form();
+});
+</script>
+</body>
+</html>

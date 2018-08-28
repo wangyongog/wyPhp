@@ -1,0 +1,39 @@
+<script type="text/javascript">
+var app ='{CONTROLLER}_{ACTION}_{F("URL_HTML_FIX")}';
+</script>
+<!-- basic scripts -->
+<!--[if !IE]> -->
+<script src="{$assets}/aceAdmin/js/jquery-2.1.4.min.js"></script>
+
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script src="{$assets}/aceAdmin/js/jquery-1.11.3.min.js"></script>
+<![endif]-->
+<script type="text/javascript">
+    if('ontouchstart' in document.documentElement) document.write("<script src='{$assets}/aceAdmin/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+</script>
+<script src="{$assets}/aceAdmin/js/bootstrap.min.js"></script>
+
+<!-- page specific plugin scripts -->
+
+<!--[if lte IE 8]>
+  <script src="{$assets}/aceAdmin/js/excanvas.min.js"></script>
+<![endif]-->
+<script src="{$assets}/aceAdmin/js/jquery-ui.custom.min.js"></script>
+<script src="{$assets}/aceAdmin/js/jquery.ui.touch-punch.min.js"></script>
+<script src="{$assets}/aceAdmin/js/jquery.easypiechart.min.js"></script>
+<script src="{$assets}/aceAdmin/js/jquery.sparkline.index.min.js"></script>
+<script src="{$assets}/aceAdmin/js/jquery.flot.min.js"></script>
+<script src="{$assets}/aceAdmin/js/jquery.flot.pie.min.js"></script>
+<script src="{$assets}/aceAdmin/js/jquery.flot.resize.min.js"></script>
+
+<!-- ace scripts -->
+<script src="{$assets}/aceAdmin/js/ace-elements.min.js"></script>
+<script src="{$assets}/aceAdmin/js/ace.min.js"></script>
+<script src="{$assets}/common/layer3.02/layer.js"></script>
+<script src="{$assets}/common/layui/layui.js"></script>
+
+<script src="{$assets}/aceAdmin/common.js"></script>
+<script src="{$assets}/aceAdmin/ajax.js"></script>
+

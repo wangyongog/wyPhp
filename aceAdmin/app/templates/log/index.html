@@ -1,0 +1,120 @@
+{include file="public/header.html"}
+		{include file="public/head.html"}
+
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+				try{
+					ace.settings.loadState('main-container')
+					}catch(e){
+				}
+			</script>
+			{include file="public/sidebar.html"}
+
+
+			<div class="main-content">
+				<div class="main-content-inner">
+					{include file="public/breadcrumbs.html"}
+
+					<div class="page-content">
+						{include file="public/settingsBox.html"}
+
+						<div class="page-header">
+							<form action="" method="get" class="form-inline">
+                            	
+                                类型：
+                                <select name="ltype" class="form-control">
+                                    <option value="">全部</option>
+                                    <option value="sql">sql</option>
+                                    <option value="file">文件</option>
+                                </select>
+                                <button type="submit" class="btn btn-purple btn-sm">
+                                    <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+                                    搜索
+                                </button>
+                            </form>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+								<table id="simple-table" class="table  table-bordered table-hover">
+									<thead>
+									<tr>
+										<th class="center">
+											<label class="pos-rel">
+												<input type="checkbox"  class="ace check-all">
+												<span class="lbl"></span>
+											</label>
+										</th>
+                                        <th style="width:80px">类型</th>
+										<th>url</th>
+										<th class="hidden-480">错误信息</th>
+										<th style="width:100px" class="hidden-480">时间</th>
+                                        <th style="width:80px">操作</th>
+									</tr>
+									</thead>
+
+									<tbody>
+                                    {foreach from=$data key=k item=val}
+									<tr>
+										<td class="center">
+											<label class="pos-rel">
+												<input type="checkbox" class="ace ids" name="ids[]" value="{$val.id}">
+												<span class="lbl"></span>
+											</label>
+										</td>
+
+										
+										<td>{$val.ltype}</td>
+										<td>{$val.url}</td>
+										<td class="hidden-480">{$val.msg}</td>
+										<td class="hidden-480">{date('Y-m-d H:i:s', $val.addtime)}</td>
+										
+										<td>
+										
+											<div class="hidden-sm hidden-xs action-buttons">	
+                                                <a class="red del" href="javascript:;" _url="{U('log/del',['id'=>$val['id'],'token'=>creatToken($val['id'])])}" title="删除">
+                                                    <i class="ace-icon fa fa-trash-o bigger-130"></i>
+                                                </a>
+                                            </div>
+                                            
+											<div class="hidden-md hidden-lg">
+												<div class="inline pos-rel">
+													<button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+														<i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+													</button>
+
+													<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+														<li>
+															<a href="javascript:;" class="tooltip-error del" _url="{U('log/del',['id'=>$val['id'],'token'=>creatToken($val['id'])])}" title="删除" data-rel="tooltip" title="" data-original-title="Delete">
+																			<span class="red">
+																				<i class="ace-icon fa fa-trash-o bigger-120"></i>
+																			</span>
+															</a>
+														</li>
+													</ul>
+												</div>
+											</div>
+                                            
+										</td>
+									</tr>
+
+
+										{/foreach}
+									</tbody>
+								</table>
+                                <div class="pagin" >{$_page}</div>
+							</div>
+						</div>
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+
+
+		{include file="public/footer.html"}
+		</div><!-- /.main-container -->
+
+		{include file="public/footerJs.html"}
+
+		
+	</body>
+</html>

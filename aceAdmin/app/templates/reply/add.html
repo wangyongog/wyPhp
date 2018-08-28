@@ -1,0 +1,52 @@
+{include file="public/header.html"}
+<style>
+*, *:before, *:after {
+  box-sizing:content-box;
+}
+</style>
+    <section class="content">
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+          <!-- general form elements -->
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form class="layui-form" action="{U('reply/add')}">
+            <input type="hidden" value="{$id}" name="id"/>
+            <input type="hidden" value="{formhash()}" name="formhash"/>
+
+			<div class="layui-form-item">
+                <label class="layui-form-label">反馈</label>
+                <div class="layui-input-block">
+                 <textarea name="reply" value="" class="layui-textarea" readonly="readonly">{$notice}</textarea>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">回复</label>
+                <div class="layui-input-block">
+                  <textarea name="reply" placeholder="请输入内容" value="" class="layui-textarea"></textarea>
+                </div>
+              </div>
+
+              <div class="layui-form-item">
+                <div class="layui-input-block">
+                  <button type="button" class="layui-btn ajaxFrom">立即提交</button>
+                 <!-- <button type="reset" class="layui-btn layui-btn-primary">重置</button>-->
+                </div>
+              </div>
+            </form>
+          <!-- /.box -->
+        </div>
+        <!--/.col (right) -->
+      </div>
+      <!-- /.row -->
+    </section>
+{include file="public/footerJs.html"}
+<script>
+//Demo
+layui.use('form', function(){
+  var form = layui.form();
+});
+</script>
+</body>
+</html>
