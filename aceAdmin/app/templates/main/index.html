@@ -33,7 +33,12 @@
 
         
 <script type="text/javascript">
-
+$(window).load(function () {
+	var index = layer.load(0, { shade: [0.6,'#fff']});
+	window.setTimeout(function () {
+	   adminJs.closeAllf();
+	}, 1000);
+});			
 function resize(resizeHandle){
 	var d = document.documentElement;
 	var timer;//避免resize触发多次,影响性能
