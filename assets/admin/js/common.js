@@ -78,3 +78,19 @@
 		layer.closeAll('tips'); //关闭所有的tips层*/    
 	},
 };
+
+function resize(resizeHandle){
+	var d = document.documentElement;
+	var timer;//避免resize触发多次,影响性能
+	var width = d.clientWidth, height = d.clientHeight;
+	$(top.window).on('resize',function(e){
+		if((width != d.clientWidth || height != d.clientHeight)){
+			width = d.clientWidth, height = d.clientHeight;
+			if(timer){clearTimeout(timer);}
+			timer = setTimeout(function(){
+				resizeHandle();
+			},10);	
+		}
+	});
+	
+}

@@ -63,7 +63,7 @@
 	runAjaxResSuccess:function(data){
 		if(data.status == 1){
 			layer.msg(
-				data.info,
+				data.msg,
 				{icon:1,time:2000,shade:[0.8,'#fff']},
 				function(index){
 					var indexbox=parent.layer.getFrameIndex(window.name);
@@ -84,7 +84,7 @@
 			);
 			return;
 		}else{
-			layer.alert(data.info,{title:data.info,icon:2},
+			layer.alert(data.msg,{title:data.msg,icon:2},
 			function(index){
 				var indexBox=parent.layer.getFrameIndex(window.name);
 				if(indexBox){

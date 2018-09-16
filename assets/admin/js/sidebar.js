@@ -270,9 +270,9 @@
     $.learunindex = {
         load: function () {
             //$("body").removeClass("hold-transition")
-            $("#content-wrapper").find('.mainContent').height($(window).height() - 100);
+            $("#content-wrapper").find('.mainContent').height($(window).height() - 92);
             $(window).resize(function (e) {
-                $("#content-wrapper").find('.mainContent').height($(window).height() - 100);
+                $("#content-wrapper").find('.mainContent').height($(window).height() - 92);
             });
             /*$(".sidebar-toggle").click(function () {
                 if (!$("body").hasClass("sidebar-collapse")) {
