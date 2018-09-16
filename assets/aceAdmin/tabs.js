@@ -108,12 +108,9 @@
             return false;
         },
         addTab: function () {
-            //$(".navbar-custom-menu>ul>li.open").removeClass("open");
             var dataId = $(this).attr('data-id');
-
             var dataUrl = $(this).attr('_url');
             var menuName = $.trim($(this).text());
-
             var flag = true;
             if (dataUrl == undefined || $.trim(dataUrl).length == 0) {
                 return false;
@@ -141,9 +138,9 @@
                 $('.content-iframe').find('iframe.main_iframe').hide();
                 $('.content-iframe').append(str1);
                 //$.loading(true);
-                $('.content-iframe iframe:visible').load(function () {
-                    //$.loading(false);
-                });
+                /*$('.content-iframe iframe:visible').load(function () {
+                    $.loading(false);
+                });*/
                 $('.menuTabs .page-tabs-content').append(str);
                 $.learuntab.scrollToTab($('.menuTab.active'));
             }
@@ -274,12 +271,6 @@
 			$(window).resize(function (e) {
 				$("#content-iframe").height($(window).height() - 90);
 			});
-
-            $(window).load(function () {
-                window.setTimeout(function () {
-                    $('#ajax-loader').fadeOut();
-                }, 300);
-            });
         },
         jsonWhere: function (data, action) {
             if (action == null) return;

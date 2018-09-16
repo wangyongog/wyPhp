@@ -17,9 +17,8 @@
 		  scrollbar:true,
 		  maxmin: false,
 		  shadeClose: true,
-		  shade:noshade?0:[0.1,'#000'],
+		  shade:noshade?0:[0.6,'#fff'],
 		  success: function(layero, index){
-    		//console.log(layero, index);
 			layer.setTop(layero);
   		  },
 		  cancel: function(index, layero){ 
