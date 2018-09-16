@@ -78,6 +78,8 @@
 						adminJs.closeThis();
 					}else if(data.reload){
 						window.location.reload();
+					}else if(data.location){
+						adminJs.goUrl(data.url);
 					}
 					layer.close(index);
 				}

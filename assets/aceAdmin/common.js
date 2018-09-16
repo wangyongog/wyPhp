@@ -17,7 +17,7 @@
 		  scrollbar:true,
 		  maxmin: false,
 		  shadeClose: true,
-		  shade:noshade?0:[0.8,'#000'],
+		  shade:noshade?0:[0.1,'#000'],
 		  success: function(layero, index){
     		//console.log(layero, index);
 			layer.setTop(layero);
@@ -61,6 +61,9 @@
 		confirmFUNC, 
 		cancelFUNC
 		);
+	},
+	showMsg:function(html){
+		$('.page-content').html(html);
 	},
 	goUrl:function(url,obj){obj=obj?obj:self;obj.location=url;},
 	///tips层
