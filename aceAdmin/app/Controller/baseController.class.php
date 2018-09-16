@@ -30,20 +30,37 @@ class baseController extends Controller {
          if(!$this->admin){
              redirect(U('/login'));
          }
-         $sidebarlist = S('sidebarlist');
-         $sidebar = new SidebarModel();
-         if(empty($sidebarlist)){
-             $sidebarlist = $sidebar->sidebarList();
+         if(!$this->auth()){
+             $this->error('无权操作！');
          }
-         $this->assign('head_itle', $sidebar->getHeadTitle());
-         list($act, $par) = explode('?', $_SERVER['REQUEST_URI']);
-         $this->assign('act', rtrim($act, F('URL_HTML_FIX')));
-         //$this->assign('act','/'.CONTROLLER.'/'.ACTION);
+         $this->getMem();
          $this->assign('user',$this->admin);
-         $this->assign('sidebarlist', $sidebarlist);
-         $this->assign('web_name', get_map());
      }
 
+    /**
+     * 权限验证
+     * @return bool
+     */
+    protected function auth(){
+         if(!in_array($this->admin['uid'], F('SYSTEM_USERID')) ){
+             $group = D('Admin/Group');
+             return $group->check(CONTROLLER.'/'.ACTION, $this->admin['uid']);
+         }
+         return true;
+    }
+
+    /**
+     * 获取栏目列表
+     *
+     */
+    protected function getMem(){
+        $sidebarlist = S('sidebarlist'.$this->admin['uid']);
+        $sidebar = new SidebarModel();
+        if(empty($sidebarlist)){
+            $sidebarlist = $sidebar->sidebarList($this->admin['uid']);
+        }
+        $this->assign('sidebarlist', $sidebarlist);
+    }
     /**
      * 验证用户登录
      *
@@ -54,7 +71,8 @@ class baseController extends Controller {
              list($uid, $hash) = explode("\t", mcrypt($uidHash, 'DECODE')  ,2);
              $uid = intval($uid);
              if($uid && $hash){
-                 $user = DB::fetch_first('admin', 'uid,groupid,user,hash,lasttime,addtime', array('uid' =>$uid));
+                 $manager = D('Admin/Manager');
+                 $user = $manager->checkLogin($uid);
                  if ($user && $user['hash'] == $hash) {
                      $this->admin = $user;
                  }else{
@@ -63,4 +81,5 @@ class baseController extends Controller {
              }
          }
      }
+
 }

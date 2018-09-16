@@ -1,39 +1,50 @@
 <?php
 namespace Admin\Model;
+use App\Controller\baseController;
 use WyPhp\DB;
 use WyPhp\Model;
 
 class SidebarModel extends Model {
     private $_tabal = 'auth_rule';
-
-    public function sidebarList($items=array(), $id = 'id', $pid = 'pid', $son = 'children'){
+    protected $data = [];
+    public function sidebarList($uid){
         $data = [];
         $where['status'] = 1;
+        if(!in_array($uid, F('SYSTEM_USERID')) ) {
+            $group = D('Admin/Group');
+            $group_arr = $group->getGroups($uid);
+            $rules = $group_arr['rules'];
+            if(!$rules){
+                return $this->data;
+            }
+            $where['id'] = ['in', $rules];
+        }
         $items = DB::fetch_all($this->_tabal ,'id,pid,title,url,icon,o,status',$where ,'o ASC');
-        $data = $this->getTree($items);
-        S('sidebarlist' ,$data);
-        return $data;
+        if(empty($items)){
+            return $this->data;
+        }
+        $this->data = $this->getTree($items);
+        S('sidebarlist'.$uid ,$this->data);
+        return $this->data;
     }
     function getTree($array){
         $items = $tree = [];
         foreach($array as $value){
-            $value['url'] = strtolower($value['url']);
+            $value['url'] = '/'.strtolower(ltrim($value['url'],'/') );
             $items[$value['id']] = $value;
         }
         foreach($items as $key => $value){
             if(isset($items[$value['pid']])){
                 $items[$value['pid']]['children'][] = &$items[$key];
-                $items[$value['pid']]['acts'][] = $value['url'];
             }else{
                 $tree[] = &$items[$key];
-                $value['url'] && !$value['pid'] and $items[$key]['acts'][] = $value['url'];
             }
         }
         return $tree;
     }
 
     /**
-     * 获取栏目层级关系
+     * 获取栏目层级,面包屑
      * @return array
      */
     public function getHeadTitle(){

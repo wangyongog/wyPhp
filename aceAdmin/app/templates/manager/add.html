@@ -3,8 +3,13 @@
 *, *:before, *:after {
   box-sizing:content-box;
 }
+body{
+	background-color:#fff
+}
 </style>
-    <section class="content">
+    <div class="main-content">
+	<div class="main-content-inner">
+    	<div class="page-content">
       <div class="row">
         <!-- left column -->
         <div class="col-md-12">
@@ -64,12 +69,14 @@
         <!--/.col (right) -->
       </div>
       <!-- /.row -->
-    </section>
+    </div>
+    </div>
+    </div>
 {include file="public/footerJs.html"}
 <script>
-//Demo
-layui.use('form', function(){
-  var form = layui.form();
+layui.use(['form'], function(){
+  var form = layui.form;
+  
 });
 </script>
 </body>

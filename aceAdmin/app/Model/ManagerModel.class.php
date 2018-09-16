@@ -18,6 +18,12 @@ class ManagerModel extends Model{
         array('ip', 'getIP', self::MODEL_INSERT, 'function', 1),
         array('password', 'creatPassWorld', self::MODEL_BOTH, 'callback')
     );
+
+    /**
+     * 根据ID获取管理员信息
+     * @param int $uid
+     * @return bool|mixed
+     */
     public function getAdminUser($uid=0){
         if(!$uid) return false;
         if(S('admin'.$uid)){
@@ -26,6 +32,20 @@ class ManagerModel extends Model{
         $data = DB::fetch_first($this->table, 'uid,groupid,user,hash,lasttime,addtime',array('uid'=>$uid));
         !empty($data) and S('admin'.$uid, $data);
         return $data;
+    }
+
+    /**
+     * 更加ID查找是否有合法用户
+     * @param $uid
+     * @return mixed
+     */
+    public function checkLogin($uid){
+        $table = array(
+            'admin' =>'a',
+            'left' =>'a.groupid=ag.groupid',
+            'auth_group' =>'ag'
+        );
+        return DB::fetch_first($table, ['a.uid,a.user,a.hash,a.lasttime,a.addtime','ag.*'], ['a.uid'=>$uid,'a.status'=>1,'ag.status' =>1]);
     }
     public function login($username='', $password=''){
         if(!$password || !$username){

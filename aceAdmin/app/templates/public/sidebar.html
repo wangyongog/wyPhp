@@ -39,8 +39,8 @@
     <ul class="nav nav-list">
         {if $sidebarlist}
         {foreach from=$sidebarlist key=k item=val}
-        <li class="{if in_array($act, $val['acts'])}active{/if} {if in_array($act, $val['acts']) and !$val['url']}open{/if}" >
-            <a data-id="{$val['id']}" _url="{$val['url']}" href="{if $val['url']}{$val['url']} {else}javascript:; {/if}"  {if !$val['url']}class="dropdown-toggle"{/if}>
+        <li>
+            <a data-id="{$val['id']}" _url="{$val['url']}" href="javascript:;" class="{if !empty( $val.children)}dropdown-toggle{else}menuItem{/if}">
                 <i class="{$val['icon']} menu-icon"></i>
                 <span class="menu-text">
                     {$val['title']}
@@ -51,8 +51,8 @@
 			<b class="arrow"></b>
             <ul class="submenu">
             	{foreach from=$val.children key=k item=v}
-            	<li {if $act eq $v['url']} class="active"{/if}>
-                    <a data-id="{$v['id']}" _url="{$v['url']}" href="{if $v['url']}{$v['url']} {else}javascript:; {/if}" {if !$v['url']}class="dropdown-toggle"{/if}>
+            	<li>
+                    <a data-id="{$v['id']}" _url="{$v['url']}" href="javascript:;" class="{if !empty( $v.children)}dropdown-toggle{else}menuItem{/if}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         {$v['title']}
                         <b class="arrow {if !empty( $v.children)} fa fa-angle-down {/if}"></b>
@@ -62,8 +62,8 @@
                     <b class="arrow"></b>
                     <ul class="submenu">
                         {foreach from=$v.children key=k item=va}
-                        <li class="">
-                            <a data-id="{$va['id']}" _url="{$va['url']}" href="{if $va['url']}{$va['url']} {else}javascript:; {/if}" {if !$va['url']}class="dropdown-toggle"{/if}>
+                        <li>
+                            <a data-id="{$va['id']}" _url="{$va['url']}" href="javascript:;" class="{if !empty( $va.children)}dropdown-toggle{else}menuItem{/if}">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 {$va['title']}
                                 <b class="arrow {if !empty( $va.children)} fa fa-angle-down {/if}"></b>

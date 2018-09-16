@@ -30,12 +30,13 @@ body{
                         {if isset( $val.children)}  
                             {foreach from=$val.children key=k item=v}
                                   <option value="{$v.id}" >&nbsp;&nbsp;┗━{$v['title']}</option>
-                            {/foreach}
-                            {if isset( $v.children)}  
-                                {foreach from=$v.children key=k item=vo}
+                                  {if isset( $v.children)}
+                                      {foreach from=$v.children key=k item=vo}
                                       <option value="{$vo.id}" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┗━{$vo['title']}</option>
-                                {/foreach}
-                            {/if}
+                                      {/foreach}
+                                  {/if}
+                            {/foreach}
+
                         {/if}
                     {/foreach}
                     {/if}  

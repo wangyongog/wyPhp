@@ -12,14 +12,7 @@ use WyPhp\DB;
 class Sidebar extends baseController{
     public function actionIndex(){
         if(IS_AJAX){
-            //echo  U('sidebar/add?t=9',array('ss'=>1,'y'=>4));exit;
-            //$x = $this->fetch('page/page.html');
-            //$y = $this->fetch('public/footer.html');
-            //$sidebar = new SidebarModel();
-            //$this->limit =1;
-            //$this->count = DB::count('auth_rule');
-            //$data = DB::fetch_all('auth_rule' ,'*','','o ASC',$this->limit,$this->page);
-            $data = S('sidebarlist');
+            $data = S('sidebarlist'.$this->admin['uid']);
             $html_row = $this->menList($data);
             $this->tbody_html = $html_row;
             $this->dynamicOutPrint();
@@ -51,6 +44,9 @@ class Sidebar extends baseController{
         $sidebar = new SidebarModel();
         $id = I('id','int',0);
         if(IS_AJAX){
+            if(!I('title')){
+                $this->error('栏目名不能为空！');
+            }
             $data['pid'] = I('pid','int',0);
             $data['url'] = I('url');
             $data['title'] = I('title');
@@ -59,6 +55,7 @@ class Sidebar extends baseController{
             $data['o'] = I('order');
             $data['tips'] = I('tips');
             $msg = '添加成功！';
+
             if($id){
                 $row = $sidebar->update($data, ['id'=>$id]);
                 $msg = '编辑成功！';
@@ -66,7 +63,7 @@ class Sidebar extends baseController{
                 $id = $sidebar->add($data);
             }
             if($id || $row){
-                S('sidebarlist',null);
+                S('sidebarlist'.$this->admin['uid'],null);
                 $this->success($msg);
             }
             $this->error('操作失败！');
@@ -78,7 +75,7 @@ class Sidebar extends baseController{
         $pid = isset($data['pid']) ? $data['pid'] : 0;
         $this->assign('pid', $pid);
         $this->assign('id', $id);
-        $this->assign('sidebarlist', S('sidebarlist'));
+        $this->assign('sidebarlist', S('sidebarlist'.$this->admin['uid']));
         $this->render();
     }
     public function actionDel(){
@@ -89,7 +86,7 @@ class Sidebar extends baseController{
         }
         if(DB::delete('auth_rule',array('id'=>$id))){
             $this->outData['reload'] = 1;
-            S('sidebarlist',null);
+            S('sidebarlist'.$this->admin['uid'],null);
             $this->success('操作成功!');
         }
         $this->error('删除失败！');

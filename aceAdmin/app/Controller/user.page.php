@@ -15,7 +15,7 @@ class user extends baseController{
         if(I('username')){
             $where['username'] = I('username');
         }
-
+$this->limit =1;
         $this->count = DB::count('member', $where);
         $data = DB::fetch_all('member','*',$where, 'uid DESC',$this->limit,$this->page);
         $this->pageBar();

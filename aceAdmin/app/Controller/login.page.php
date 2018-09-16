@@ -8,6 +8,8 @@
 namespace App\Controller;
 //use Admin\Model\LoginModel;
 
+use WyPhp\Trace;
+
 class login extends baseController {
     public function actionIndex(){
         //$this->caching = false;
@@ -21,7 +23,7 @@ class login extends baseController {
         $password = I('password');
         $code = I('code');
         if(check_formhash(I('formhash')) === false){
-            $this->error('无效操作11111！');
+            $this->error('无效操作！');
         }
         $login = D('Admin/Manager');
         $uid = $login->login($username, $password);

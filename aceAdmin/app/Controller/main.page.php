@@ -8,11 +8,13 @@
 namespace App\Controller;
 use WyPhp\Cache;
 use WyPhp\DB;
+use WyPhp\Trace;
 
 class main extends baseController {
     public function actionIndex(){
         //echo '1111';exit;
         $this->render();
+
     }
     public function actionCheshi(){
         $this->render();
