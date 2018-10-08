@@ -15,7 +15,7 @@ return [
         'assets' =>'http://static.wyphp.local',//js+css
     ],
     'LOAD_CONFIG' =>'task', //扩展配置文件
-    'SYSTEM_USERID' => [1,2], //超级管理员
+    'SYSTEM_USERID' => [10000,2], //超级管理员
     'AUTOKEY' =>'fa#*^$(_+(*!@@#":fazziidmcl.gp;chiqndc;ljl', //秘钥
     'ATTACHMENT_UPLOAD' => [
         'mimes'    => '', //允许上传的文件MiMe类型
@@ -36,7 +36,7 @@ return [
     'COOKIE_HASH'  => false, //session,Cookie是否加密
     'SESSION_ID' =>'session_id',
 
-    'CACHE_TYPE'  => 'Dbcache', //   redis,Dbcache,Filecache,memcache缓存类型
+    'CACHE_TYPE'  => 'Filecache', //   redis,Dbcache,Filecache,memcache缓存类型
     'DATA_CACHE_TABLE'  => 'cache_data', //数据库缓存表名
     'DATA_CACHE_TIME'  => 24*3600, //数据缓时间
     'CACHE_PATH'  => '/data/cachefile', //文件缓存目录

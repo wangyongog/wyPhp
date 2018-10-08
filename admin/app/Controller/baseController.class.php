@@ -13,6 +13,12 @@ use WyPhp\DB;
 class baseController extends Controller {
      public $admin = [];
      public function _initialize(){
+         $this->outData['append'] = [];     // 追加
+         $this->outData['html'] = [];       // 替换内容
+         $this->outData['remove'] = [];     // 删除
+         $this->outData['data'] = '';            // 方法中的数据
+         $this->outData['runFunction'] = '';            // 方法中的数据
+         $this->outData['method'] = 'write';     // write需要写入    alert 只做提示
          $this->_checkLogin();
          if (in_array(CONTROLLER, ['login'])) {
              if($this->admin){

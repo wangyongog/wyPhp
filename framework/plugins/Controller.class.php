@@ -22,16 +22,13 @@ abstract class Controller extends Template{
     public $show_num = 5;
     public $totalPage = 0;  //总页数
     public function __construct() {
-        $this->outData['status'] = 0;
-        $this->outData['msg'] = '';
         parent::__construct();
         if(method_exists($this,'_initialize')){
             $this->_initialize();
         }
-
+        $this->assign(F('DOMAIN'));
         $this->inajax = I('inajax','int',0);
         $this->page = max(1, I('page','int',1));
-        $this->assign(F('DOMAIN'));
     }
 
     /**
@@ -161,7 +158,7 @@ abstract class Controller extends Template{
      * @param string $msg
      * @param string $jumpUrl
      */
-    public function success($msg='',$url=''){
+    public function success($msg='',$url='',$tpl){
         $this->dispatchJump($msg, $url, 1);
     }
 
@@ -169,7 +166,7 @@ abstract class Controller extends Template{
      * @param string $message
      * @param string $jumpUrl
      */
-    public function error($msg='',$url=''){
+    public function error($msg='',$url='',$tpl){
         $this->dispatchJump($msg, $url,0);
     }
 
@@ -178,14 +175,21 @@ abstract class Controller extends Template{
      * @param int $status
      * @param string $jumpUrl
      */
-    private function dispatchJump($msg='',$url, $status=1) {
+    private function dispatchJump($msg='',$url, $status=1, $tpl='') {
         /*$data = empty($rdata) ? [] : $rdata;
         $data['msg']   =   $msg;
         $data['status'] =   $status;
         $data['url']    =   $jumpUrl;*/
-        $this->outData['msg'] = $msg;
-        $this->outData['url'] = $url;
-        $this->outData['status'] = $status;
-        $this->printJson();
+        if(IS_AJAX){
+            $this->outData['msg'] = $msg;
+            $this->outData['url'] = $url;
+            $this->outData['status'] = $status;
+            $this->printJson();
+        }
+        $this->assign('msg', $msg);
+        $this->assign('url', $url);
+        $tpl = $tpl ? $tpl : 'public/msg.html';
+        $this->render($tpl);
+        die();
     }
 }

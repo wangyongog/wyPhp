@@ -14,8 +14,13 @@ use Zxing\QrReader;
 
 class main extends baseController{
     public function actionIndex(){
-        $data = DB::fetch_all('notice','*', ['map'=>0], 'id DESC', 30,$this->page);
+        //$data = DB::fetch_all('notice','*', ['map'=>0], 'id DESC', 30,$this->page);
+        $data = DB::fetch_first('member','*','uid=1');
+
+        //print_r($data);exit;
+
         $this->assign('data',$data);
+        $this->assign('gggg','11111');
         $this->render();
     }
     public function actionReply(){
@@ -107,4 +112,5 @@ class main extends baseController{
         $url = $qrcode->text(); //return decoded text from QR Code
         echo $url;
     }
+
 }

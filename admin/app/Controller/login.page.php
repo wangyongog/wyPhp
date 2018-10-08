@@ -12,9 +12,9 @@ class login extends baseController {
     public function actionIndex(){
         //$this->caching = false;
         //$this->assign('sss', '11111111');
-        $_SESSION['var2'] = "111";
-        $_SESSION['var3'] = "顶顶顶顶";
-        //$this->render();
+        //$_SESSION['var2'] = "111";
+        //$_SESSION['var3'] = "顶顶顶顶";
+        $this->render();
     }
     public function actionLogin(){
         $username = I('username');

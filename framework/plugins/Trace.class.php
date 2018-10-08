@@ -7,33 +7,41 @@ namespace WyPhp;
  * Time: 11:49
  */
 class Trace{
+    //导入文件
+    protected $included_files;
+    //输出信息
+    protected $_trace;
+    //链接数据库次数
+    protected $link_query =0;
+    //数据库操作
+    protected $exe_query =0;
     /**
      * 显示加载信息
      * @param $detail
      * @return unknown_type
      */
     public function showTrace(){
-        $_trace = [];
-        $included_files = get_included_files();
-
+        $this->included_files = get_included_files();
+        $this->link_query = DB::queryTimes();
+        $this->exe_query = DB::executeTimes();
         // 系统默认显示信息
-        $_trace['请求脚本'] = $_SERVER['SCRIPT_NAME'];
-        $_trace['请求方法'] = CONTROLLER.'/'. ACTION;
-        $_trace['USER_AGENT'] = $_SERVER['HTTP_USER_AGENT'];
-        $_trace['HTTP版本'] = $_SERVER['SERVER_PROTOCOL'];
-        $_trace['请求时间'] = date('Y-m-d H:i:s', TIMESTAMP);
+        $this->_trace['请求脚本'] = $_SERVER['SCRIPT_NAME'];
+        $this->_trace['请求方法'] = CONTROLLER.'/'. ACTION;
+        $this->_trace['USER_AGENT'] = $_SERVER['HTTP_USER_AGENT'];
+        $this->_trace['HTTP版本'] = $_SERVER['SERVER_PROTOCOL'];
+        $this->_trace['请求时间'] = date('Y-m-d H:i:s', TIMESTAMP);
 
-        $_trace['读取数据库'] = DB::queryTimes() . '次';
-        $_trace['写入数据库'] = DB::executeTimes() . '次';
-        $_trace['加载文件数目'] = count($included_files);
-        $_trace['PHP执行占用'] = $this->getMerTime();
+        $this->_trace['读取数据库'] = $this->link_query . '次';
+        $this->_trace['写入数据库'] = $this->exe_query . '次';
+        $this->_trace['加载文件数目'] = count($this->included_files);
+        $this->_trace['PHP执行占用'] = $this->getMerTime();
         $request = $requireFlie = '';
-        foreach ($_trace as $key => $info) {
+        foreach ($this->_trace as $key => $info) {
             $request .= '<p>'.$key . ' : ' . $info .'</p>';
         }
 
         //输出包含的文件
-        foreach ($included_files as $file) {
+        foreach ($this->included_files as $file) {
             $requireFlie .= '<p>'.'require ' . $file .'</p>';
         }
         // 调用Trace页面模板
@@ -111,5 +119,8 @@ HTMLS;
         $endMem = array_sum(explode(' ',memory_get_usage()));
         $return['memory'] = number_format(($endMem - $startMem)/1024).'kb';
         return $return;
+    }
+    public function stop(){
+        //print_r(debug_backtrace());exit;
     }
 }
