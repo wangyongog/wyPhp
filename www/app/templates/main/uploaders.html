@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+{loadCss_js(['common/js/jquery-2.1.4.min.js','common/plupload/js/plupload.full.min.js','www/js/initUploaders.js'])}
+</head>
+
+<body>
+<div>
+    <div class="upload-box">
+        <input type="text" name="pic1" value=""/>
+        <div class="preview"><img src=""></div>
+        <div class="process none">
+            <span class="filename"></span>
+            <span class="filesize"></span>
+            <span class="percent"></span>
+        </div>
+        <button id="pickfiles1" class="browse_button" data-upload-url="{$web}/main/upfile.html" data-extensions="jpg,png,gif,bmp" data-max-size="10mb" data-base-url="www.awaimai.com">图片1</button>
+    </div>
+    <div class="upload-box">
+        <input type="text" name="pic1" value=""/>
+        <div class="preview"><img src=""></div>
+        <div class="process none">
+            <span class="filename"></span>
+            <span class="filesize"></span>
+            <span class="percent"></span>
+        </div>
+        <button id="pickfiles2" class="browse_button" data-upload-url="http://www.ayhmjy.local/infoadmin!@20180317/usercard_add.php?dopost=savefile" data-extensions="jpg,png,gif,bmp" data-max-size="10mb" data-base-url="www.awaimai.com">图片2</button>
+    </div>
+    <div class="upload-box">
+        <input type="text" name="pic1" value=""/>
+        <div class="preview"><img src=""></div>
+        <div class="process none">
+            <span class="filename"></span>
+            <span class="filesize"></span>
+            <span class="percent"></span>
+        </div>
+        <button id="pickfiles3" class="browse_button" data-upload-url="http://www.ayhmjy.local/infoadmin!@20180317/usercard_add.php?dopost=savefile" data-extensions="jpg,png,gif,bmp" data-max-size="10mb" data-base-url="www.awaimai.com">图片3</button>
+    </div>
+</div>
+<script type="text/javascript">
+uploaders.initUploaders();
+</script>
+<style>
+.progress{
+		margin-top:2px;
+	    width: 200px;
+	    height: 14px;
+	    margin-bottom: 10px;
+	    overflow: hidden;
+	    background-color: #f5f5f5;
+	    border-radius: 4px;
+	    -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+	    box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+	}
+	.progress-bar{ 
+		background-color: rgb(92, 184, 92);
+		background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.14902) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.14902) 50%, rgba(255, 255, 255, 0.14902) 75%, transparent 75%, transparent);
+		background-size: 40px 40px;
+		box-shadow: rgba(0, 0, 0, 0.14902) 0px -1px 0px 0px inset;
+		box-sizing: border-box;
+		color: rgb(255, 255, 255);
+		display: block;
+		float: left; 
+		font-size: 12px;
+		height: 20px;
+		line-height: 20px;
+		text-align: center;
+		transition-delay: 0s;
+		transition-duration: 0.6s;
+		transition-property: width;
+		transition-timing-function: ease;
+		width: 266.188px;
+	}
+</style>
+</body>
+</html>
