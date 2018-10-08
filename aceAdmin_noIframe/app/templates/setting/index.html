@@ -1,0 +1,212 @@
+{include file="public/header.html"}
+<style>
+*, *:before, *:after {
+  box-sizing:content-box;
+}
+</style>
+    <section class="content">
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+          <!-- general form elements -->
+            <!-- /.box-header -->
+            <div class="layui-tab">
+            	<ul class="layui-tab-title">
+                    <!--<li class="layui-this">{$web_name[0]}</li>-->
+                    <li class="layui-this">{$web_name[1]}</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item ">
+                    	 <!-- form start -->
+                        <form class="layui-form" action="{U('setting/index')}" name="form1">
+                        <input type="hidden" value="{formhash()}" name="formhash"/>
+                        <input type="hidden" value="0" name="stype"/>
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">网站名称</label>
+                            <div class="layui-input-inline">
+                              <input type="text" name="sitename" value="{$data[0].sitename}" class="layui-input">
+                            </div>
+                          </div>
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">任务显示</label>
+                            <div class="layui-input-block">
+                              {foreach from=$taskType key=k item=val}
+                              <input {if in_array($k,$data[0]['taskshow'])} checked {/if} type="checkbox" name="show_type[]" value="{$k}" lay-skin="primary" title="{$val}">
+                              {/foreach}
+                            </div>
+                          </div>
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">设置价格</label>
+                            <div class="layui-input-block">
+                              <div class="layui-form" style="width:80%">
+                                  <table class="layui-table">
+                                    <colgroup>
+                                      <col width="130">
+                                      <col width="150">
+                                      <col width="150">
+                                      <col width="150">
+                                      <col width="150">
+                                       <col>
+                                    </colgroup>
+                                    <thead>
+                                      <tr>
+                                        <th>任务名称</th>
+                                        {foreach from=$userGrades key=k item=val}
+                                            <th>{$val}</th>
+                                        {/foreach}
+                                      </tr> 
+                                    </thead>
+                                    <tbody>
+                                    {foreach from=$taskType key=k item=val}
+                                      <tr>
+                                        <td>{$val}</td>
+                                        {foreach from=$userGrades key=ky item=v}
+                                        <td><input type="text" placeholder="￥" name="prices_list[{$k}][{$ky}]" value="{$task_prices[$k][$ky]}" class="layui-input"></td>
+                                        {/foreach}
+                                      </tr>
+                                     {/foreach}
+                                    </tbody>
+                                  </table>
+                                </div>
+                            </div>
+                          </div>
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">上限量</label>
+                            <div class="layui-input-inline">
+                              <input type="text" name="upnum" value="{$data[0].upnum}" class="layui-input">
+                            </div>
+                          </div>
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">公告内容</label>
+                            <div class="layui-input-block">
+                              <textarea name="notice_msg" placeholder="请输入公告内容" class="layui-textarea" style="width:600px">{$data[0].notice}</textarea>
+                            </div>
+                          </div>
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">充值说明</label>
+                            <div class="layui-input-block">
+                              <textarea name="recharge_msg" placeholder="请输入公告内容" class="layui-textarea"  style="width:600px">{$data[0].recharge}</textarea>
+                            </div>
+                          </div>
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">注册开关</label>
+                            <div class="layui-input-inline">
+                              <input type="checkbox" name="isreg" lay-skin="switch" lay-text="开启|关闭" {if $data[0].isreg eq 1} checked {/if} >
+                            </div>
+                          </div>
+                          <div class="layui-form-item">
+                            <div class="layui-input-block">
+                              <button type="button" class="layui-btn ajaxFrom">立即提交</button>
+                              <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                          </div>
+                        </form>
+                    </div>
+                    
+                    <!--平台2-->
+                    <div class="layui-tab-item layui-show">
+                    	<form class="layui-form" action="{U('setting/index')}" name="form2">
+                        <input type="hidden" value="{formhash()}" name="formhash"/>
+                        <input type="hidden" value="1" name="stype"/>
+                        	<div class="layui-form-item">
+                            <label class="layui-form-label">网站名称</label>
+                            <div class="layui-input-inline">
+                              <input type="text" name="sitename" value="{$data[1].sitename}" class="layui-input">
+                            </div>
+                          </div>
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">任务显示</label>
+                            <div class="layui-input-block">
+                              {foreach from=$taskType1 key=k item=val}
+                              <input {if in_array($k,$data[1]['taskshow'])} checked {/if} type="checkbox" name="show_type[]" value="{$k}" lay-skin="primary" title="{$val}">
+                              {/foreach}
+                            </div>
+                          </div>
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">设置价格</label>
+                            <div class="layui-input-block">
+                              <div class="layui-form" style="width:80%">
+                                  <table class="layui-table">
+                                    <colgroup>
+                                      <col width="130">
+                                      <col width="150">
+                                      <col width="150">
+                                      <col width="150">
+                                      <col width="150">
+                                       <col>
+                                    </colgroup>
+                                    <thead>
+                                      <tr>
+                                        <th>任务名称</th>
+                                        {foreach from=$userGrades key=k item=val}
+                                            <th>{$val}</th>
+                                        {/foreach}
+                                      </tr> 
+                                    </thead>
+                                    <tbody>
+                                    {foreach from=$taskType1 key=k item=val}
+                                      <tr>
+                                        <td>{$val}</td>
+                                        {foreach from=$userGrades key=ky item=v}
+                                        <td><input type="text" placeholder="￥" name="prices_list[{$k}][{$ky}]" value="{$task_prices1[$k][$ky]}" class="layui-input"></td>
+                                        {/foreach}
+                                      </tr>
+                                     {/foreach}
+                                    </tbody>
+                                  </table>
+                                </div>
+                            </div>
+                          </div>
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">上限量</label>
+                            <div class="layui-input-inline">
+                              <input type="text" name="upnum" value="{$data[1].upnum}" class="layui-input">
+                            </div>
+                          </div>
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">公告内容</label>
+                            <div class="layui-input-block">
+                              <textarea name="notice_msg" placeholder="请输入公告内容" class="layui-textarea" style="width:600px">{$data[1].notice}</textarea>
+                            </div>
+                          </div>
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">充值说明</label>
+                            <div class="layui-input-block">
+                              <textarea name="recharge_msg" placeholder="请输入公告内容" class="layui-textarea"  style="width:600px">{$data[1].recharge}</textarea>
+                            </div>
+                          </div>
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">注册开关</label>
+                            <div class="layui-input-inline">
+                              <input type="checkbox" name="isreg" lay-skin="switch" lay-text="开启|关闭" {if $data[1].isreg eq 1} checked {/if} >
+                            </div>
+                          </div>
+                          <div class="layui-form-item">
+                            <div class="layui-input-block">
+                              <button type="button" class="layui-btn ajaxFrom">立即提交</button>
+                              <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                          </div>
+                        </form>
+                    </div>
+
+                 </div>
+            </div>
+           
+          <!-- /.box -->
+        </div>
+        <!--/.col (right) -->
+      </div>
+      <!-- /.row -->
+    </section>
+{include file="public/footerJs.html"}
+<script type="text/javascript">
+layui.use('form', function(){
+  var form = layui.form();
+});
+layui.use('element', function(){
+  element = layui.element();
+});
+</script>
+</body>
+</html>
