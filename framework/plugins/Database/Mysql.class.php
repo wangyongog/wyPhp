@@ -1,7 +1,5 @@
 <?php
 namespace WyPhp\Database;
-use WyPhp\Error;
-use WyPhp\Sutil;
 
 /**
  * Created by PhpStorm.
@@ -38,7 +36,6 @@ class Mysql extends Driver{
             }
             if (!empty($this->bind)) {
                 foreach ($this->bind as $key => $value) {
-                    $type = \PDO::PARAM_STR;
                     switch ($value) {
                         case is_int($value):
                             $type = \PDO::PARAM_INT;
@@ -49,6 +46,8 @@ class Mysql extends Driver{
                         case is_null($value):
                             $type = \PDO::PARAM_NULL;
                             break;
+                        default:
+                            $type = \PDO::PARAM_STR;
                     }
                     $this->PDOStatement->bindValue($key, $value, $type);
                 }
@@ -553,10 +552,8 @@ class Mysql extends Driver{
      * @return string
      */
     protected function parseDsn($config){
-        $dsn = 'mysql:dbname=' . $config['database'] . ';host=' . $config['host'] . ';charset='.$config['charset'];
-        if(!empty($config['host'])) {
-            $dsn  .= ';port='.$config['port'];
-        }elseif(!empty($config['socket'])){
+        $dsn = 'mysql:dbname=' . $config['database'] . ';host=' . $config['host'] . ';charset='.$config['charset'].';port='.$config['port'];
+        if(!empty($config['socket'])){
             $dsn  .= ';unix_socket='.$config['socket'];
         }
         if(!empty($config['charset'])){
@@ -593,22 +590,5 @@ class Mysql extends Driver{
      */
     public function rollBack(){
         return $this->_linkID->rollBack();
-    }
-
-    /**
-     * 错误日志输出
-     * @param $message
-     * @param string $sql
-     */
-    private function ExceptionLog($message, $sql = ""){
-        $exception = 'Unhandled Exception. <br />';
-        $exception .= $message;
-        $exception .= "<br /> You can find the error back in the log.";
-        if (!empty($sql)) {
-            $message .= NL."Raw SQL : " . $sql;
-        }
-        DEBUG and die($message);
-        Error::write($message, 'sql');
-        die($exception);
     }
 }

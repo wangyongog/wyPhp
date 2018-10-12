@@ -77,9 +77,13 @@ abstract class Driver{
                 if(empty($config['dsn'])) {
                     $config['dsn'] = $this->parseDsn($config);
                 }
-                if(version_compare(PHP_VERSION,'5.3.6','<=')){
+                //if(version_compare(PHP_VERSION,'5.3.6','<=')){
                     // 禁用模拟预处理语句
                     $this->options[\PDO::ATTR_EMULATE_PREPARES] = false;
+                //}
+                //启用持久化连接
+                if(isset($config['longlink'])){
+                    $this->options[\PDO::ATTR_PERSISTENT] = true;
                 }
                 $this->linkID[$linkNum] = new \PDO($config['dsn'], $config['user'], $config['password'],$this->options);
                 $this->linkID[$linkNum]->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
@@ -126,5 +130,21 @@ abstract class Driver{
             $this->free();
         }
         $this->close();
+    }
+    /**
+     * 错误日志输出
+     * @param $message
+     * @param string $sql
+     */
+    public function ExceptionLog($message, $sql = ""){
+        $exception = 'Unhandled Exception. <br />';
+        $exception .= $message;
+        $exception .= "<br /> You can find the error back in the log.";
+        if (!empty($sql)) {
+            $message .= NL."Raw SQL : " . $sql;
+        }
+        DEBUG and die($message);
+        Error::write($message, 'sql');
+        die($exception);
     }
 }
