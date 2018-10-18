@@ -69,9 +69,9 @@ class Template {
      * @return true | false
      */
     function craetHtml($template='', $filename='', $path = ''){
-        $path = ROOT.'/'.F('CACHE_HTML').'/'. ($path ? $path : CONTROLLER);
+        //$path = ROOT.'/'.F('CACHE_HTML').'/'. ($path ? $path : CONTROLLER);
         if (!is_dir($path)) {
-            mkdir($path, 0777, true);
+            cmkdir($path);
         }
         $content = $this->fetch($template);
         file_put_contents($path . '/' . ($filename ? $filename:ACTION.F('URL_HTML_FIX')), $content);
