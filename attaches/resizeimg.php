@@ -101,7 +101,7 @@ class CutImg{
      * @return mixed
      */
     protected function GetWaterPos($pos){
-        return $this->water_pos[$pos];
+        return isset($this->water_pos[$pos]) ? $this->water_pos[$pos] : $this->water_pos[1];
     }
 
     /**
@@ -110,7 +110,7 @@ class CutImg{
      * @return mixed
      */
     protected function GetCutType($cutType){
-        return $this->cutType[$cutType];
+        return isset($this->cutType[$cutType]) ? $this->cutType[$cutType] : $this->cutType[1];
     }
 }
 //file_put_contents("D:/WWW/wyPhp/test.txt",json_encode($_GET));
