@@ -60,7 +60,7 @@ class Filter{
                 $string[$key] = self::daddslashes($val);
             }
         } else {
-            $string = MAGIC_QUOTES_GPC ? $string : addslashes($string);
+            $string = MAGIC_QUOTES_GPC ? strip_tags(stripslashes($string)) : strip_tags($string);
         }
         return $string;
     }

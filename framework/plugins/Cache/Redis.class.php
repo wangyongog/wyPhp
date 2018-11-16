@@ -38,7 +38,6 @@ class Redis extends WyPhp\Cache{
             if (!empty($config)) {
                 $this->config = array_merge($this->config, $config);
             }
-            //$connect = $this->config['persistent'] ? 'pconnect' : 'connect';
             self::$redis_link[$this->_redis_id] = new \Redis;
             $this->redis = self::$redis_link[$this->_redis_id];
             $this->config['persistent'] ? $this->redis->pconnect($this->config['host'], $this->config['port'], $this->config['timeout']) : $this->redis->connect($this->config['host'], $this->config['port']);

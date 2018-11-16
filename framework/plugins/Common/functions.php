@@ -1,11 +1,5 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2016/8/3
- * Time: 10:23
- */
-/**
  * cookie设置
  * @param $key 设置的cookie名
  * @param $value 设置的cookie值
@@ -354,32 +348,20 @@ function cmkdir($path, $mode=0775, $recursive =true){
  * @return string
  */
 function mcrypt($value, $operation = 'ENCODE', $skey = '') {
-    if (empty($value)) {
-        return false;
+    if (empty($value)) return false;
+    $str ='';
+    $en_type = ucfirst(F('ENCRYPT'));
+    $class = '\\WyPhp\\Encrypt\\'.$en_type;
+    $mode = new $class($skey);
+    switch ($operation){
+        case 'ENCODE':
+            $str = $mode->encrypt($value);
+            break;
+        case 'DECODE':
+            $str = $mode->decrypt($value);
+            break;
     }
-    $skey = $skey ? $skey : substr(F('AUTOKEY'),4,10);
-    if ($operation == 'ENCODE') {
-        $sResult = '';
-        for ($i = 0; $i < strlen($value); $i++) {
-            $sChar = substr($value, $i, 1);
-            $skeyChar = substr($skey, ($i % strlen($skey)) - 1, 1);
-            $sChar = chr(ord($sChar) + ord($skeyChar));
-            $sResult .= $sChar;
-        }
-        $sBase64 = base64_encode($sResult);
-        return str_replace('=', '', strtr($sBase64, '+/', '-_'));
-    } else {
-        $sResult = '';
-        $value = strtr($value, '-_', '+/');
-        $value = base64_decode($value . '==');
-        for ($i = 0; $i < strlen($value); $i++) {
-            $sChar = substr($value, $i, 1);
-            $skeyChar = substr($skey, ($i % strlen($skey)) - 1, 1);
-            $sChar = chr(ord($sChar) - ord($skeyChar));
-            $sResult .= $sChar;
-        }
-        return $sResult;
-    }
+    return $str;
 }
 
 /**

@@ -158,16 +158,16 @@ abstract class Controller extends Template{
      * @param string $msg
      * @param string $jumpUrl
      */
-    public function success($msg='',$url='',$tpl){
-        $this->dispatchJump($msg, $url, 1);
+    public function success($msg='',$url='',$tpl=''){
+        $this->dispatchJump($msg, $url, 1,$tpl);
     }
 
     /**
      * @param string $message
      * @param string $jumpUrl
      */
-    public function error($msg='',$url='',$tpl){
-        $this->dispatchJump($msg, $url,0);
+    public function error($msg='',$url='',$tpl=''){
+        $this->dispatchJump($msg, $url,0, $tpl);
     }
 
     /**
@@ -175,7 +175,7 @@ abstract class Controller extends Template{
      * @param int $status
      * @param string $jumpUrl
      */
-    private function dispatchJump($msg='',$url, $status=1, $tpl='') {
+    private function dispatchJump($msg='',$url, $status, $tpl='') {
         /*$data = empty($rdata) ? [] : $rdata;
         $data['msg']   =   $msg;
         $data['status'] =   $status;

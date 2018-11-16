@@ -1,11 +1,5 @@
 <?php
 namespace WyPhp\Session;
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2016/8/2
- * Time: 15:24
- */
 class Redis extends \SessionHandler{
     protected $hand;
     function __construct($config = []){
@@ -24,7 +18,6 @@ class Redis extends \SessionHandler{
     }
     function write($sid, $value){
         return $this->hand->set($sid, $value);
-        //echo $this->hand->TTL($sid);
     }
     function destroy($sid){
         return $this->hand->delete($sid);

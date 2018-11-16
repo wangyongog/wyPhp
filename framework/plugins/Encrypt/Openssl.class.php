@@ -80,7 +80,7 @@ class Openssl{
     /**
      *   私钥解密
      */
-    public function privDecrypt($str){
+    public function decrypt($str){
         if(!is_string($str)){
             return null;
         }
@@ -112,7 +112,7 @@ class Openssl{
      * @param $str
      * @return null|string
      */
-    public function pubEncrypt($str){
+    public function encrypt($str){
         if(!is_string($str)){
             return null;
         }
