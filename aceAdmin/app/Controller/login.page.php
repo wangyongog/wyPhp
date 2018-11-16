@@ -8,6 +8,7 @@
 namespace App\Controller;
 //use Admin\Model\LoginModel;
 
+use WyPhp\DB;
 use WyPhp\Trace;
 
 class login extends baseController {
@@ -22,7 +23,7 @@ class login extends baseController {
         $username = I('username');
         $password = I('password');
         $code = I('code');
-        if(check_formhash(I('formhash')) === false){
+        if(check_formhash() === false){
             $this->error('无效操作！');
         }
         $login = D('Admin/Manager');

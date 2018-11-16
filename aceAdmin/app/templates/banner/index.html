@@ -20,7 +20,7 @@
 
 						<div class="page-header">
 							<form action="" method="get" class="form-inline">
-                            	<button type="button" class="btn btn-info btn-sm show_dialog" _url="{U('manager/xx')}">
+                            	<button type="button" class="btn btn-info btn-sm show_dialog" _url="{U('banner/add')}">
                                 添加
                             	</button>
                             	<label class="inline">用户名：</label>
@@ -52,12 +52,12 @@
 												<span class="lbl"></span>
 											</label>
 										</th>
-                                        <th class="detail-col"></th>
-										<th>用户名</th>
-                                        <th>余额</th>
-                                        <th class="hidden-480">级别</th>
-                                        <th class="hidden-480">注册时间</th>
-                                        <th class="hidden-480">最后登录时间</th>
+										<th>图片</th>
+                                        <th>广告位置</th>
+                                        <th class="hidden-480">链接</th>
+                                        <th class="hidden-480">开始时间</th>
+                                        <th class="hidden-480">结束时间</th>
+                                        <th>排序</th>
 										<th>操作</th>
 									</tr>
 									</thead>
@@ -67,18 +67,9 @@
 									<tr>
 										<td class="center">
 											<label class="pos-rel">
-												<input type="checkbox" class="ace ids" name="ids[]" value="{$val.uid}">
+												<input type="checkbox" class="ace ids" name="ids[]" value="{$val.id}">
 												<span class="lbl"></span>
 											</label>
-										</td>
-
-										<td class="center">
-											<div class="action-buttons">
-												<a href="#" class="green bigger-140 show-details-btn" title="Show Details">
-													<i class="ace-icon fa fa-angle-double-down"></i>
-													<span class="sr-only">Details</span>
-												</a>
-											</div>
 										</td>
 										<td>{$val.username}</td>
 										<td>{$val.leftmoney}</td>
@@ -129,43 +120,6 @@
 									</tr>
 
 
-									<tr class="detail-row">
-													<td colspan="8">
-														<div class="table-detail">
-															<div class="row">
-																<div class="col-xs-12 col-sm-2">
-																	<div class="text-center">
-																		<img height="150" class="thumbnail inline no-margin-bottom" alt="Domain Owner's Avatar" src="{$assets}/aceAdmin/images/avatars/profile-pic.jpg" />
-																		<br />
-																		<div class="width-80 label label-info label-xlg arrowed-in arrowed-in-right">
-																			<div class="inline position-relative">
-																				<a class="user-title-label" href="#">
-																					<i class="ace-icon fa fa-circle light-green"></i>
-																					&nbsp;
-																					<span class="white">{$val.username}</span>
-																				</a>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-
-																<div class="col-xs-12 col-sm-7">
-																	<div class="space visible-xs"></div>
-
-																	<div class="profile-user-info profile-user-info-striped">
-																		<div class="profile-info-row">
-																			<div class="profile-info-name"> Username </div>
-
-																			<div class="profile-info-value">
-																				<span>{$val.username}</span>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</td>
-												</tr>
 										{/foreach}
 									</tbody>
 								</table>
@@ -180,7 +134,7 @@
 		{include file="public/footer.html"}
 		</div><!-- /.main-container -->
 
-		{include file="public/footerJs.html" isdate=1}
+		{include file="public/footerJs.html" isdate=1 isupfile=1}
 <script type="text/javascript">
     jQuery(function ($) {
         $('#startime').datetimepicker({

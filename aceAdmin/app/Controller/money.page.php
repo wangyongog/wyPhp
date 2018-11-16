@@ -31,7 +31,7 @@ class money extends baseController{
                         $hands = '<a href="javascript:;" _msg="确定通过？" class="tipClose" _url="'.U('money/chang',['id'=>$val['id'],'status'=>2,'token'=>creatToken($val['id'])]).'">通过</a> | <a href="javascript:;" _msg="确定驳回？" class="tipClose" _url="'.U('money/chang',['id'=>$val['id'],'status'=>3,'token'=>creatToken($val['id'])]).'">驳回</a>';
                     }
                     $html_row .= '<tr>
-                        <td><input type="checkbox" class="ids" name="ids[]" value="'.$val['id'].'" ></td>
+                        <td><label class="pos-rel"><input type="checkbox" class="ace ids" name="ids[]" value="'.$val['id'].'" ></label><span class="lbl"></span></td>
                         <td>'.$val['username'].'</td>
                         <td>'.$val['cost'].'</td>
                         <td>'.$val['alipay_number'] .'</td>
@@ -81,8 +81,8 @@ class money extends baseController{
             if(I('username')){
                 $where['uid'] = DB::result_first($memberModel->table,'uid', array('username'=>trim(I('username'))));
             }
-            if(I('start') && I('end')){
-                $where['create_time'] = array('between',[strtotime(I('start')), strtotime(I('end').' 23:59:59')]);
+            if(I('startime') && I('endtime')){
+                $where['create_time'] = array('between',[strtotime(I('startime')), strtotime(I('endtime').' 23:59:59')]);
             }
             $this->count = DB::count('balance', $where);
             $data = DB::fetch_all('balance','*',$where, 'id DESC',$this->limit,$this->page);
@@ -91,7 +91,7 @@ class money extends baseController{
             if($data){
                 foreach ($data as $val){
                     $html_row .= '<tr>
-                        <td><input type="checkbox" class="ids" name="ids[]" value="'.$val['uid'].'" ></td>
+                        <td class="center"><label class="pos-rel"><input id="ids" name="ids[]" value="'.$val['id'].'" type="checkbox" class="ace ids"><span class="lbl"></span></label></td>
                         <td>'.$memberModel->getUsername($val['uid']).'</td>
                         <td>'.$val['balance'].'</td>
                         <td>'.$stype[$val['type']]  .'</td>

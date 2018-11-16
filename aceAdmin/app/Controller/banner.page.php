@@ -1,62 +1,29 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2016/7/1
- * Time: 17:01
- */
 namespace App\Controller;
 use WyPhp\DB;
-use WyPhp\Filter;
 
-class user extends baseController{
+class banner extends baseController{
     public function actionIndex(){
         $where = [];
         if(I('username')){
             $where['username'] = I('username');
         }
 
-        $this->count = DB::count('member', $where);
-        $data = DB::fetch_all('member','*',$where, 'uid DESC',$this->limit,$this->page);
+        $this->count = DB::count('banner', $where);
+        $data = DB::fetch_all('banner','*',$where, 'id DESC',$this->limit,$this->page);
         $this->pageBar();
-        $grade = F('TASK_GRADE');
 
-        $this->assign('grade', $grade);
         $this->assign('data', $data);
         $this->render();
     }
     public function actionAdd(){
-        if(IS_AJAX){
-            if(check_formhash() === false){
-                $this->error('无效操作！');
-            }
-            if(!I('username')){
-                $this->error('请输入用户名！');
-            }
-            if(!I('password') || !I('password1')){
-                $this->error('请输入密码！');
-            }
-            if(I('password') != I('password1')){
-                $this->error('2次密码不一致！');
-            }
-            $member = D('member');
-            $data['username'] = I('username');
-            $data['password'] = $member->creatPassWorld(I('password'));
-            $data['hash'] = random();
-            $data['addtime'] = TIMESTAMP;
-            $data['map'] = 1;
-            $data['status'] = I('status') ? 1 : 2;
-
-            $msg = '添加成功！';
-            $uid = DB::insert('member', $data);
-            if($uid>0){
-                $this->success($msg);
-            }
-            $this->error('添加失败！');
+        if(IS_AJAX && IS_POST){
+            die('sss');
         }
-        $this->assign('gradelist', F('TASK_GRADE') );
+        $this->assign('pos', F('POSITION'));
         $this->render();
     }
+
     public function actionEdit(){
         $uid = I('uid','int');
         if(!$uid){
