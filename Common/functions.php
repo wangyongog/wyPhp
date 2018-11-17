@@ -44,43 +44,6 @@ function loadCss_js($path = []){
 function edie($msg=''){
     die($msg);
 }
-function get_task_status($status=0,$isclose=0){
-    $str = '';
-    switch ($status) {
-        case 0:
-            $str .= '<span class="label label-sm label-success">';
-        break;
-        case 1:
-            $str .= '<span class="label label-sm label-danger">';
-        break;
-        case 2:
-            $str .= '<span class="label label-sm label-warning">';
-        break;
-        case -1:
-            $str .= '<span class="label label-sm label-info">';
-        break;
-    }
-    return $str. ( $isclose==1 && !in_array($status,[-1,2])  ? '关闭退款中' :  F('TASK_STATUS')[$status]).'</span>';
-}
-function get_mosi($mosi=1){
-    $mosiArr = F('MOSI');
-    return isset($mosiArr[$mosi]) ? ($mosi ==2 ? '<span style="color:#F00">'.$mosiArr[$mosi].'</span>' : $mosiArr[$mosi])  : '未知';
-}
-function getdzpren($kscount=0,$dqcount=0,$count=0,$spren=false){
-    $diff = $dqcount - $kscount ;
-    if(!$dqcount || $diff <=0){
-        return '0%';
-    }
-    return round(round($diff /$count,2) * 100,2).'%';
-    /*if($spren){
-        return round(round($diff /$count,2) * 100,2).'%';
-    }
-    return $dqcount.' - '.$kscount.' = '. round(round($diff /$count,2) * 100,2).'%' ;*/
-}
-function get_frommsg($frommsg='', $ftype='',$count=0,$map=0){
-    $frommsg = unserialize($frommsg);
-    return isset($frommsg[$ftype]) ? $frommsg[$ftype] : 0;
-}
 function get_map(){
     $set = D('Admin/Setting');
     $config = $set->get_setting('', 'all');
