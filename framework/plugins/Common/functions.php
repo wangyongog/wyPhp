@@ -96,7 +96,6 @@ function D($name='',$layer='') {
         $model = class_exists($class)? new $class($name) : '';
     }else {
         \WyPhp\Error::debug('D方法实例化没找到模型类'.$class);
-        $model = new WyPhp\Model(basename($name));
     }
     $_model[$name.$layer] = $model;
     return $model;
@@ -201,23 +200,6 @@ function isMobile($mobile) {
 function creatOrderId(){
     return date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8).random(3,1);
 }
-/**
- * @param array $user
- * @param int $len
- * @return string
- */
-function formhash(){
-    $user = APP::$user;
-    $uid =isset($user['uid']) ? $user['uid'] : '';
-    $hash = isset($user['hash']) ? $user['hash'] : '';
-    $skey = mcrypt('hashCode'.$uid);
-    $hashCode = session($skey);
-    if(empty($hashCode) ){
-        $hashCode = random(20);
-        session($skey, $hashCode);
-    }
-    return substr(md5( $hashCode.$hash . $uid  . substr(F('AUTOKEY'),5,6) ), 8, 10);
-}
 function post($url, $param=array()){
     /*if(!is_array($param)){
         throw new Exception("参数必须为array");
@@ -250,21 +232,37 @@ function post($url, $param=array()){
     curl_close($httph);
     return $rst;
 }
+
 /**
- * @param string $formhash
+ * 产生表单hash值
+ * @return bool|string
+ */
+function formhash(){
+    $user = APP::$user;
+    $uid = isset($user['uid']) ? $user['uid'] : '';
+    $hash = isset($user['hash']) ? $user['hash'] : '';
+    $skey = 'formhash_'.$uid.$hash;
+    $hashCode = S($skey);
+    if(empty($hashCode) ){
+        $hashCode = random(20);
+        S($skey, $hashCode,3600);
+    }
+    return substr(md5( $hashCode.$hash . $uid  . substr(F('AUTOKEY'),5,6) ), 8, 20);
+}
+
+/**
+ * 验证表单hash值
  * @return bool
  */
-function check_formhash($formhash=''){
+function check_formhash(){
     $formhash = I('formhash') ? I('formhash') : $_SERVER['HTTP_X_CSRF_TOKEN'];
     $user = APP::$user;
     $uid =isset($user['uid']) ? $user['uid'] : '';
     $hash = isset($user['hash']) ? $user['hash'] : '';
-    $skey = mcrypt('hashCode'.$uid);
-    if($formhash == substr(md5( session($skey).$hash . $uid  . substr(F('AUTOKEY'),5,6)), 8, 10)){
-        IS_AJAX or session($skey, null);
+    $skey = 'formhash_'.$uid.$hash;
+    if($formhash == substr(md5( S($skey).$hash . $uid  . substr(F('AUTOKEY'),5,6)), 8, 20)){
         return true;
     }
-    session($skey, null);
     return false;
 }
 /**
@@ -273,7 +271,7 @@ function check_formhash($formhash=''){
  * @param string $TokenKey
  * @return string
  */
-function creatToken($TokenId=0, $TokenKey = '', $len=8){
+function creatToken($TokenId=0, $TokenKey = '', $len=15){
     $TokenKey = $TokenKey ? $TokenKey.substr(F('AUTOKEY'),4,12) : substr(F('AUTOKEY'),4,12) ;
     return substr(md5($TokenId. $TokenKey),5, $len) ;
 }
@@ -427,11 +425,7 @@ function S($name, $value='',$options=null) {
     }elseif(is_null($value)) { // 删除缓存
         return $cache->delete($name);
     }else { // 缓存数据
-        if(is_array($options)) {
-            $expire = isset($options['expire']) ? $options['expire'] : NULL;
-        }else{
-            $expire = is_numeric($options) ? $options : NULL;
-        }
+        $expire = isset($options['expire']) ? $options['expire'] : $options;
         return $cache->set($name, $value, $expire);
     }
 }

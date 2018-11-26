@@ -124,6 +124,7 @@ class APPbase{
      * @return bool|mixed
      */
     protected static function initApp(){
+        //$_SERVER['PATH_INFO']
         $url = parse_url($_SERVER['REQUEST_URI']);
         if(empty($url)){
             header('HTTP/1.1 404 Not Found');
@@ -140,15 +141,16 @@ class APPbase{
         define('ACTION', strtolower($view));
         define('CONTROLLER', strtolower($controller));
         $action = 'action'.ucfirst($view);
-        if (!preg_match('/^[A-Za-z](\w)*$/', $controller)) {
-            WyPhp\Error::error('file ['.$controller.'] not exists');
-            //\WyPhp\Error::http_status();
-        }
-        if (!preg_match('/^[a-z0-9_]+$/i', $action)) {
+        if(F('URL_DENY_SUFFIX') && preg_match('/\.('.trim(F('URL_DENY_SUFFIX'),'.').')$/i', $controller)){
             \WyPhp\Error::http_status();
         }
+        if (!preg_match('/^[A-Za-z](\w)*$/', $controller)) {
+            WyPhp\Error::error('file ['.$controller.'] not exists');
+        }
+        if (!preg_match('/^[a-z0-9_]+$/i', $action)) {
+            WyPhp\Error::error('file ['.$controller.'] is ['.$action.'] not exists');
+        }
         $filePath = self::$appPath.'/Controller/'. CONTROLLER.'.page.php';
-
         //命名空间类
         $classname = '\\App\\Controller\\'. CONTROLLER;
         if (class_exists($classname, false)) {
@@ -160,11 +162,21 @@ class APPbase{
         //self::$app = $controller .'/'.$action;
         include (realpath($filePath));
         $classInstance = new $classname();
+        $method = new \ReflectionMethod($classInstance, $action);
+        if($method->isPublic() && !$method->isStatic()) {
+            //$class = new \ReflectionClass($classInstance);
+            $method->invoke($classInstance);
+        }else{
+            WyPhp\Error::error("method[$action] not isPublic in [$classname]");
+            return false;
+        }
+        /*include (realpath($filePath));
+        $classInstance = new $classname();
         if(!method_exists($classInstance, $action)){
             WyPhp\Error::debug("method[$action] not exists in class[$classname]");
             return false;
         }
-        return call_user_func(array(&$classInstance, $action));
+        return call_user_func(array(&$classInstance, $action));*/
     }
     /**
      *产生唯一ID

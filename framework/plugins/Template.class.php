@@ -1,11 +1,5 @@
 <?php
 namespace WyPhp;
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2016/7/4
- * Time: 15:45
- */
 include FWPATH . '/plugins/smarty/libs/Smarty.class.php';
 class Template {
     //缓存时间
