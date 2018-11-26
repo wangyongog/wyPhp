@@ -45,7 +45,7 @@ class setting extends baseController {
             $this->success('提交成功！');
             die();
         }
-        $set = D('Admin/Setting');
+        $set = D('aceAdmin/Setting');
         $data = $set->get_setting('', 'all');
         //print_r($data);exit;
         $this->assign('userGrades', $task_config['TASK_GRADE']);

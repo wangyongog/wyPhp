@@ -1,5 +1,5 @@
 <?php
-namespace Admin\Model;
+namespace aceAdmin\Model;
 use WyPhp\Model;
 
 class LoginModel extends Model {

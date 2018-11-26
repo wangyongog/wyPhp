@@ -6,7 +6,7 @@
  * Time: 16:14
  */
 namespace App\Controller;
-//use Admin\Model\LoginModel;
+//use aceAdmin\Model\LoginModel;
 
 use WyPhp\DB;
 use WyPhp\Trace;
@@ -26,7 +26,7 @@ class login extends baseController {
         if(check_formhash() === false){
             $this->error('无效操作！');
         }
-        $login = D('Admin/Manager');
+        $login = D('aceAdmin/Manager');
         $uid = $login->login($username, $password);
         if($uid>0){
             $this->success('登录成功','/main');

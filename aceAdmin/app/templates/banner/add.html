@@ -65,7 +65,20 @@
 		</div>
 	</div>-->
 </form>
+<style>
+.toast-center-center {
+   top: 50%;
+   left: 50%;
+   margin-top: -25px;
+  margin-left: -500px;
+ }
+</style>
 <script type="text/javascript">
+/*toastr.options.positionClass = 'toast-center-center';
+toastr.warning('请选择有效数据');*/
+function backFuns(url,obj){
+	alert(obj)
+}
 uploaders.initUploaders();
 $('#start').datetimepicker({
    format: 'yyyy-mm-dd h:ii:ss',

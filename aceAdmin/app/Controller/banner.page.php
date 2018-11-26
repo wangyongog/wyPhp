@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 use WyPhp\DB;
+use WyPhp\Filter;
 
 class banner extends baseController{
     public function actionIndex(){
@@ -14,11 +15,25 @@ class banner extends baseController{
         $this->pageBar();
 
         $this->assign('data', $data);
+        $this->assign('pos', F('POSITION'));
         $this->render();
     }
     public function actionAdd(){
         if(IS_AJAX && IS_POST){
-            die('sss');
+            $data = Filter::$gp['data'];
+            if(!$data['pos']){
+                $this->error('请选择广告位！');
+            }
+            if(!I('fileup1')){
+                $this->error('请选择图片！');
+            }
+            $data['img'] = I('fileup1');
+            $data['addtime'] = TIMESTAMP;
+            $bannerModel = D('aceAdmin/Banner');
+            if(!$bannerModel->add($data)){
+                $this->error($bannerModel->getError());
+            }
+            $this->success('添加成功');
         }
         $this->assign('pos', F('POSITION'));
         $this->render();

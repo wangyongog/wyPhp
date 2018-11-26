@@ -5,7 +5,7 @@
  * Date: 2017/4/28
  * Time: 11:36
  */
-namespace Admin\Model;
+namespace aceAdmin\Model;
 use WyPhp\DB;
 use WyPhp\Model;
 

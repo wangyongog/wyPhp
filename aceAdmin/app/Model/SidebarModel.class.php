@@ -1,5 +1,5 @@
 <?php
-namespace Admin\Model;
+namespace aceAdmin\Model;
 use App\Controller\baseController;
 use WyPhp\DB;
 use WyPhp\Model;
@@ -11,7 +11,7 @@ class SidebarModel extends Model {
         $data = [];
         $where['status'] = 1;
         if(!in_array($uid, F('SYSTEM_USERID')) ) {
-            $group = D('Admin/Group');
+            $group = D('aceAdmin/Group');
             $group_arr = $group->getGroups($uid);
             $rules = $group_arr['rules'];
             if(!$rules){

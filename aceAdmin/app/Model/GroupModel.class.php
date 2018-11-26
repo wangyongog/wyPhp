@@ -1,5 +1,5 @@
 <?php
-namespace Admin\Model;
+namespace aceAdmin\Model;
 use WyPhp\DB;
 use WyPhp\Model;
 
@@ -47,7 +47,7 @@ class GroupModel extends Model {
     public function getGroups($uid) {
         static $user_groups;
         if(isset($user_groups[$uid])) return $user_groups[$uid];
-        $manager = D('Admin/Manager');
+        $manager = D('aceAdmin/Manager');
         $user_groups[$uid] = $manager->checkLogin($uid);
         return $user_groups[$uid];
     }

@@ -5,11 +5,11 @@ use WyPhp\DB;
 class manager extends baseController{
     public function actionIndex(){
         if(IS_AJAX){
-            $manager = D('Admin/Manager');
+            $manager = D('aceAdmin/Manager');
             $this->count = DB::count($manager->table);
             $data = DB::fetch_all($manager->table,'*','',' uid ASC',$this->limit,$this->page);
             $html_row = '';
-            $groupModel = D('Admin/Group');
+            $groupModel = D('aceAdmin/Group');
             $group = $groupModel->getGroup();
             if($data){
                 foreach ($data as $val){
@@ -30,7 +30,7 @@ class manager extends baseController{
         $this->render();
     }
     public function actionAdd(){
-        $manager = D('Admin/Manager');
+        $manager = D('aceAdmin/Manager');
         $uid = I('uid','int',0);
         if(IS_AJAX){
             if(creatToken($uid) != I('formhash')){
@@ -72,7 +72,7 @@ class manager extends baseController{
 
             $this->assign('data', $data);
         }
-        $groupModel = D('Admin/Group');
+        $groupModel = D('aceAdmin/Group');
         $group = $groupModel->getGroup();
         $this->assign('uid', $uid);
         $this->assign('group', $group);

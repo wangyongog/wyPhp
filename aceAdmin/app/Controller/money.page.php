@@ -23,7 +23,7 @@ class money extends baseController{
             $data = DB::fetch_all('recharge','*',$where, 'id DESC',$this->limit,$this->page);
             $html_row = '';
             if($data){
-                $managerModel = D('Admin/Manager');
+                $managerModel = D('aceAdmin/Manager');
                 foreach ($data as $val){
                     $adminArr = $managerModel->getAdminUser($val['douid']);
                     $hands = '';
@@ -124,7 +124,7 @@ class money extends baseController{
             $data = DB::fetch_all('mlog','*',$where, 'id DESC',$this->limit,$this->page);
             $html_row = '';
             if($data){
-                $managerModel = D('Admin/Manager');
+                $managerModel = D('aceAdmin/Manager');
                 $member = D('Member');
                 $task_type = F('TASK_TYPE');
                 foreach ($data as $val){
@@ -248,7 +248,7 @@ class money extends baseController{
             $html_row = '';
             if($data){
                 foreach ($data as $val){
-                    $Manager = D('Admin/Manager');
+                    $Manager = D('aceAdmin/Manager');
                     $adminArr = $Manager->getAdminUser($val['douid']);
                     $hands = '';
                     $status_str = '审核中';

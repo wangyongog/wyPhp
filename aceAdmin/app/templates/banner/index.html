@@ -1,6 +1,4 @@
 {include file="public/header.html"}
-
-
 		<div class="main-container ace-save-state" id="main-container">
 			<script type="text/javascript">
 				try{
@@ -8,32 +6,25 @@
 					}catch(e){
 				}
 			</script>
-
-
-
 			<div class="main-content">
 				<div class="main-content-inner">
-					
-
 					<div class="page-content">
-
-
 						<div class="page-header">
 							<form action="" method="get" class="form-inline">
-                            	<button type="button" class="btn btn-info btn-sm show_dialog" _url="{U('banner/add')}">
+                            	<button type="button"  class="btn btn-info btn-sm show_dialog" _url="{U('banner/add')}">
                                 添加
                             	</button>
-                            	<label class="inline">用户名：</label>
-                            	<input type="text" class="form-control" name="username" value="{I('username')}"/>
-                                
-                                <select name="simoney" class="form-control">
+                            	<label class="inline">广告位：</label>
+                                <select name="pos" class="form-control">
                                     <option value="">全部</option>
-                                    <option value="1">是</option>
-                                    <option value="2">否</option>
+                                    {foreach from=$pos key=k item=val}
+                                    <option value="{$k}">{$val}</option>
+            						{/foreach}
                                 </select>
-                                <label class="inline">注册时间：</label>
-                            	<input type="text" class="form-control" name="addtime" id="startime" value=""/>
-                                
+                                <label class="inline">开始时间：</label>
+                            	<input type="text" class="form-control" name="startime" id="startime" value=""/>
+                                <label class="inline">结束时间：</label>
+                            	<input type="text" class="form-control" name="endtime" id="endtime" value=""/>
                                 <button type="submit" class="btn btn-purple btn-sm">
                                     <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
                                     搜索
@@ -71,22 +62,22 @@
 												<span class="lbl"></span>
 											</label>
 										</td>
-										<td>{$val.username}</td>
-										<td>{$val.leftmoney}</td>
-										<td class="hidden-480">{$grade[$val.grade]}</td>
-										<td class="hidden-480">{date('Y-m-d H:i:s', $val.addtime)}</td>
+										<td><img src="{picSize($val.img)}" style="max-width:160px; max-height:100px"/></td>
+										<td>{$pos[$val.pos]}</td>
+										<td class="hidden-480">{$val.url}</td>
+										<td class="hidden-480">{if !empty( $val.startime)}{date('Y-m-d H:i:s', $val.startime)} {/if}</td>
 										<td class="hidden-480">
-										{if !empty( $val.lasttime)}	{date('Y-m-d H:i:s', $val.lasttime)} {/if}
+										{if !empty( $val.endtime)}	{date('Y-m-d H:i:s', $val.endtime)} {/if}
 										</td>
-
+										<td>{$val.o}</td>
 										<td>
 										
 											<div class="hidden-sm hidden-xs action-buttons">	
-                                                <a class="green edit" href="javascript:;" _url="{U('user/edit',['uid'=>$val.uid])}" _wh="700,550" title="编辑">
+                                                <a class="green edit" href="javascript:;" _url="{U('banner/add',['id'=>$val.id])}" _wh="700,550" title="编辑">
                                                     <i class="ace-icon fa fa-pencil bigger-130"></i>
                                                 </a>
 
-                                                <a class="red del" href="javascript:;" _url="{U('User/del',['uid'=>$val['uid'],'token'=>creatToken($val['uid'])])}" title="删除">
+                                                <a class="red del" href="javascript:;" _url="{U('banner/add',['id'=>$val['id'],'token'=>creatToken($val['id'])])}" title="删除">
                                                     <i class="ace-icon fa fa-trash-o bigger-130"></i>
                                                 </a>
                                             </div>
@@ -99,7 +90,7 @@
 
 													<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
 														<li>
-															<a href="javascript:;" class="tooltip-success edit" _url="{U('user/edit',['uid'=>$val.uid])}" _wh="700,550" title="编辑" data-rel="tooltip" title="" data-original-title="Edit">
+															<a href="javascript:;" class="tooltip-success edit" _url="{U('banner/add',['id'=>$val.id])}" _wh="700,550" title="编辑" data-rel="tooltip" title="" data-original-title="Edit">
 																			<span class="green">
 																				<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
 																			</span>
@@ -107,7 +98,7 @@
 														</li>
 
 														<li>
-															<a href="javascript:;" class="tooltip-error del" _url="{U('User/del',['uid'=>$val['uid'],'token'=>creatToken($val['uid'])])}" title="删除" data-rel="tooltip" title="" data-original-title="Delete">
+															<a href="javascript:;" class="tooltip-error del" _url="{U('banner/add',['id'=>$val['id'],'token'=>creatToken($val['id'])])}" title="删除" data-rel="tooltip" title="" data-original-title="Delete">
 																			<span class="red">
 																				<i class="ace-icon fa fa-trash-o bigger-120"></i>
 																			</span>
@@ -138,9 +129,19 @@
 <script type="text/javascript">
     jQuery(function ($) {
         $('#startime').datetimepicker({
-           format: 'yyyy-mm-dd',//'yyyy-mm-dd hh:ii:ss'
+           format: 'yyyy-mm-dd hh:ii:ss',//'yyyy-mm-dd hh:ii:ss'
             autoclose: true,
-			minView: 30,
+			//minView: 30,
+			language : 'zh-CN',
+			minuteStep:1,
+			todayBtn: true,
+			startView:2,
+			startDate: new Date() 
+        });
+		$('#endtime').datetimepicker({
+           format: 'yyyy-mm-dd hh:ii:ss',//'yyyy-mm-dd hh:ii:ss'
+            autoclose: true,
+			//minView: 30,
 			language : 'zh-CN',
 			minuteStep:1,
 			todayBtn: true,

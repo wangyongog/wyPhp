@@ -6,7 +6,7 @@
  * Time: 17:01
  */
 namespace App\Controller;
-use Admin\Model\SidebarModel;
+use aceAdmin\Model\SidebarModel;
 use WyPhp\DB;
 
 class Sidebar extends baseController{

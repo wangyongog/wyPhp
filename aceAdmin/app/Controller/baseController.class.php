@@ -1,6 +1,6 @@
 <?php
 namespace App\Controller;
-use Admin\Model\SidebarModel;
+use aceAdmin\Model\SidebarModel;
 use WyPhp\Controller;
 use WyPhp\DB;
 
@@ -44,7 +44,7 @@ class baseController extends Controller {
      */
     protected function auth(){
          if(!in_array($this->admin['uid'], F('SYSTEM_USERID')) ){
-             $group = D('Admin/Group');
+             $group = D('aceAdmin/Group');
              return $group->check(CONTROLLER.'/'.ACTION, $this->admin['uid']);
          }
          return true;
@@ -72,7 +72,7 @@ class baseController extends Controller {
              list($uid, $hash) = explode("\t", mcrypt($uidHash, 'DECODE')  ,2);
              $uid = intval($uid);
              if($uid && $hash){
-                 $manager = D('Admin/Manager');
+                 $manager = D('aceAdmin/Manager');
                  $user = $manager->checkLogin($uid);
                  if ($user && $user['hash'] == $hash) {
                      $this->admin = $user;

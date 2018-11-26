@@ -6,7 +6,7 @@ use WyPhp\Filter;
 class group extends baseController{
     public function actionIndex(){
 
-        $groupModel = D('Admin/Group');
+        $groupModel = D('aceAdmin/Group');
         $data = $groupModel->getGroup();
         $this->assign('data', $data);
         $this->render();
