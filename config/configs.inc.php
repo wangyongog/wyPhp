@@ -49,5 +49,6 @@ return [
     'CACHE_HTML' =>'cache/html',
     'URL_HTML_FIX' =>'.html',
     //加密类型
-    'ENCRYPT' =>'mcrypt'
+    'ENCRYPT' =>'openssl',
+    'URL_DENY_SUFFIX' =>'ico|png|gif|jpg', // URL禁止访问的后缀设置
 ];
