@@ -33,6 +33,7 @@
 .content-tabs .page-tabs a.active {
     background: #3498db;
     color:#fff;
+	font-weight:700;
 }
 
 .content-tabs a i:first-child{

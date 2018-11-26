@@ -62,7 +62,7 @@
 	,
 	runAjaxResSuccess:function(data){
 		if(data.status == 1){
-			layer.msg(
+			parent.layer.msg(
 				data.msg,
 				{icon:1,time:2000,shade:[0.8,'#fff']},
 				function(index){
@@ -81,21 +81,22 @@
 					}else if(data.location){
 						adminJs.goUrl(data.url);
 					}
-					layer.close(index);
+					parent.layer.close(index);
 				}
 			);
 			return;
 		}else{
-			layer.alert(data.msg,{title:data.msg,icon:2},
+			parent.layer.alert(data.msg,{title:data.msg,icon:2},
 			function(index){
-				var indexBox=parent.layer.getFrameIndex(window.name);
+				//var indexBox=parent.layer.getFrameIndex(window.name);
+				var indexBox = top.location!=self.location ? true : false;
 				if(indexBox){
 					if(data.url&&data.url!='javascript:history.back(-1);'){
 						adminJs.goUrl(data.url,parent);
 					}
 					//adminJs.closeThis();
 				}
-				layer.close(index);
+				parent.layer.close(index);
 				//layer.closeAll('loading');
 			});
 		}
@@ -107,7 +108,7 @@
         if(typeof app == 'undefined'){
             return false;
         } 
-		var layars=layer.load(0,{shade:[0.8,'#fff']});
+		var layars=parent.layer.load(0,{shade:[0.8,'#fff']});
 		var dataArr = app.split('_');
         var page = page || 1;
         var url = ('/'+dataArr[0]+'/'+dataArr[1]+dataArr[2]+'?inajax=1&page='+page);

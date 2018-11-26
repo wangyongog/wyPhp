@@ -1,4 +1,3 @@
-
 var uploaders = {
 	initUploaders : function(){
 		var uploaderArr = [];
@@ -24,7 +23,7 @@ var uploaders = {
 				silverlight_xap_url: silverlight_xap_url,
 
 				filters: {
-					max_file_size: max_size || '1mb',
+					max_file_size: max_size || '2mb',
 					mime_types: [
 						{title: "Image files", extensions: file_extensions}
 					]

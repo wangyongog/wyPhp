@@ -1,10 +1,11 @@
 ﻿var adminJs = {
+	dialog : null,
 	showIframe :function(title,url,w,h,noshade){
 		w =w?w+"px":'';h=h?h+"px":'';
 		if(!this.isPc()||((!w||w=='')&&(!h||h==''))){
 			w='90%';h='90%';
 		}
-		var index = layer.open({
+		var index = parent.layer.open({
 		  type: 2,
 		  title:title,
 		  area: [w,h],
@@ -19,14 +20,56 @@
 		  shadeClose: true,
 		  shade:noshade?0:[0.6,'#fff'],
 		  success: function(layero, index){
-			layer.setTop(layero);
+			parent.layer.setTop(layero);
   		  },
 		  cancel: function(index, layero){ 
-			  layer.close(index);	//只有当点击confirm框的确定时，该层才会关闭
+			  parent.layer.close(index);	//只有当点击confirm框的确定时，该层才会关闭
 			  return false; 
 			}    
 		});
 	},
+	ShowDailog:function(title,url,backFun) {
+        adminJs.dialog = BootstrapDialog.show({
+            title: title,
+            type: BootstrapDialog.TYPE_PRIMARY,
+            size: BootstrapDialog.SIZE_LARGE,
+            cssClass: "fade",
+            closeable: true,
+            message: function (dialog) {
+                var $message = $('<div></div>');
+                var pageToLoad = dialog.getData('pageToLoad');
+                $message.load(pageToLoad);
+                return $message;
+            },
+            onshow: function(dialogRef){
+            },
+            data: {
+                'pageToLoad': url,
+            },
+            buttons: [{
+                label: '<i class="fa fa-close"></i> 取消',
+                action: function (dialog) {
+                    dialog.close();
+                }
+            }, {
+                label: '<i class="fa fa-check"></i> 确定',
+                cssClass: 'btn btn-primary',
+                action: function (dialog) {
+					//console.log(backFun)
+					//eval(backFun+'()');
+					//dailogAlert.confirms('sssssssss',function(){alert(1)},function(){alert(2)});
+                	var formObj = $('.modal-body').find('form');
+                	if(typeof backFun !='undefined'){
+						eval(backFun+'("'+formObj.attr('action')+'","'+formObj+'")');
+					}else{
+						dailogAjax.dailogPost(formObj.attr('action'),formObj);
+					}
+                    //dialog.close();
+                }
+            }]
+        });
+	}
+	,
 	closeThis:function (){
         var indexBox = parent.layer.getFrameIndex(window.name);
         parent.IframeCount--;
@@ -46,14 +89,14 @@
 	},
 	showAlert:function(msg,icnum){
 		icnum = typeof icnum == 'undefined' ? 0 : icnum;
-		layer.alert(msg,{icon: icnum,scrollbar: false});
+		parent.layer.alert(msg,{icon: icnum,scrollbar: false});
 		/*layer.open({
 				  content: '浏览器滚动条已锁',
 				  scrollbar: false
 				});*/
 	},
 	confirm_box:function(msg, confirmFUNC, cancelFUNC){
-		layer.confirm(msg, {
+		parent.layer.confirm(msg, {
 		  btn: ['确定','取消'], //按钮
 		  icon: 0,
 		}, 
@@ -69,10 +112,10 @@
 	tipsObj:function(msg,obj){layer.tips(msg,obj,{tips:3});},
 	//提示层
 	msg:function(msg){
-		layer.msg(msg);
+		parent.layer.msg(msg);
 	},
 	closeAllf:function(){
-		layer.closeAll(); //疯狂模式，关闭所有层
+		parent.layer.closeAll(); //疯狂模式，关闭所有层
 		/*layer.closeAll('dialog'); //关闭信息框
 		layer.closeAll('page'); //关闭所有页面层
 		layer.closeAll('iframe'); //关闭所有的iframe层
@@ -118,6 +161,13 @@ jQuery(function($) {
 		var whArr = typeof wh !='undefined' ? wh.split(',') : '';
 		adminJs.showIframe(title, url,whArr[0],whArr[1]);
 	});
+	$('.page-content').on('click','.show_dialog',function(){
+		var title = $(this).attr('_title') || '添加';
+		var url = $(this).attr('_url');
+		var backFun = $(this).attr('backFun');
+		adminJs.ShowDailog(title, url, backFun);
+	});
+	
 	$('.searchForm').on('click',function(){
 		formAjax.tbodyLoading();
 	});
@@ -196,12 +246,6 @@ jQuery(function($) {
 		var url = createurl(dataurl);
 		adminJs.confirm_box('删除提示');        
 	});
-	
-	
-	
-	
-	
-	
 	
 	$('.show-details-btn').on('click', function(e) {
 		e.preventDefault();

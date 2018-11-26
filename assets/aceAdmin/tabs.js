@@ -167,7 +167,6 @@
                     tabElement = $(tabElement).next();
                 }
                 scrollVal = $.learuntab.calSumWidth($(tabElement).prevAll());
-				alert(1)
                 if (scrollVal > 0) {
                     $('.page-tabs-content').animate({
                         marginLeft: 0 - scrollVal + 'px'
