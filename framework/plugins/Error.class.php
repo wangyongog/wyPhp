@@ -124,7 +124,7 @@ class Error extends \Exception{
      * @param string $type 错误类型
      * @param string $stype 保存类型
      */
-    static function write($message='', $type='file', $stype) {
+    static function write($message='', $type='file', $stype='') {
         $stype = $stype ? $stype : CF::get('ERROR_TYPE');
         //文件日志记录
         if($stype == 'file'){

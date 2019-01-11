@@ -19,7 +19,6 @@ class APPbase{
         define('ROOT', substr(__DIR__,0, -10));  //根目录
         define('MAGIC_QUOTES_GPC', get_magic_quotes_gpc());
         define('APPATH', realpath(self::$appPath));
-
         $temp_uri = urldecode($_SERVER['REQUEST_URI']);
         if (strpos($temp_uri, '<') !== false || strpos($temp_uri, '"') !== false){
             exit('Request Bad url');
@@ -88,6 +87,7 @@ class APPbase{
         $file = str_replace('\\', DIRECTORY_SEPARATOR,  $file) ;
         if(!is_file($file)){
             $file = ROOT.DIRECTORY_SEPARATOR. strtolower(strstr($class, '\\', true)).DIRECTORY_SEPARATOR.self::$appPath.DIRECTORY_SEPARATOR.str_replace('\\', DIRECTORY_SEPARATOR, strstr($class ,'\\')).'.class.php';
+
             if(!is_file($file)){
                 WyPhp\Error::debug("file [$file] not exists");
             }
@@ -100,6 +100,7 @@ class APPbase{
      */
     protected static function loadApi(){
         // 加载核心方法或第三方类
+        
         WyPhp\CF::get('configs');
         WyPhp\CF::get('db');
         WyPhp\CF::get('api');
@@ -109,6 +110,7 @@ class APPbase{
                 is_file($file) and include $file;
             }
         }
+
         if($configs = F('LOAD_CONFIG')){
             if(is_string($configs)) $configs =  explode(',',$configs);
                 foreach ($configs as $key=>$config){

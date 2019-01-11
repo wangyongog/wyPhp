@@ -1,6 +1,8 @@
 <?php
 namespace WyPhp\Database;
 
+use WyPhp\Error;
+
 class Mongo extends Driver{
     protected $_mongo           =   null; // MongoDb Object
     protected $_collection      =   null; // MongoCollection Object
@@ -15,7 +17,7 @@ class Mongo extends Driver{
      */
     public function __construct($config=[]){
         if ( !class_exists('mongoClient') ) {
-            $this->ExceptionLog('mongoClient NOT Driver');
+            Error::error('mongoClient NOT Driver');
         }
         if(!empty($config)) {
             $this->config = array_merge($this->config,$config);
@@ -32,9 +34,42 @@ class Mongo extends Driver{
             try{
                 $this->linkID[$linkNum] = new \mongoClient( $host,$this->config['params']);
             }catch (\MongoConnectionException $e){
-                $this->ExceptionLog($e->getmessage());
+                Error::error($e->getmessage());
             }
         }
         return $this->linkID[$linkNum];
+    }
+    /**
+     * 切换当前操作的Db和Collection
+     * @access public
+     * @param string $collection  collection
+     * @param string $db  db
+     * @param boolean $master 是否主服务器
+     * @return void
+     */
+    public function switchCollection($collection,$db='',$master=true){
+        // 当前没有连接 则首先进行数据库连接
+        if ( !$this->_linkID ) $this->initConnect($master);
+        try{
+            if(!empty($db)) { // 传人Db则切换数据库
+                // 当前MongoDb对象
+                $this->_dbName  =  $db;
+                $this->_mongo = $this->_linkID->selectDb($db);
+            }
+            // 当前MongoCollection对象
+            if($this->config['debug']) {
+                $this->queryStr   =  $this->_dbName.'.getCollection('.$collection.')';
+            }
+            if($this->_collectionName != $collection) {
+                $this->queryTimes++;
+                N('db_query',1); // 兼容代码
+                $this->debug(true);
+                $this->_collection =  $this->_mongo->selectCollection($collection);
+                $this->debug(false);
+                $this->_collectionName  = $collection; // 记录当前Collection名称
+            }
+        }catch (MongoException $e){
+            E($e->getMessage());
+        }
     }
 }
