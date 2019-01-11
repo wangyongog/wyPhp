@@ -1,0 +1,373 @@
+{include file="public/header.html" isindex=1}
+
+<body>
+    <div class="index">
+        {include file="public/nav.html"}
+        <!-- banner部分 -->
+        <div class="banner">
+            <div class="banner_com">
+                <div class="banner_com_from">
+                    <div class="xq-csname">学前测试</div>
+                    <form action="{U('main/postppre')}" id="form1" class="form" method="post" onSubmit="return false;">
+                        <div class="form-input">
+                            <span class="width">姓名</span>
+                            <input type="text" name="data[uname]" id="">
+                        </div>
+                        <div class="form-input">
+                            <span class="width">电话</span>
+                            <input type="text" name="data[phone]" id="">
+                        </div>
+                        <div class="form-input">
+                            <span class="width">年级</span>
+                            <select name="data[classes]">
+                                <option value="">请选择</option>
+                                <option value="高一">高一</option>
+                                <option value="高二">高二</option>
+                                <option value="高三">高三</option>
+                            </select>
+                        </div>
+                        <div class="form-input">
+                            <span class="width_zysp">专业水平</span>
+                            <select name="data[professional]">
+                                <option value="">请选择</option>
+                                <option value="专业水平1">专业水平1</option>
+                                <option value="专业水平2">专业水平2</option>
+                                <option value="专业水平3">专业水平3</option>
+                            </select>
+                        </div>
+                        <div class="form-input">
+                            <span class="width_whkcj">文化课成绩</span>
+                            <select name="data[culture]">
+                                <option value="">请选择</option>
+                                <option value="文化课成绩1">文化课成绩1</option>
+                                <option value="文化课成绩2">文化课成绩2</option>
+                                <option value="文化课成绩3">文化课成绩3</option>
+                            </select>
+                        </div>
+                        <div style="color:#903" class="Error"></div>
+                        <div class="button" style="margin-top:0px"><button id="postxq">免费领取考试秘笈</button><button type="reset" style="display:none" id="prerest" style="margin-top:0px"></button></div>
+                    </form>
+                    <div class="nian_nav"><a href="#">2018 LIXIANG ART</a></div>
+                </div>
+            </div>
+        </div>
+        <!-- 第三部分，招生简章 -->
+        <div class="srbbox">
+            <div class="srbbox_itmes">
+                <a href="#">
+                    <p class="srb_itmes_list1">招生简章</p>
+                    <p class="srb_itmes_list2">全封闭小班管理</p>
+                    <p class="srb_itmes_list3"></p>
+                </a>
+                <a href="#">
+                    <p class="srb_itmes_list1">大事件</p>
+                    <p class="srb_itmes_list2">全封闭小班管理</p>
+                    <p class="srb_itmes_list3"></p>
+                </a>
+                <a href="#">
+                    <p class="srb_itmes_list1">精品学员</p>
+                    <p class="srb_itmes_list2">全封闭小班管理</p>
+                    <p class="srb_itmes_list3"></p>
+                </a>
+                <a href="#">
+                    <p class="srb_itmes_list1">文化+专业</p>
+                    <p class="srb_itmes_list2">全封闭小班管理</p>
+                    <p class="srb_itmes_list3"></p>
+                </a>
+                <a href="#">
+                    <p class="srb_itmes_list1">一站服务</p>
+                    <p class="srb_itmes_list2">全封闭小班管理</p>
+                    <p class="srb_itmes_list3"></p>
+                </a>
+            </div>
+        </div>
+        <!-- 第四部分 状元banner -->
+        <div class="zy-mist">
+            <div class="layui-carousel" id="test1">
+                <div carousel-item>
+                	{foreach from=$data['banner'][1] key=k item=v}
+                    <div><a href="{$v['url']}"><img src="{$v['img']}" alt=""></a></div>
+                    {/foreach}
+                </div>
+            </div>
+        </div>
+        <!-- 第五部分 合格证数据 -->
+        <div class="Certificate" id="eq">
+            <div class="Certificate_com">
+                <div>
+                    <b class="b1">0</b>
+                    <P>九大美院<span class="b1">{$website['nums'][0]}</span>张合格证</P>
+                </div>
+                <div>
+                    <b class="b2">0</b>
+                    <P>状元制造者	<span class="b2">{$website['nums'][1]}</span>张合格证</P>
+                </div>
+                <div>
+                    <b class="b3">0</b>
+                    <P>中国美术学院<span>{$website['nums'][2]}</span>张合格证</P>
+                </div>
+                <div>
+                    <b class="b4">0</b>
+                    <P>高等美术学院<span>{$website['nums'][3]}</span>张合格证</P>
+                </div>
+                <div>
+                    <b class="b5">0</b>
+                    <P>合格证<span>{$website['nums'][4]}</span>张合格证</P>
+                </div>
+
+            </div>
+        </div>
+        <!-- 优秀学员 -->
+        <div class="excellent">
+            <div class="excellent_com">
+                <ul>
+                	{foreach from=$data['yxlist'] key=k item=v}
+                    <li>
+                        <a href="{U('student/')}{$v['arid']}.html">
+                            <p>
+                                <img src="{$v['thumb']}" alt="">
+                                <span>DREAM WAY ART EDUCATION</span>
+                            </p>
+                            <div class="excellent_bg">
+                                <img src="{$assets}/hzlx/img/Himg.png" class="himg">
+                                <img src="{$assets}/hzlx/img/right_zimg.png" class="rigimg">
+                                <dd class="exce-py">{$v['extend']['en_username']}</dd>
+                                <dd class="exce-hx"></dd>
+                                <dd class="exce-name">{$v['extend']['zh_username']}</dd>
+                                <dd class="exce-zy">
+                                    <span>{$v['extend']['yychengj']}</span>
+                                </dd>
+                                <dd class="exce-yx">{$v['extend']['yx_stu']}</dd>
+                            </div>
+                        </a>
+                    </li>
+                    {/foreach}
+                </ul>
+            </div>
+        </div>
+        <!-- 每张成绩诉说着理想和青春 -->
+        <div class="lxqc"><img src="{$assets}/hzlx/img/cjshimg.jpg" alt=""></div>
+        <!-- 诉说 -->
+        <div class="Complain">
+            <div class="Complain-com">
+                <div class="complain-left">
+                    <div id="demo">
+                        <div id="demo1">
+                            <ul class="prizelist">
+                            {foreach from=$data['stulist'] key=k item=v}
+                                <li>
+                                    <a href="{U('view/')}{$v['arid']}.html">
+                                        <dd class="priazlistimg"><img src="{$v['thumb']}" alt=""></dd>
+                                        <dd class="priazlist_title">
+                                            <span class="priazlist-py">{$v['extend']['en_username']}</span>
+                                            <span class="priazlist-name">{$v['extend']['zh_username']}</span>
+                                            <span class="priazlist-lq">{$v['extend']['yychengj']}</span>
+                                        </dd>
+                                    </a>
+                                </li>
+                                {/foreach}
+                            </ul>
+                        </div>
+                        <div id="demo2">
+                            <ul class="prizelist">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="complain-right">
+                    <div class="complain-right-nav">
+                        <dd class="com_active" id="1">在线留言</dd>
+                        <dl><img src="{$assets}/hzlx/img/right_btn.png" alt=""></dl>
+                        <dd id="2">最近留言</dd>
+                    </div>
+                    <div class="comlist">
+                        <div class="comlist-ly">
+                            <div class="comlist-ts">谢谢您的参与</div>
+                            <div class="comlist-inputbox">
+                                <form action="{U('main/reply')}" id="form2" method="post" onSubmit="return false;">
+                                    <dd>
+                                        <span>姓名</span>
+                                        <input type="text" name="data[username]" id="">
+                                    </dd>
+                                    <dd>
+                                        <span>电话</span>
+                                        <input type="text" name="data[phone]" id="">
+                                    </dd>
+                                    <dd>
+                                        <span>邮箱</span>
+                                        <input type="text" name="data[email]" id="">
+                                    </dd>
+                                    <dd>
+                                        <span>内容</span>
+                                        <textarea name="data[contents]" id="" cols="30" rows="10"></textarea>
+                                    </dd>
+                                    <dd class="Ereply" style="color:#F00"></dd>
+                                    <button class="comlist-button postReply" type="button" style="margin-top:0px">提交留言</button>
+                                    <button type="reset" style="display:none" id="onresets" style="margin-top:0px"></button>
+                                </form>
+                            </div>
+
+                        </div>
+                        <div class="comlist-zjly">
+                        {foreach from=$data['reply'] key=k item=v}
+                            <div class="conlist-zjly-list">
+                                <img src="{$assets}/hzlx/img/logo.jpg" alt="">
+                                <dd>
+                                    <img src="{$assets}/hzlx/img/yuan.png" class="yuan">
+                                    <span>{$v['contents']}</span><br>
+                                    <span>{date('Y-m-d',$v['addtime'])}</span>
+                                </dd>
+                            </div>
+                            {/foreach}
+                        </div>
+                    </div>
+                    <dd class="comlist-jy">--您的建议就是梦想路上的助听器--</dd>
+
+                </div>
+            </div>
+        </div>
+        <!-- 八大优势 -->
+        <div class="advantage">
+            <div class="advantage-com">
+                <dd class="advantage-navname">
+                    <span class="advantage-name1">理想八大优势</span>
+                    <span class="advantage-name2">EIGHT ADVANTAGES</span>
+                </dd>
+                <div class="advantage-list">
+                    <ul>
+                    {foreach from=$data['ys_data'] key=k item=v}
+                        <li>
+                            <a href="{U('view/')}{$v['arid']}.html">
+                                <dd class="advatg-py">QUALIFICATION</dd>
+                                <dd class="advatg-name">{$v['title']}</dd>
+                                <dd class="advatg-img"></dd>
+                                <dd class="advatg-txt">{$v['description']}</dd>
+
+                            </a>
+                        </li>
+                     {/foreach}   
+                        
+
+                    </ul>
+                </div>
+                <!-- 选择决定未来 -->
+                <div class="advatg-jd">
+                    <a href="#">CHOICE DECIDES YOUR FUTURE</a>
+                    <span>选择决定未来</span>
+                </div>
+            </div>
+        </div>
+        <!-- 理想banner轮播 -->
+        <div class="ideal-broadcast">
+            <div class="layui-carousel" id="test2">
+                <div carousel-item>
+                {foreach from=$data['banner'][2] key=k item=v}
+                    <div><a href="{$v['url']}"><img src="{$v['img']}" alt=""></a></div>
+				{/foreach}
+                </div>
+            </div>
+        </div>
+        <!-- 理想班型 -->
+        <div class="Class-type">
+            <div class="Class-type-box">
+                <ul>
+                {foreach from=$data['classlist'] key=k item=v}
+                    <li>
+                        <dd class="class-name">{$v['typename']}</dd>
+                        <dd class="class-titile">{$v['description']}</dd>
+                        <dd class="class-a">
+                            <a href="{U('classtype/')}{$v['typeid']}.html" class="class-nav">了解更多</a>
+                        </dd>
+                    </li>
+                    {/foreach}
+                </ul>
+            </div>
+        </div>
+        <!-- 素描*优秀作品 -->
+        <div class="Sketch">
+            <div class="layui-carousel" id="test3">
+                <div carousel-item>
+                {foreach from=$data['banner'][3] key=k item=v}
+                    <div><a href="{$v['url']}"><img src="{$v['img']}" alt=""></a></div> 
+         		{/foreach}
+                </div>
+            </div>
+        </div>
+        
+        {include file="public/footer.html"}
+    </div>
+    {include file="public/footerJs.html" indexjs=1}
+    <script type="text/javascript">
+    layui.use('carousel', function () {
+        var carousel = layui.carousel;
+        //建造实例
+        carousel.render({
+            elem: '#test1',
+            width: '100%', //设置容器宽度
+            arrow: 'always' //始终显示箭头
+            //,anim: 'updown' //切换动画方式
+        });
+        //建造实例
+        carousel.render({
+            elem: '#test2',
+            width: '100%', //设置容器宽度 
+            arrow: 'always' //始终显示箭头
+            //,anim: 'updown' //切换动画方式
+        });
+        //建造实例
+        carousel.render({
+            elem: '#test3',
+            width: '100%', //设置容器宽度 
+            arrow: 'always' //始终显示箭头
+            //,anim: 'updown' //切换动画方式
+        });
+    });
+    $(document).ready(function () {
+        function beginroll() {
+            var speed = 40
+            var demoScrollTop = $("#demo").scrollTop();
+            var demo1OffsetHeight = $("#demo1").height();
+            var demohtml = $("#demo1").html();
+            $("#demo2").html(demohtml);
+
+            function Marquee() {
+                if (demoScrollTop >= demo1OffsetHeight) {
+                    demoScrollTop = 0;
+                } else {
+                    demoScrollTop = demoScrollTop + 1;
+                }
+                $("#demo").scrollTop(demoScrollTop);
+            }
+            var MyMar = setInterval(Marquee, speed);
+            $("#demo").mouseover(function () {
+                clearInterval(MyMar);
+            })
+            $("#demo").mouseout(function () {
+                MyMar = setInterval(Marquee, speed);
+            })
+
+        }
+        beginroll();
+        var i = 1;
+        $(".complain-right-nav dd").click(function () {
+            $(this).addClass('com_active').siblings('dd').removeClass('com_active');
+            var id = $(this).attr('id');
+            if (id == 1) {
+                $('.comlist-ly').show();
+                $('.comlist-zjly').hide();
+            }
+            if (id == 2) {
+                $('.comlist-ly').hide();
+                $('.comlist-zjly').show();
+            }
+        });
+
+
+    })
+
+</script>
+
+</body>
+
+
+</html>

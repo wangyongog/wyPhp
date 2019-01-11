@@ -1,0 +1,412 @@
+/*
+ * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
+ * http://cssreset.com
+*/
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video,
+input {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font-weight: normal;
+    vertical-align: baseline;
+}
+
+html,
+body {
+    height: 100%;
+    min-width: 1200px;
+    margin: auto;
+}
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+menu,
+nav,
+section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* custom */
+a {
+    color: #7e8c8d;
+    text-decoration: none;
+    -webkit-backface-visibility: hidden;
+}
+
+li {
+    list-style: none;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+    height: 5px;
+    background-color: rgba(125, 125, 125, 0.7);
+    -webkit-border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+    width: 5px;
+    background-color: rgba(125, 125, 125, 0.7);
+    -webkit-border-radius: 6px;
+}
+
+html,
+body {
+    width: 100%;
+}
+
+body {
+    -webkit-text-size-adjust: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+/* 头部 */ 
+.header {
+    width: 100%;
+    height: auto;
+    position: relative;
+    background: #ffffff;
+}
+
+.header_com {
+    width: 1200px;
+    height: auto;
+    margin: auto;
+    position: relative;
+}
+
+.header_com .layui-nav {
+    background: #ffffff;
+    color: #0000c0;
+    padding: 0px;
+    margin: auto;
+    text-align: center
+}
+
+.header_com .layui-nav .layui-nav-item {
+    line-height: 72px;
+    margin: 0px 30px;
+}
+
+.header_com .layui-nav .layui-nav-item a {
+    color: #0000c0 !important;
+    font-size: 14px;
+}
+
+.header_com .layui-nav .layui-nav-more {
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid dashed dashed;
+    border-color: #fff transparent transparent;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all .2s;
+    -webkit-transition: all .2s;
+    position: absolute;
+    top: 50%;
+    right: 3px;
+    margin-top: -3px;
+    border-width: 6px;
+    border-top-color: rgba(0, 0, 192, .7);
+}
+
+.header_com .layui-nav .layui-nav-mored,
+.layui-nav-itemed>a .layui-nav-more {
+    margin-top: -9px;
+    border-style: dashed dashed solid;
+    border-color: transparent transparent #0000c0
+}
+
+.header_com .layui-nav .layui-this:after,
+.layui-nav-bar,
+.layui-nav-tree .layui-nav-itemed:after {
+    display: none;
+}
+
+/* 底部 */
+.foot{
+    width: 100%;
+    height: 971px;
+    position: relative;
+    background:url(../img/footbg.png) no-repeat center;
+    background-size: cover
+}
+.foot-com{
+    width: 1200px;
+    height: auto;
+    margin: auto;
+    padding-top: 165px;
+    position: relative;
+    box-sizing: border-box
+}
+.foot-img1{
+    width: 100%;
+    height: auto;
+    text-align: center
+}
+.foot-txt1{
+    width: 100%;
+    height: auto;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    color: #ffffff;
+    padding-top: 10px;
+    box-sizing: border-box
+}
+.foot-dhimg{
+    width: 100%;
+    height: auto;
+    text-align: center;
+    padding-top: 80px;
+    box-sizing: border-box
+}
+.foot-dh1{
+    width: 100%;
+    height: auto;
+    text-align: center;
+    padding-top: 30px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #ffffff;
+    box-sizing: border-box
+}
+.foot-dh1 span{
+    display: inline-block;
+    font-weight: 600;
+    font-size: 26px;
+    position: relative;
+    top: 2px;
+    padding-right: 10px;
+    box-sizing: border-box
+}
+.foot-zd{
+    width: 100%;
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    font-size: 27px;
+    color: #0000c0;
+    font-weight: 600;
+    background: #ffffff;
+    margin-top: 145px;
+}
+.foot-lxfs{
+    width: 100%;
+    height: auto;
+    text-align: center;
+    position: relative;
+    margin-top: 40px;
+}
+.foot-lxfs img{
+    margin: 0px 10px;
+}
+/* 分頁 */
+
+.paging {
+	width: 800px;
+	height: 40px;
+	line-height: 40px;
+	margin: auto;
+	text-align: center;
+}
+
+.paging button {
+	padding: 0 10px;
+	margin: 0 10px;
+	height: 40px;
+	float: left;
+	cursor: pointer;
+	border: 1px solid #ebebeb;
+	background-color: #ffffff;
+}
+
+.paging .first-page,
+.paging .last-page {
+	margin: 0;
+}
+
+.paging .pageWrap {
+	height: 40px;
+	float: left;
+	overflow: hidden;
+}
+
+.paging .pageWrap ul {
+	width: auto;
+	height: 40px;
+	float: left;
+}
+
+.paging .pageWrap ul li {
+	width: 60px;
+	height: 40px;
+	border: 1px solid #ebebeb;
+	line-height: 40px;
+	box-sizing: border-box;
+	cursor: pointer;
+    float: left;
+    background: #ffffff
+}
+
+.paging .pageWrap ul .sel-page {
+	background-color: #0000c0 ;
+	color: white;
+}
+
+.paging .jump-text {
+	width: 60px;
+	height: 40px;
+	box-sizing: border-box;
+	text-align: center;
+	margin: 0 5px;
+	float: left;
+}
+
+.paging .jump-button {
+	margin: 0;
+	float: left;
+}
+
+.paging .total-pages,
+.paging .total-count {
+	margin-left: 10px;
+	float: left;
+	font-size: 14px;
+}
+
+.activecolor{
+    color: #0000c0 !important;
+}
+.studentbox-com ul li a{
+    color: #333333;
+}
+.paging .pageWrap ul .sel-page a{
+    color: #fff;
+}
+.paging a{
+    float: left;
+    width: auto;
+    height: auto;
+}
+.paging{
+    width: auto;
+    margin: 40px auto;
+display: table
+}

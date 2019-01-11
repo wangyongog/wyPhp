@@ -1,0 +1,73 @@
+{include file="public/header.html"}
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+				try{
+					ace.settings.loadState('main-container')
+					}catch(e){
+				}
+			</script>
+			<div class="main-content">
+				<div class="main-content-inner">
+					<div class="page-content">
+					
+						<div class="row">
+							<div class="col-xs-12">
+								<table id="simple-table" class="table  table-bordered table-hover">
+									<thead>
+									<tr>
+										<th class="center">
+											<label class="pos-rel">
+												<input type="checkbox"  class="ace check-all">
+												<span class="lbl"></span>
+											</label>
+										</th>
+										<th>姓名</th>
+                                        <th>电话</th>
+                                        <th class="hidden-480">年级</th>
+                                        <th class="hidden-480">专业水平</th>
+                                        <th class="hidden-480">文化课成绩</th>
+
+										<th>提交时间</th>
+									</tr>
+									</thead>
+
+									<tbody>
+                                    {foreach from=$data key=k item=val}
+									<tr>
+										<td class="center">
+											<label class="pos-rel">
+												<input type="checkbox" class="ace ids" name="ids[]" value="{$val.id}">
+												<span class="lbl"></span>
+											</label>
+										</td>
+										<td>{$val['uname']}</td>
+										<td>{$val['phone']}</td>
+										<td class="hidden-480">{$val.classes}</td>
+										<td class="hidden-480">{$val.professional}</td>
+                                        <td class="hidden-480">{$val.culture}</td>
+										<td>
+										{if !empty( $val.addtime)}	{date('Y-m-d H:i:s', $val.addtime)} {/if}
+										</td>
+		
+										
+									</tr>
+
+
+										{/foreach}
+									</tbody>
+								</table>
+                                <div class="pagin" >{$_page}</div>
+							</div>
+						</div>
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+
+
+		{include file="public/footer.html"}
+		</div><!-- /.main-container -->
+
+		{include file="public/footerJs.html" isdate=1 isupfile=1}
+
+</body>
+</html>

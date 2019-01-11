@@ -1,0 +1,82 @@
+.course{
+    width: 100%;
+    height: 1042px;
+    position: relative;
+}
+.course img{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+.course-banner-titi{
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    color: #ffffff;
+    text-align: center
+}
+.course-banner-titi span{
+    display: block;
+    font-size: 38px;
+    font-weight: 600;
+}
+.course-banner-titi label{
+    display: block;
+    font-size: 22px;
+    margin-top: 10px;
+}
+.couse2018{
+    width: 100%;
+    height: 1048px;
+    position: relative;
+}
+.couse2018 img{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+.couse2018titi{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: auto;
+    color: #ffffff;
+    text-align: center
+}
+.couse2018titi-data{
+    display: block;
+    color: #0000c0;
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 50px
+}
+.couse2018titi-name1{
+    display: block;
+    font-size: 23px;
+    color: #000;
+    font-weight: 600;
+    margin-bottom: 44px;
+}
+.couse2018titi-name2{
+    display: block;
+    font-size: 16px;
+    color: #000;
+}
+.couse2018titi-name2 span{
+    display: block;
+    padding-bottom: 8px;
+    box-sizing: border-box;
+}
+.cousetiti2017{
+    text-align: left;
+    max-width: 490px;
+    left: 70%;
+}

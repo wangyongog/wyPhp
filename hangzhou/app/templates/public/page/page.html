@@ -1,0 +1,28 @@
+<div class="paging" id="paging">
+{if $_p['currpage'] neq 1}
+      <a href="{if $_p['currpage'] == 1} javascript:; {else} {$_p['first']} {/if}">
+         <button type="button" id="firstPage" class="turnPage first-page">首页</button>
+      </a>
+      <a href="{if $_p['currpage'] == 1} javascript:; {else} {$_p['prepg']} {/if}">
+      <button class="turnPage" id="prePage" >上一页</button>
+      </a>
+      {/if}
+      <span class="pageWrap">
+        <ul id="pageSelect" style="transition: all 600ms; transform: translateX(0px);">
+        {if $_p['pages']}
+        {foreach from=$_p['pages'] key=key item=item }
+            <li class="{if $_p['currpage'] == $item['page']}sel-page{/if}"><a href="{if $_p['currpage'] == $item['page']} javascript:; {else} {$item['url']} {/if}">{$item['page']}</a></li>
+          {/foreach}
+        {/if}  
+        </ul>
+      </span>
+      {if $_p['currpage'] neq $_p['pagenum']}
+      <a href="{if $_p['currpage'] == $_p['pagenum']} javascript:; {else} {$_p['nextpg']} {/if}">
+      <button class="turnPage" id="nextPage">下一页</button>
+    </a>
+    <a href="{if $_p['currpage'] == $_p['pagenum']} javascript:; {else} {$_p['last']} {/if}">
+      <button type="button" id="lastPage" class="last-page">尾页</button> 
+    </a>
+    {/if}
+      <p class="total-count"></p>
+</div>

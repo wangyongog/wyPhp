@@ -1,0 +1,9 @@
+<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+    <ul class="breadcrumb">
+        {if $head_itle}
+            {foreach from=$head_itle key=k item=val}
+                <li class="active">{if $val.home} <i class="ace-icon fa fa-home home-icon"></i>{/if}<a href="{if $val['url']}{$val['url']} {else}javascript:; {/if}">{$val['name']}</a></li>
+            {/foreach}
+        {/if}
+    </ul>
+</div>

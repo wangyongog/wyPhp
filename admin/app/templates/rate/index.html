@@ -1,0 +1,47 @@
+{include file="public/header.html"}
+	<!-- Content Wrapper. Contains page content -->
+    <style>
+   .layui-form input[type=checkbox], .layui-form input[type=radio], .layui-form select {
+    	display:block;
+	}
+    </style>
+  <div class="">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    	<div class="row">
+        	<div class="col-md-12">
+            	<div class="btn-group">
+                	<button type="submit" class="btn btn-success" onclick="adminJs.showIframe('新增','{U('rate/add')}','700','450')">添加频率</button>
+                </div>
+            	
+            </div>
+        </div>
+		
+    </section>
+    
+	<div class="layui-form table_p">
+      <table class="layui-table">
+        <colgroup>
+          <col width="50">
+          <col width="150">
+          <col width="150">
+          <col width="200">
+          <col>
+        </colgroup>
+        <thead>
+          <tr>
+            <th><input class="check-all" type="checkbox"></th>
+            <th>时间段</th>
+            <th>频率</th>
+            <th>操作</th>
+          </tr> 
+        </thead>
+        <tbody id="tbody_data" data-name="tbody_data"></tbody>
+        
+      </table>
+    </div>
+    <div class="pagin" data-name="pagin" ></div>
+</div>
+{include file="public/footerJs.html"}
+</body>
+</html>

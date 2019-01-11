@@ -1,0 +1,92 @@
+
+.content-tabs nav.page-tabs .page-tabs-content {
+    float: left;
+}
+.content-tabs .page-tabs a:first-child {
+    padding-right: 15px;
+}
+.content-tabs .page-tabs a {
+    display: block;
+    float: left;
+    padding: 0 15px;
+    text-decoration: none;
+    color: #999;
+	/*border-radius: 6px 6px 0 0;*/
+	border:1px solid #ddd;
+	margin-right: -1px;
+	margin-top: -1px;
+}
+.content-tabs{
+    position: relative;
+    height: 41px;
+    line-height: 41px;
+    border-bottom: 3px #3498db solid;
+}
+.content-tabs nav{
+	/*margin-top:8px*/
+}
+.content-tabs nav.page-tabs {
+    margin-left: 40px;
+    height: 38px;
+    overflow: hidden;
+}
+.content-tabs .page-tabs a.active {
+    background: #3498db;
+    color:#fff;
+	font-weight:700;
+}
+
+.content-tabs a i:first-child{
+    margin-right: 3px;
+	margin-left: 3px;
+}
+
+.content-tabs .roll-left {
+   
+}
+.content-tabs .roll-nav, .page-tabs-list {
+    position: absolute;
+    width: 40px;
+    height: 39px;
+    text-align: center;
+    color: #475059;
+    z-index: 2;
+    top: 0;
+}
+.content-tabs button {
+    background: #fff;
+    border: 0;
+    height: 37px;
+    line-height: 37px;
+    width: 40px;
+	outline: 0;
+}
+.content-tabs .roll-right.tabRight {
+    right: 120px;
+}
+.content-tabs .roll-right {
+    right: 0;
+    border-left: solid 1px #ddd;
+}
+
+.content-tabs .roll-right.btn-group {
+    right: 40px;
+    width: 80px;
+    padding: 0;
+}
+.content-tabs .roll-right {
+    right: 0;
+    border-left: solid 1px #ddd;
+}
+.content-tabs .roll-right.btn-group button {
+    width: 80px;
+}
+.content-wrapper .content-tabs button i {
+    color: #999;
+}
+.content-tabs .dropdown-menu {
+    border: solid 1px #ccc;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    right: -1px;
+}

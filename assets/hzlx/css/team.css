@@ -1,0 +1,185 @@
+.team-banner {
+    width: 100%;
+    height: 1043px;
+    position: relative;
+}
+
+.team-banner img {
+    width: 100%;
+    height: auto;
+}
+
+.team-titi {
+    width: 100%;
+    height: auto;
+    min-height: 307px;
+    background: #ededed
+}
+
+.team-titi-com {
+    width: 1200px;
+    height: auto;
+    margin: auto;
+    padding-top: 90px;
+    box-sizing: border-box;
+}
+
+.team-p {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    font-size: 25px;
+    color: #000;
+    font-weight: 600;
+    padding-bottom: 35px;
+    box-sizing: border-box;
+}
+
+.team-page {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    font-size: 16px;
+    color: #000;
+    line-height: 28px;
+}
+
+/* 轮播 */
+.team-lunbo {
+    width: 100%;
+    height: 1033px;
+    background: #e1e1e1;
+    position: relative;
+}
+
+.team-lunbo #test1 {
+    width: 100%;
+    height: 100% !important;
+}
+
+.team-lunbo .layui-carousel[lay-arrow=always] .layui-carousel-arrow {
+    left: 19%;
+}
+
+.team-lunbo .layui-carousel:hover .layui-carousel-arrow[lay-type=add],
+.layui-carousel[lay-arrow=always] .layui-carousel-arrow[lay-type=add] {
+    right: 19%;
+}
+
+.team-lunbo .layui-carousel-arrow {
+    background: none;
+    color: #0000c0;
+    font-size: 50px;
+}
+
+.team-lunbo .layui-carousel-ind {
+    display: none
+}
+
+/* 人物 */
+.team-peng {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding-top: 147px;
+    padding-bottom: 166px;
+    background: #ededed;
+    box-sizing: border-box;
+}
+
+.team-pengcom{
+    width: 1200px;
+    height: auto;
+    margin: auto;
+    position: relative;
+}
+
+.team-peng ul {
+    width: 100%;
+    height: auto;
+}
+
+.team-peng ul li {
+    float: left;
+    width: 240px;
+    height: 240px;
+    position: relative;
+    background: #e1e1e1;
+    overflow: hidden;
+}
+.team-peng ul li a{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    
+}
+.team-peng ul li a:hover .team-up{
+     position: absolute;
+     top: 0px;
+     display: block;
+}
+.team-img {
+    width: 100%;
+    height: 100%;
+}
+
+.team-up {
+    position: absolute;
+    top: -240px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: #0000c0;
+    padding: 40px 30px;
+    transition: 0.5s;
+    box-sizing: border-box; 
+}
+
+.himg {
+    position: absolute;
+    right: 30px;
+    top: 40px;
+}
+
+.team-pup {
+    width: 100%;
+    height: auto;
+    color: #fff; 
+}
+.team-pup span{
+    display: block;
+    font-size: 26px;
+    color: #f7e921;
+    font-weight: 600;
+}
+.team-pup label{
+    display: inline-block;
+    width: auto;
+    font-size: 16px;
+    color: #fff;
+    font-weight: 600;
+    border-top: 2px solid #7f7fdf;
+    padding-top: 5px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+.team-navup{
+    width: 100%;
+    height: auto;
+    position: absolute;
+    bottom: 35px;
+    left: 0px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: underline;
+    color: #fff;
+    overflow:hidden;text-overflow:ellipsis; -o-text-overflow:ellipsis;white-space:nowrap;
+    padding: 0px 17px;
+    box-sizing: border-box;
+}
+.team-peng ul::after {
+    display: block;
+    clear: both;
+    content: ''
+}

@@ -1,0 +1,366 @@
+body {
+    background: #e1e1e1
+}
+
+.journalism-nav {
+    width: 100%;
+    height: auto;
+}
+
+.journalism-navcom {
+    width: 1200px;
+    height: auto;
+    margin: auto;
+}
+
+.journalism-navcom ul {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    position: relative;
+    padding-top: 15px;
+    box-sizing: border-box;
+}
+
+.journalism-navcom ul li {
+    display: inline-block;
+    font-size: 13px;
+    color: #000000;
+    margin: 0px 35px;
+    position: relative;
+    cursor: pointer;
+}
+
+.journalism-navcom ul li span {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.journalism-navcom ul li label {
+    display: block;
+    width: 10px;
+    height: 10px;
+    margin: auto;
+    border-radius: 50%;
+    margin-bottom: 5px;
+}
+
+.journalism-navcom ul li .jouactive {
+    background: #0000c0;
+}
+
+.journalism-com {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding-top: 75px;
+    margin-bottom: 70px;
+    box-sizing: border-box;
+}
+
+.journalsm-combox {
+    width: 1200px;
+    height: auto;
+    margin: auto;
+    position: relative;
+    display: none
+}
+
+.joushow {
+    display: block;
+}
+
+
+.journalsm-combox ul::after {
+    display: block;
+    clear: both;
+    content: ''
+}
+
+.typenav {
+    width: 100%;
+    height: auto;
+    margin: auto;
+    text-align: center;
+
+}
+
+.typenav dd {
+    display: inline-block;
+    width: auto;
+    height: auto;
+    margin: auto;
+    font-weight: 600;
+    text-align: center;
+    font-size: 33px;
+    color: #0000c0;
+    border-bottom: 2px solid #7171d1;
+    box-sizing: border-box;
+}
+
+.typenavcom {
+    width: 100%;
+    height: auto;
+    position: relative;
+    margin-top: 57px;
+    margin-bottom: 140px;
+}
+
+.typenavcom ul {
+    width: 100%;
+    height: auto;
+    position: relative;
+    text-align: center
+}
+
+.typenavcom ul li {
+    display: inline-block;
+    width: 207px;
+    height: 117px;
+    margin: auto 10px;
+    color: #000;
+    background: url(../img/type-bg.png) no-repeat center;
+    background-size: cover;
+}
+
+.typenavcom ul li p {
+    position: relative;
+    top: 60px;
+    width: 100%;
+    text-align: left;
+    padding-left: 10px;
+    box-sizing: border-box;
+}
+
+.typenavcom ul li p span {
+    display: block;
+    font-weight: 600;
+    font-size: 18px;
+    color: #000;
+}
+
+.typenavcom ul li p label {
+    display: block;
+    font-size: 10px;
+    color: #000;
+    padding-top: 5px;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.type-yz {
+    width: 100%;
+    height: auto;
+    position: relative;
+    margin-top: 65px;
+    margin-bottom: 60px;
+}
+
+.type-yz-img {
+    width: 100%;
+    height: auto;
+    position: relative;
+    text-align: center
+}
+
+.type-yz-img img { 
+    width: 100%;
+    height: 190px;
+    margin: auto;
+    margin-right: 20px;
+}
+
+ 
+
+.type-yz-tiit {
+    width: 100%;
+    height: 37px;
+    line-height: 37px;
+    font-weight: 600;
+    background: #0000c0;
+    display: flex
+}
+
+.type-yz-tiit dd {
+    width: 285px;
+    font-weight: 600;
+    height: auto;
+    color: #ffffff;
+    text-align: center;
+}
+
+#class {
+    margin-top: 73px;
+}
+
+#class td,
+#class th
+
+/*设置表格文字左右和上下居中对齐*/
+    {
+    vertical-align: middle;
+    text-align: center;
+    font-weight: 600;
+    font-size: 20px;
+    color: #0000c0;
+    border-color: #0000c0;
+    border: 2px solid #0000c0;
+    background: #e1e1e1
+}
+
+#class th {
+    border: none;
+    font-size: 26px;
+    height: 65px;
+    padding: 0;
+    color: #ffffff;
+    background: #0000c0
+}
+
+#class .layui-table thead tr,
+.layui-table-click,
+.layui-table-header,
+.layui-table-hover,
+.layui-table-mend,
+.layui-table-patch,
+.layui-table-tool,
+.layui-table-total,
+.layui-table-total tr,
+.layui-table[lay-even] tr {
+    background: #0000c0;
+    color: #ffffff;
+}
+
+.type-jiaru {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    margin-top: 45px;
+    margin-bottom: 80px;
+}
+
+.type-jiaru a {
+    display: block;
+    width: 173px;
+    height: 60px;
+    background: #0000c0;
+    color: #ffffff;
+    font-size: 26px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 60px;
+    margin: auto;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.type-guihua {
+    width: 100%;
+    height: auto;
+    position: relative;
+    text-align: center;
+    margin-top: 68px;
+}
+
+.typegh {
+    display: block;
+    width: 191px;
+    height: 97px;
+    background: url(../img/guihua-b.png) no-repeat center;
+    background-size: cover; 
+    position: relative;
+}
+
+.type-guihua::after {
+    display: block;
+    clear: both;
+    content: ''
+}
+
+.typegh-one {
+    display: block;
+    width: auto;
+    text-align: left;
+    font-size: 26px;
+    font-weight: 600;
+    color: #0000c0;
+    position: absolute;
+    top: -26px;
+    left: 11px;
+}
+
+.type-ghname {
+    width: 100%;
+    height: auto;
+    position: relative;
+    top: 17px;
+}
+
+.type-ghname span {
+    display: block;
+    font-size: 26px;
+    font-weight: 600;
+    color: #0000c0;
+}
+
+.type-ghname label {
+    display: block;
+    font-size: 26px;
+    font-weight: 100;
+    color: #0000c0;
+}
+
+.type-ghjs {
+    width: 100%;
+    height: auto;
+    position: relative;
+    margin-top: 50px;
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+.type-ghjs div {
+    float: left;
+    width: 191px;
+    font-size: 16px;
+    color: #000;
+    text-align: left;
+    margin: auto;
+    text-indent: 2em;
+    line-height: 30px; 
+}
+
+.type-ghjs::after {
+    display: block;
+    clear: both;
+    content: ''
+}
+
+.tylelistbox {
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+.tylelistbox li {
+    float: left;
+    width: auto;
+    max-width: 191px;
+    height: auto;
+    margin-bottom: 60px;
+    margin-right: 60px;
+}
+.tylelistbox li:nth-child(5n){
+ margin-right: 0px;
+}
+
+.type-gunlist {
+    display: block;
+    max-width: 191px;
+    height: auto;
+    margin-top: 20px;
+}

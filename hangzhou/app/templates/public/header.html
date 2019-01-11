@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{$website['sitename']}</title>
+    <meta name="description" content="{$website['description']}" />
+	<meta name="keywords" content="{$website['keywords']}" />
+    <link rel="stylesheet" href="{$assets}/hzlx/css/base.css">
+    <link rel="stylesheet" href="{$assets}/hzlx/css/layui.css">
+    {if $isindex}
+    <link rel="stylesheet" href="{$assets}/hzlx/css/index.css">
+    {/if}
+    {if $istudent}
+    <link rel="stylesheet" href="{$assets}/hzlx/css/outstanding_student.css">
+    <link rel="stylesheet" href="{$assets}/hzlx/css/student.css">
+    {/if}
+    {if $about}
+    <link rel="stylesheet" href="{$assets}/hzlx/css/about.css">
+    {/if}
+    {if $jianjie}
+    <link rel="stylesheet" href="{$assets}/hzlx/css/course.css">
+    {/if}
+    {if $newslist}
+        <link rel="stylesheet" href="{$assets}/hzlx/css/journalism.css">
+    {/if}
+    
+    <script type="text/javascript">
+    var config = {
+		host:'{$web_hosts["hzweb"]}',
+		nums:[{$website['nums'][0]},{$website['nums'][1]},{$website['nums'][2]},{$website['nums'][3]},{$website['nums'][4]}],
+	};
+    </script>
+</head>

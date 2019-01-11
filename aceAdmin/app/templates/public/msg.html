@@ -1,0 +1,67 @@
+{include file="public/header.html"}
+
+
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+				try{
+					ace.settings.loadState('main-container')
+					}catch(e){
+				}
+			</script>
+
+
+
+			<div class="main-content">
+				<div class="main-content-inner">
+					<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12" >
+								<div class="error-container">
+									<div class="well">
+										<h1 class="grey lighter smaller">
+											
+											<span class="blue" >{$msg} <b id="wait">{$waitSecond}</b>秒后将跳转...</span>
+                                            
+										</h1>
+			
+										<h3 class="lighter smaller blue"></h3>
+										<div>
+										</div>
+
+										<hr>
+										<div class="space"></div>
+
+										<div >
+											<a id="href" href="{if $url}{$url}{else}javascript:history.back();{/if}" class="btn btn-grey">
+												<i class="ace-icon fa fa-arrow-left"></i>
+												返回
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+
+
+		{include file="public/footer.html"}
+		</div><!-- /.main-container -->
+
+		{include file="public/footerJs.html"}
+		<script type="text/javascript">
+(function(){
+var wait = document.getElementById('wait'),href = document.getElementById('href').href;
+var interval = setInterval(function(){
+	var time = --wait.innerHTML;
+	if(time <= 0) {
+		location.href = href;
+		clearInterval(interval);
+	};
+}, 1000);
+})();
+</script>
+		
+	</body>
+</html>

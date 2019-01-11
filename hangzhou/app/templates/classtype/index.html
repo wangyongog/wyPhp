@@ -1,0 +1,57 @@
+{include file="public/header.html"}
+<body>
+<link rel="stylesheet" href="{$assets}/hzlx/css/type.css">
+    <div class="index">
+        {include file="public/nav.html"}
+        <!-- 精英班型banner -->
+        <div class="team-banner">
+            <img src="{$assets}/hzlx/img/jybxbanner.jpg" alt="">
+        </div>
+        <!-- 新闻菜单 -->
+        <div class="journalism-nav">
+            <div class="journalism-navcom">
+                <ul>
+                {foreach from=$classlist key=k item=val name=foo}
+                    <li id="{$val['typeid']}"  {if $id eq $val['typeid']} class="activecolor" {/if}>
+                        <label {if $id eq $val['typeid']} class="jouactive" {/if}></label>
+                        <span>{$val['typename']}</span>
+                    </li>
+                {/foreach}       
+                </ul>
+            </div>
+            <div class="journalism-com newslist"></div>
+        </div>
+    {include file="public/footer.html"}
+    </div>
+    {include file="public/footerJs.html"}
+</body>
+
+
+<script>
+    $(function () {
+		var url = '{U("/classtype")}';
+		var aid = $('.journalism-navcom').find('.activecolor').attr('id');
+		ajax.post_loading(url,{ typeid: aid} );
+		
+        $('.journalism-navcom ul li').hover(function () {
+            $(this).addClass('activecolor').siblings().removeClass('activecolor')
+            $(this).children("label").addClass("jouactive").parent().siblings().children("label").removeClass('jouactive');
+            var id = $(this).attr('id');
+            $('.journalism-com .journalsm-combox').each(function (index, e) {
+                var name = $(this).attr('name');
+                if (id == name) {
+                    $(this).addClass('joushow').siblings().removeClass('joushow');
+
+                }
+            });
+			if(id !=aid){
+				aid = id;
+				ajax.post_loading( url ,{ typeid:id});
+			}
+        },function(){});
+
+    });
+
+</script>
+
+</html>

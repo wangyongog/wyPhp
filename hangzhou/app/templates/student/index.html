@@ -1,0 +1,51 @@
+{include file="public/header.html" istudent=1}
+
+<body>
+    <div class="index">
+       {include file="public/nav.html"}
+        <!-- 精英学员banner -->
+        <div class="team-banner">
+            <img src="{$assets}/hzlx/img/student-banner.jpg" alt="">
+        </div>
+        <!-- 学员信息 -->
+        <div class="studentbox">
+			<div class="studentbox-com">
+				<ul>
+                {foreach from=$data key=k item=v}
+					<li>
+						<a href="{U('student/')}{$v['arid']}.html">
+							<div class="student-list">
+                                <img src="{picSize($v['thumb'])}" alt="">
+                                <span class="student-list-title">DREAM WAY ART EDUCATION</span>
+                            </div>
+                            <div class="student-listtitle">
+                                <img src="{$assets}/hzlx/img/Himg.png" class="himg">
+                                <img src="{$assets}/hzlx/img/right_zimg.png" class="righnav">
+                                <p class="student-py">{$v['extend']['en_username']}</p>
+                                <P class="student-name">
+                                    <Label></Label>
+                                    <span>{$v['extend']['zh_username']}</span>
+                                </P>
+                                <div class="sutdent-page">
+                                    <dd>{$v['extend']['yychengj']}</dd>
+                       
+                                </div>
+                                <p class="student-js">{$v['extend']['yx_stu']}</p>
+
+                            </div>
+						</a>
+                    </li>
+                    {/foreach}
+				</ul>
+                <div class="pages">{$_page}</div>
+			</div>
+		</div>
+
+        {include file="public/footer.html"}
+    </div>
+     {include file="public/footerJs.html"}
+</body>
+
+
+
+</html>

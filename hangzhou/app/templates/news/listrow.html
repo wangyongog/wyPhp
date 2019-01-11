@@ -1,0 +1,11 @@
+<ul>
+{foreach from=$data key=k item=v}
+    <li class="jouli">
+        <a href="{U('view/')}{$v['arid']}.html">
+            <img src="{picSize($v['thumb'])}" class="jouimg">
+            <span class="joutiti">{$v['title']}</span>
+            <label class="jou-data">{date('Y-m-d',$v['addtime'])}</label>
+        </a>
+    </li>
+    {/foreach}
+</ul>

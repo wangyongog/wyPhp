@@ -1,0 +1,54 @@
+{include file="public/header.html"}
+	<!-- Content Wrapper. Contains page content -->
+    <style>
+   .layui-form input[type=checkbox], .layui-form input[type=radio], .layui-form select {
+    	display:block;
+	}
+    </style>
+  <div class="">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    	<div class="row">
+        	<div class="col-md-12">
+            	
+            	<div class="btn-group">
+                    <form class="form-inline" id="searchForm" action="/task/{I('type')}.html" method="get">
+                        <label class="inline">用户名：</label>
+                        <input id="username" class="form-control" name="username" value="" type="text">
+                        <label class="inline">标题：</label>
+								<input class="form-control" name="title" value="" type="text" style="width:250px" placeholder="请输入标题">
+                                
+                        <label class="inline">链接：</label>
+                        <input id="url" class="form-control" name="url" value="" type="text">
+                        <button type="button" class="btn btn-primary searchForm">搜索</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+		
+    </section>
+    
+	<div class="layui-form table_p">
+      <table class="layui-table">
+        
+        <thead>
+          <tr>
+          <th style="  width:100px;">操作</th>
+            {foreach from=$show_list key=k item=val}
+              {if empty($val.hidden)}
+              <th style="  width:{$val.width}px;">
+                    {$val.title}
+              </th>
+              {/if}
+            {/foreach}
+            
+          </tr> 
+        </thead>
+        <tbody id="tbody_data" data-name="tbody_data"></tbody>
+      </table>
+      <div class="pagin" data-name="pagin" ></div>
+    </div>
+</div>
+{include file="public/footerJs.html"}
+</body>
+</html>

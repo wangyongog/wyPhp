@@ -1,0 +1,64 @@
+{include file="public/header.html"}
+		{include file="public/head.html"}
+
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+				try{
+					ace.settings.loadState('main-container')
+					}catch(e){
+				}
+			</script>
+			{include file="public/sidebar.html"}
+
+
+			<div class="main-content">
+				<div class="main-content-inner">
+					{include file="public/breadcrumbs.html"}
+
+					
+						{include file="public/settingsBox.html"}
+                        <div id="content-iframe" class="content-iframe">
+                            <iframe class="main_iframe" scrolling="auto" id="main_iframe" width="100%" height="100%" src="{U('main/default')}" frameborder="0" data-id="{U('main/default')}"></iframe>
+                        </div>
+					
+				</div>
+			</div><!-- /.main-content -->
+
+
+		<!--{include file="public/footer.html"}-->
+		</div><!-- /.main-container -->
+
+		{include file="public/footerJs.html"}
+        
+
+        
+<script type="text/javascript">
+$(window).load(function () {
+	var index = layer.load(0, { shade: [0.6,'#fff']});
+	window.setTimeout(function () {
+	   adminJs.closeAllf();
+	}, 1000);
+});			
+function resize(resizeHandle){
+	var d = document.documentElement;
+	var timer;//避免resize触发多次,影响性能
+	var width = d.clientWidth, height = d.clientHeight;
+	$(top.window).on('resize',function(e){
+		if((width != d.clientWidth || height != d.clientHeight)) {
+			width = d.clientWidth, height = d.clientHeight;
+			if(timer){
+				clearTimeout(timer);
+			}
+			timer = setTimeout(function() {
+				resizeHandle();
+			},10);	
+		}
+	});
+	
+}
+
+</script>
+		<!-- inline scripts related to this page -->
+		
+	</body>
+</html>

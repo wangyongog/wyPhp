@@ -1,0 +1,83 @@
+{include file="public/header.html"}
+<style>
+*, *:before, *:after {
+  box-sizing:content-box;
+}
+body{
+	background-color:#fff
+}
+</style>
+    <div class="main-content">
+	<div class="main-content-inner">
+    	<div class="page-content">
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+          <!-- general form elements -->
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form class="layui-form" action="{U('Manager/add')}">
+            <input type="hidden" value="{$uid}" name="uid"/>
+            <input type="hidden" value="{creatToken($uid)}" name="formhash"/>
+            
+              <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="user" value="{$data['user']}" {if $uid gt 0}  disabled="disabled" {/if} required  lay-verify="required"  datatype="s" errormsg="请输入用户名" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">用户组</label>
+                <div class="layui-input-inline">
+                  <select name="group" lay-verify="required">
+                    {if $group}  
+                    {foreach from=$group key=k item=val}
+                    <option  {if $data['groupid'] eq $val['groupid']}  selected="selected" {/if} value="{$val['groupid']}">{$val['title']}</option>
+					{/foreach}
+                    {/if}
+                  </select>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-block">
+                  <input type="password" name="password" value="" required  lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">重复密码</label>
+                <div class="layui-input-block">
+                  <input type="password" name="password1" value="" required  lay-verify="required" placeholder="再次输入密码" autocomplete="off" class="layui-input">
+                </div>
+              </div>
+              
+              <div class="layui-form-item">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-inline">
+                  <input type="checkbox" name="status" lay-skin="switch" lay-text="正常|锁定"  checked >
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <div class="layui-input-block">
+                  <button type="button" class="layui-btn ajaxFrom">立即提交</button>
+                 <!-- <button type="reset" class="layui-btn layui-btn-primary">重置</button>-->
+                </div>
+              </div>
+            </form>
+          <!-- /.box -->
+        </div>
+        <!--/.col (right) -->
+      </div>
+      <!-- /.row -->
+    </div>
+    </div>
+    </div>
+{include file="public/footerJs.html"}
+<script>
+layui.use(['form'], function(){
+  var form = layui.form;
+  
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,265 @@
+.team-banner{
+    width: 100%;
+    height: auto;
+}
+.team-banner img{
+    width: 100%;
+    height: auto;
+}
+.about-page1{
+    width: 100%;
+    height: auto;
+    /* min-height: 690px; */
+    /* padding: 35px 0px; */
+    padding-bottom: 35px;
+    background: #ededed;
+    border-bottom: 2px solid #4a4ace;
+    box-sizing: border-box;
+}
+.about-page1com{
+    width: 1200px;
+    height: auto;
+    margin: auto;
+    position: relative;
+    padding-top: 62px;
+    box-sizing: border-box;
+}
+.abottop{
+    width: 100%;
+    height: auto;
+}
+.abutonavlog{
+    float: left;
+    position: absolute;
+    left: 0px;
+}
+.aboutpage1-titiname{
+    float: left;
+    width: auto;
+    height: auto;
+    padding-left: 75px;
+    box-sizing: border-box;
+}
+.aboutpage1-titiname span{
+    display: block;
+}
+.about-page1com::after{
+    display: block;
+    clear: both;
+    content: ''
+}
+.abutitinamepy{
+    font-size: 28px;
+    color: #0000c0;
+}
+.abutitinamename{
+    color: #0000c0;
+    font-size: 25px;
+    font-weight: 600;
+}
+.abutopage1titi1{
+    width: 100%;
+    font-size: 15px;
+    color: #0000c0;
+    padding-left: 75px;
+    padding-top: 20px;
+    box-sizing: border-box;
+}
+.abottop::after{
+    display: block;
+    clear: both;
+    content: ''
+}
+.aboutpage1-com{
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding-left: 75px;
+    margin-top: 70px;
+    box-sizing: border-box;
+}
+.aboutpage1-comleft{
+    float: left;
+    width: 367px;
+    height: auto;
+    font-size: 15px;
+    color: #0000c0; 
+    line-height: 30px;
+}
+.aboutpage1-comleft img{
+    width: auto;
+    max-width: 367px;
+    height: auto;
+    margin-bottom: 20px;
+
+}
+
+.aboutpage1-comright{
+    float: left;
+    width: 622px;
+    height: auto;
+    margin-left: 120px;
+    font-size: 15px;
+    color: #0000c0; 
+    line-height: 30px;
+}
+.aboutpage1-comright img{
+    width: auto;
+    max-width: 622px;
+    height: auto;
+}
+.aboutpage1-com::after{
+    display: block;
+    clear: both;
+    content: ''
+}
+.abuoupage1img{
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+.abuoupage1img img{
+    margin: 5px;
+}
+.aboutpage1imgcom1{
+    width: 366px;
+    height: 239px;
+    position: relative;
+    margin-bottom: 10px;
+    overflow: hidden;
+} 
+.aboutpage1imgcom1 .abuimg1{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.abutonavcompage1{
+    width: 100%;
+    height: 36px;
+    line-height: 36px;
+    background: #0000c0;
+    color: #ffffff;
+    font-size: 15px;
+    text-align: left;
+    position: relative;
+    z-index: 5;
+    padding-left: 18px;
+    box-sizing: border-box;
+}
+.aboutnavimg{
+    position: absolute;
+    right: 25px;
+    top: 15px;
+}
+.aboutnavbgtiti{
+    position: absolute;
+    top: -239px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: #0000c0;
+    z-index: 4; 
+    color: #ffffff;
+    font-size: 14px;
+    padding-top: 60px;
+    line-height: 25px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
+.aboutpage1imgcom1:hover .aboutnavbgtiti{
+  position: absolute;
+  transition: 0.5s; 
+  top: 0px;
+}
+.aboutpage1-com>.aboutpage1imgcom1{
+    float: left;
+    margin-right: 10px;
+    width: 365px;
+}
+.aboutpage1-com>.aboutpage1imgcom1 > a >.abutonavcompage1{
+    text-align: right;
+    padding-right: 60px;
+    box-sizing: border-box;
+}
+.aboutpage1imgcom1 a{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+.abuoupage1imgage1{
+    float: left;
+    width: 250px;
+    height: 366px;
+}
+.abuoupage1imgage1 img{
+    width: 100%;
+    height: auto;
+    max-height: 366px;
+}
+.abuoupage1imgage2{
+    float: left;
+    width: 275px;
+    height: 366px;
+    margin: 0px 17px;
+}
+.abuoupage1imgage2 img{
+    width: 100%;
+    height: 100%;
+}
+.abuoupage1imgage3{
+    float: left;
+}
+.abuoupage1imgage3 img{
+    max-width: 553px;
+    max-height: 366px;
+}
+.abutonavlog8{
+    top: 80px;
+}
+.abutitinamename8{
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 600;
+    padding-left: 60px;
+    box-sizing: border-box;
+}
+.youzi-fw{
+    width: 615px;
+    height: 409px; 
+    position: relative;
+}
+.youzi-fw .layui-carousel{
+    height: 100% !important;
+}
+.youzi-fw  img{
+    height: 100% !important;
+}
+.youzi-fw .layui-carousel-ind{
+    display: none;
+}
+.youzi-fw .layui-carousel-arrow{
+    background: none;
+    color: #0000c0;
+    font-size: 35px;
+}
+.abutonavlog2{
+    left: -10px;
+}
+.abutonavlog3{
+    left: -10px;
+}
+.abutonavlog4{
+    left: -10px;
+}
+.abutonavlog5{
+    top: 70px;
+    left: -10px;
+}
+.abutonavlog7{
+    top: 70px;
+    left: -10px;
+}

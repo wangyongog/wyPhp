@@ -1,0 +1,16 @@
+<div class="paging" id="paging{$typeid}"></div>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#paging{$typeid}").paging({
+		initPageNo: 1,
+		totalPages: {$totalPage},
+		totalCount: {$count},
+		slideSpeed: 600,
+		jump: false,
+		callback: function(t,first) {
+			if(typeof first =="undefined"){
+				ajax.post_loading('{$post_url}',{ page:t,id:{$typeid}});
+			}
+		}
+	})});
+</script>

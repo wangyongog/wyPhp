@@ -1,0 +1,117 @@
+{include file="public/header.html"}
+		{include file="public/head.html"}
+
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+				try{
+					ace.settings.loadState('main-container')
+					}catch(e){
+				}
+			</script>
+			{include file="public/sidebar.html"}
+
+
+			<div class="main-content">
+				<div class="main-content-inner">
+					{include file="public/breadcrumbs.html"}
+
+					<div class="page-content">
+						{include file="public/settingsBox.html"}
+
+						<div class="page-header">
+                        <a href="{U('group/add')}">
+                            <button type="button" class="btn btn-info btn-sm ">
+                                添加
+                            </button></a>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+								<table id="simple-table" class="table  table-bordered table-hover">
+									<thead>
+									<tr>
+										<th class="center detail-col">
+											<label class="pos-rel">
+												<input type="checkbox" class="ace check-all">
+												<span class="lbl"></span>
+											</label>
+										</th>
+										<th>用户组</th>
+                                        <th>状态</th>
+                                        <th>操作</th>
+									</tr>
+									</thead>
+
+									<tbody>
+                                    {foreach from=$data key=k item=val}
+                                    	<tr>
+										<td class="center">
+											<label class="pos-rel">
+												<input type="checkbox" class="ace ids" name="ids[]" value="{$val.groupid}">
+												<span class="lbl"></span>
+											</label>
+										</td>
+
+										
+										<td>{$val.title}</td>
+										<td>{if $val.status eq '1'}	启用 {else}禁用 {/if}</td>
+										
+										</td>
+
+										<td>
+										
+											<div class="hidden-sm hidden-xs action-buttons">	
+                                                <a class="green" href="{U('group/add',['groupid'=>$val.groupid])}"  title="编辑">
+                                                    <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                                </a>
+
+                                                <a class="red del" href="javascript:;" _url="{U('group/del',['groupid'=>$val['groupid'],'token'=>creatToken($val['groupid'])])}" title="删除">
+                                                    <i class="ace-icon fa fa-trash-o bigger-130"></i>
+                                                </a>
+                                            </div>
+											
+                                            <div class="hidden-md hidden-lg">
+												<div class="inline pos-rel">
+													<button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+														<i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+													</button>
+
+													<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+														<li>
+															<a href="javascript:;" class="tooltip-success edit" _url="{U('group/add',['groupid'=>$val.groupid])}" _wh="700,550" title="编辑" data-rel="tooltip" title="" data-original-title="Edit">
+																			<span class="green">
+																				<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+																			</span>
+															</a>
+														</li>
+
+														<li>
+															<a href="javascript:;" class="tooltip-error del" _url="{U('group/del',['groupid'=>$val['groupid'],'token'=>creatToken($val['groupid'])])}" title="删除" data-rel="tooltip" title="" data-original-title="Delete">
+																			<span class="red">
+																				<i class="ace-icon fa fa-trash-o bigger-120"></i>
+																			</span>
+															</a>
+														</li>
+													</ul>
+												</div>
+											</div>
+										</td>
+									</tr>
+                                    {/foreach}
+                                    </tbody>
+								</table>
+							</div>
+						</div>
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+
+
+		{include file="public/footer.html"}
+		</div><!-- /.main-container -->
+
+		{include file="public/footerJs.html"}
+
+		
+	</body>
+</html>

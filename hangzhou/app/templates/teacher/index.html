@@ -1,0 +1,77 @@
+{include file="public/header.html"}
+<body>
+    <link rel="stylesheet" href="{$assets}/hzlx/css/team.css">
+    <div class="index">
+        {include file="public/nav.html"}
+        <!-- 教师团队banner -->
+        <div class="team-banner">
+            <img src="{$assets}/hzlx/img/team-banner.jpg" alt="">
+        </div>
+        <!-- 标题 -->
+        <div class="team-titi">
+            <div class="team-titi-com">
+                <p class="team-p">2003年开始，专注美术高考培训</p>
+                <p class="team-page">杭州理想教育培训学校，2003年成立于西子湖畔；</p>
+                <p class="team-page">2013年注册成为杭州第一家由教育局直管的正规美术培训学校；</p>
+                <p class="team-page">2016年成为杭州第一家资本入驻的美术培训学校；</p>
+                <p class="team-page">经过14年的发展成为杭州最正规、最具品牌影响力的美术培训学校。</p>
+            </div>
+        </div>
+        <!-- banner轮播 -->
+        <div class="team-lunbo">
+            <div class="layui-carousel" id="test1">
+                <div carousel-item>
+                {foreach from=$banner_data key=k item=v}
+                    <div><a href="{if $v['url']}{$v['url']}{else}javascript:;{/if}"><img src="{picSize(str_replace('small_','',$v['img']))}" alt=""></a></div>
+               {/foreach}
+                </div>
+            </div>
+        </div>
+        <!-- 人物 -->
+        <div class="team-peng">
+            <div class="team-pengcom">
+                <ul>
+                {foreach from=$data key=k item=v}
+                    <li>
+                        <a href="{U('teacher/')}{$v['arid']}.html">
+                            <img src="{picSize($v['thumb'])}" class="team-img">
+                            <div class="team-up">
+                                <img src="{$assets}/hzlx/img/Himg.png" class="himg">
+                                <p class="team-pup">
+                                    <span>{$v['extend']['en_username']}</span>
+                                    <label>{$v['extend']['zh_username']}</label>
+                                </p>
+                                <p class="team-navup">
+                                    {$v['title']}
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                    {/foreach}
+                </ul>
+                <div class="pages">{$_page}</div>
+            </div>
+        </div>
+
+
+        {include file="public/footer.html"}
+    </div>
+    {include file="public/footerJs.html"}
+
+<script type="text/javascript">
+    layui.use('carousel', function () {
+        var carousel = layui.carousel;
+        //建造实例
+        carousel.render({
+            elem: '#test1',
+            width: '100%', //设置容器宽度
+            arrow: 'always' //始终显示箭头
+            //,anim: 'updown' //切换动画方式
+        });
+    });
+
+</script>
+</body>
+
+
+</html>

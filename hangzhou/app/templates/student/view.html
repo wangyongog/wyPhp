@@ -1,0 +1,48 @@
+{include file="public/header.html" istudent=1}
+
+<body>
+    <div class="index">
+       {include file="public/nav.html"}
+        <!-- 优秀学员banner -->
+        <div class="course">
+            <img src="{$assets}/hzlx/img/course-baner.jpg" alt="">
+            <div class="course-banner-titi">
+                <span>优秀学员--理想最好的证明</span>
+                <label for="">EXCELLENT STUDENTS</label>
+            </div>
+        </div>
+        <!-- 学员详细情况 -->
+        <div class="ousteent">
+            <div class="ousteent-com">
+                {$data['article_body']}
+            </div>
+        </div>
+        
+
+
+         
+        {include file="public/footer.html"}
+    </div>
+    {include file="public/footerJs.html" ispage=1}
+<script type="text/javascript">
+    $(function () {
+        $('.journalism-navcom ul li').hover(function () {
+            $(this).children("label").addClass("jouactive").parent().siblings().children("label").removeClass(
+                'jouactive');
+            $(this).addClass('activecolor').siblings().removeClass('activecolor')
+
+            var id = $(this).attr('id');
+            $('.journalism-com .journalsm-combox').each(function (index, e) {
+                var name = $(this).attr('name');
+                if (id == name) {
+                    $(this).addClass('joushow').siblings().removeClass('joushow')
+                }
+            })
+        });
+    });
+
+</script>
+</body>
+
+
+</html>

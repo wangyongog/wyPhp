@@ -1,0 +1,17 @@
+<div class="journalsm-combox joushow">
+    <div class="wrapper">
+        <div class="teach-w">
+            <div class="works-w flash-move">
+                <div class="works clearfix " id="works_01">
+                    {foreach from=$data key=k item=v}
+                        <div class="work">
+                            <a class="slide" href="{picSize(str_replace('small_','',$v['thumb']))}" data-lightbox="work-" style="background-image: url('{picSize(str_replace('small_','',$v['thumb']))}')"></a>
+                        </div> 
+                    {/foreach}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

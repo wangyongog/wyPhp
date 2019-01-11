@@ -1,0 +1,57 @@
+{include file="public/header.html"}
+<style>
+*, *:before, *:after {
+  box-sizing:content-box;
+}
+</style>
+    <section class="content">
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+          <!-- general form elements -->
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form class="layui-form" action="{U('reply/notadd')}">
+            <input type="hidden" value="{formhash()}" name="formhash"/>
+            <input type="hidden" value="{$id}" name="id"/>
+              <div class="layui-form-item">
+                <label class="layui-form-label">平台</label>
+                <div class="layui-input-inline">
+                 	<select name="map">
+                    {foreach from=$web_name key=k item=val}
+                      <option value="{$k}" {if $data['map'] eq $k}   selected="selected" {/if}>{$val}</option>
+                    {/foreach}
+                    </select>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">公告</label>
+                <div class="layui-input-block">
+                  <textarea class="layui-textarea" name="notice" placeholder="请输入内容" value="">{$data['notice']}</textarea>
+                </div>
+              </div>
+              
+
+              
+              <div class="layui-form-item">
+                <div class="layui-input-block">
+                  <button type="button" class="layui-btn ajaxFrom">立即提交</button>
+                  <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+              </div>
+            </form>
+          <!-- /.box -->
+        </div>
+        <!--/.col (right) -->
+      </div>
+      <!-- /.row -->
+    </section>
+{include file="public/footerJs.html"}
+<script>
+//Demo
+layui.use('form', function(){
+  var form = layui.form();
+});
+</script>
+</body>
+</html>

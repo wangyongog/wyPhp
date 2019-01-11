@@ -1,0 +1,86 @@
+<div class="journalsm-combox joushow">
+                    <div class="typenav">
+                        <dd>班级亮点特色</dd>
+                    </div>
+                    <div class="typenavcom">
+                        <ul>
+                        {foreach from=$data['extendlist'][$id]['ld'] key=k item=val}
+                            <li>
+                                <p>
+                                    <span>{$val}</span>
+                                    
+                                </p>
+                            </li>
+                           {/foreach}   
+
+
+                        </ul>
+                    </div>
+                    <div class="typenav">
+                        <dd>招生规则</dd>
+                    </div>
+                    <div class="type-yz">
+                        <div class="type-yz-img">
+                            <img src="{$assets}/hzlx/img/banner.jpg" alt=""> 
+                        </div>
+                        
+                    </div>
+                    <div class="typenav">
+                        <dd>班型介绍</dd>
+                    </div>
+                    <div class="layui-form" id="class">
+                        <table class="layui-table">
+                            <thead>
+                                <tr>
+                                    <th center>班型</th>
+                                    <th>考学方向</th>
+                                    <th>班级人数</th>
+                                    <th>师资构成</th>
+                                    <th>收费标准</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {foreach from=$classlist key=k item=val}
+                                <tr>
+                                    <td>{$val['typename']}</td>
+                                    <td>{$data['extendlist'][$val['typeid']]['fx']}</td>
+                                    <td>{$data['extendlist'][$val['typeid']]['pnum']}</td>
+                                    <td>{$data['extendlist'][$val['typeid']]['szgc']}</td>
+                                    <td>{$data['extendlist'][$val['typeid']]['money']}</td>
+                                </tr>
+                             {/foreach}      
+                                
+                            </tbody>
+                        </table>
+                        <div class="type-jiaru">
+                            <a href="#">加入战队</a>
+                        </div>
+                    </div>
+                    <div class="typenav">
+                        <dd>专业规划</dd>
+                    </div>
+                    <div class="type-guihua">
+                        <ul class="tylelistbox">
+                        {foreach from=$data['extendlist'][$id]['gh'] key=k item=val}
+                            <li>
+                                <div class="typegh">
+                                    <span class="typegh-one">0{$k+1}</span>
+                                    <p class="type-ghname">
+                                        <span>{$val}</span>
+                                    </p>
+                                </div>
+                                <div class="type-gunlist">
+                                {$data['extendlist'][$id]['gh_task'][$k]}
+                                </div>
+                            </li>
+                          {/foreach}  
+                 
+
+                        </ul>
+
+
+
+                    </div>
+
+
+                </div>

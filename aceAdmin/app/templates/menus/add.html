@@ -1,0 +1,111 @@
+{include file="public/header.html"}
+<style>
+*, *:before, *:after {
+  box-sizing:content-box;
+}
+body{
+	background-color:#fff
+}
+</style>
+<div class="main-content">
+	<div class="main-content-inner">
+    	<div class="page-content">
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+          <!-- general form elements -->
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form class="layui-form" action="{U('menus/add')}">
+            <div class="layui-form-item">
+                <label class="layui-form-label">上级菜单</label>
+                <input type="hidden" value="{$id}" name="id"/>
+                <input type="hidden" value="{formhash()}" name="formhash"/>
+                <div class="layui-input-inline">
+                  <select lay-verify="required" id="pid" name="data[pid]">
+                  	<option value="0" {if $pid eq 0} selected="selected" {/if} >顶级菜单</option>
+                    {if $sidebarlist}  
+                    {foreach from=$sidebarlist key=k item=val}
+                        <option {if $pid eq $val.typeid} selected="selected" {/if} value="{$val.typeid}"  >{$val['typename']}</option>
+                        {if isset( $val.children)}  
+                            {foreach from=$val.children key=k item=v}
+                                  <option value="{$v.typeid}" {if $pid eq $v.typeid} selected="selected" {/if}>&nbsp;&nbsp;┗━{$v['typename']}</option>
+                                  {if isset( $v.children)}
+                                      {foreach from=$v.children key=k item=vo}
+                                      <option value="{$vo.typeid}" {if $pid eq $vo.typeid} selected="selected" {/if}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┗━{$vo['typename']}</option>
+                                      {/foreach}
+                                  {/if}
+                            {/foreach}
+
+                        {/if}
+                    {/foreach}
+                    {/if}  
+                  </select>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">菜单名称</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="data[typename]" value="{$data['typename']}" required  lay-verify="required"  datatype="s" errormsg="请输入菜单名称" placeholder="请输入菜单名称" autocomplete="off" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">链接</label>
+                <div class="layui-input-block">
+                  <input type="text" name="data[url]" value="{$data['url']}" required  lay-verify="required"  placeholder="请输入连接" autocomplete="off" class="layui-input">
+                </div>
+              </div>
+
+              <div class="layui-form-item">
+                <label class="layui-form-label">文章添加模板</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="data[add_article]" placeholder="" value="{$data['add_article']}" autocomplete="off" class="layui-input" >
+                </div>
+              </div>
+              
+              <div class="layui-form-item">
+                <label class="layui-form-label">显示状态</label>
+                <div class="layui-input-inline">
+                  <input type="checkbox" name="data[ishide]" lay-skin="switch" lay-text="显示|隐藏" {if $data['ishide'] eq 1} checked {/if}  >
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">排序</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="data[weight]" value="{$data['weight']}" required  lay-verify="required"  placeholder="排序越小越靠前 " autocomplete="off" class="layui-input">
+                </div>
+              </div>
+              
+              <div class="layui-form-item" >
+                <label class="layui-form-label">页面说明</label>
+                <div class="layui-input-block" style="width:466px">
+                  <textarea name="data[description]" placeholder="请输入内容" value="{$data['description']}" class="layui-textarea"></textarea>
+                </div>
+              </div>
+              
+              
+              <div class="layui-form-item">
+                <div class="layui-input-block">
+                  <button type="button" class="layui-btn ajaxFrom">立即提交</button>
+                  <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+              </div>
+            </form>
+          <!-- /.box -->
+        </div>
+        <!--/.col (right) -->
+      </div>
+      <!-- /.row -->
+      </div>
+   </div>
+</div>
+{include file="public/footerJs.html"}
+<script>
+//Demo
+layui.use(['form'], function(){
+  var form = layui.form;
+  
+});
+</script>
+</body>
+</html>

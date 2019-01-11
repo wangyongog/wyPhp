@@ -1,0 +1,76 @@
+{include file="public/header.html"}
+
+<div class="content-wrapper" style="margin-left: 0;min-height: 790px;">
+
+  <section class="content">
+        <div class="box box-default">
+        <div class="box-body">
+        <div class="btn-group changstatus">
+        <a href="javascript:;" lang="0" class="btn btn-primary {if I('type') eq 0} hover {/if}">全部</a>
+        <a href="javascript:;" lang="1" class="btn btn-primary {if I('type') eq 1} hover {/if}">待执行</a>
+        <a href="javascript:;" lang="2" class="btn btn-primary {if I('type') eq 2} hover {/if}">执行中</a>
+        <a href="javascript:;" lang="3" class="btn btn-primary {if I('type') eq 3} hover {/if}">已完成</a>
+        <a href="javascript:;" lang="-1" class="btn btn-primary {if I('type') eq -1} hover {/if}">已退单</a>
+        </div>
+        
+        <!--<div class="btn-group">
+                    <form class="form-inline" id="form1" action="" method="get">
+                        标题查询：
+                        <input id="title" class="form-control" name="title" value="" type="text">
+                        链接：
+                        <input id="url" class="form-control" name="url" value="" type="text">
+                        <button type="button" class="btn btn-primary searchForm">搜索</button>
+                    </form>
+                </div>-->
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box">
+          <div class="box-header with-border">
+            <form class="form-inline" id="searchForm" action="/task/{I('type')}.html" method="get">
+            	<input type="hidden" name="status" id="status"  value="0"/>
+                <label class="inline">用户名：</label>
+                <input id="username" class="form-control" name="username" value="" type="text">
+                <label class="inline">标题：</label>
+                        <input class="form-control" name="title" value="" type="text" style="width:250px" placeholder="请输入标题">
+                        
+                <label class="inline">链接：</label>
+                <input id="url" class="form-control" name="url" value="" type="text">
+                <button type="button" class="btn btn-primary searchForm">搜索</button>
+            </form>
+          </div>
+          <div class="box-body table-responsive mailbox-messages">
+            <div class="dataTables_wrapper form-inline dt-bootstrap no-footer" id="example1_wrapper">
+                    <table id="example1" class="table table-bordered" style="font-size:12px !important">
+                      <thead>
+                        <tr>
+                          {foreach from=$show_list key=k item=val}
+                          {if empty($val.hidden)}
+                          <th style="word-break:break-all;width:{$val.width}px;">
+                                {$val.title}
+                          </th>
+                          {/if}
+                        {/foreach}
+                          <th style="width:100px;">操作</th>
+                        </tr>
+                      </thead>
+                      <tbody id="tbody_data" data-name="tbody_data"> </tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+</div>
+<!-- basic scripts -->
+{include file="public/footerJs.html"}
+<script type="text/javascript">
+	$('.changstatus >a').on('click', function() {
+		$('#status').val($(this).attr('lang'));
+		$('.searchForm').click();
+	});
+</script>
+</body>
+</html>

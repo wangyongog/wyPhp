@@ -1,0 +1,1053 @@
+* {
+    font-family: '微软雅黑'
+}
+
+body {
+    background: #ffffff;
+    min-width: 1200px;
+    margin: auto;
+} 
+/* banner部分 */
+.banner {
+    width: 100%;
+    height: 976px;
+    position: relative;
+    background: url('../img/banner.jpg') no-repeat center;
+    background-size: cover
+}
+
+.banner_com {
+    width: 1200px;
+    height: 100%;
+    margin: auto;
+    position: relative;
+}
+
+.banner_com_from {
+    width: 417px;
+    height: 664px;
+    position: absolute;
+    background: rgba(155, 160, 195, 0.8);
+    top: 50%;
+    right: 0%;
+    transform: translate(0%, -50%)
+}
+
+.xq-csname {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    font-size: 29px;
+    color: #0000c0;
+    font-weight: bold;
+
+    padding-top: 70px;
+
+    box-sizing: border-box;
+}
+
+.form {
+    width: 100%;
+    height: auto;
+    padding: 0rem 60px;
+    padding-top: 67px;
+    box-sizing: border-box
+}
+
+.form-input {
+    width: 100%;
+    height: 42px;
+    line-height: 42px;
+    background: #e1e1e1;
+    position: relative;
+    border-radius: 7px;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+}
+
+.form-input span {
+    float: left;
+    width: 35%;
+    font-size: 15px;
+    color: #4d4d4d;
+    padding-left: 15px;
+    box-sizing: border-box
+}
+
+.form-input input,
+.form-input select {
+    float: left;
+    width: 65%;
+    height: 100%;
+    line-height: 42px;
+    border: none;
+    font-size: 15px;
+    color: #000;
+    border-radius: 7px;
+    background: none;
+    box-sizing: border-box;
+}
+
+.form-input .width {
+    width: 18%;
+}
+
+.form-input .width+input {
+    width: 82%;
+}
+
+.form-input .width {
+    width: 18%;
+}
+
+.form-input .width+select {
+    width: 82%;
+}
+
+.form-input .width_zysp {
+    width: 29%;
+}
+
+.form-input .width_zysp+select {
+    width: 71%;
+}
+
+.form-input .width_whkcj {
+    width: 33%;
+}
+
+.form-input .width_whkcj+select {
+    width: 67%;
+}
+
+.button {
+    width: 100%;
+    height: 42px;
+    position: relative;
+    margin-top: 62px;
+}
+
+.button button {
+    width: 100%;
+    height: 100%;
+    border: none;
+    font-weight: bold;
+    background: #0000c0;
+    border-radius: 7px;
+    font-size: 17px;
+    color: #ffffff;
+    box-sizing: border-box
+}
+
+.nian_nav {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    margin-top: 75px;
+}
+
+.nian_nav a {
+    display: block;
+    color: #0000c0;
+    font-size: 22px;
+    font-weight: bold;
+    text-decoration: underline
+}
+
+.form-input::after {
+    display: block;
+    clear: both;
+    content: '';
+}
+
+/* 第三部分，招生简章 */
+.srbbox {
+    width: 100%;
+    height: auto;
+    position: relative;
+    background: #ffffff
+}
+
+.srbbox_itmes {
+    width: 1200px;
+    height: 315px;
+    position: relative;
+    margin: auto;
+    display: flex;
+}
+
+.srbbox_itmes a {
+    width: 20%;
+    height: 100%;
+    border-left: 1px solid #0000c0;
+    border-right: 1px solid #0000c0;
+    box-sizing: border-box
+}
+
+.srbbox_itmes a .srb_itmes_list1 {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    font-size: 20px;
+    color: #0000c0;
+    font-weight: bold;
+    padding-top: 59px;
+    box-sizing: border-box
+}
+
+.srbbox_itmes a .srb_itmes_list2 {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    font-size: 16px;
+    color: #0000c0;
+    padding-top: 12px;
+    box-sizing: border-box
+}
+
+.srbbox_itmes a .srb_itmes_list3 {
+    width: 66px;
+    height: 56px;
+    text-align: center;
+    background: url('../img/right_btn.png') no-repeat center;
+    background-size: cover;
+    margin: auto;
+    margin-top: 66px;
+}
+
+.srbbox_itmes a:hover {
+    background: #0000c0;
+}
+
+.srbbox_itmes a:hover p {
+    color: #ffffff;
+}
+
+.srbbox_itmes a:hover .srb_itmes_list3 {
+    background: url('../img/right_bs.png') no-repeat center;
+    background-size: cover
+}
+
+/* 第四部分 状元banner */
+.zy-mist {
+    width: 100%;
+    height: 725px;
+    position: relative;
+}
+
+.zy-mist .layui-carousel {
+    height: 725px !important;
+}
+
+.zy-mist .layui-carousel-arrow {
+    width: 66px;
+    height: 66px;
+    font-size: 50px;
+}
+
+.zy-mist .layui-carousel[lay-arrow=always] .layui-carousel-arrow {
+    left: 20%;
+}
+
+.zy-mist .layui-carousel:hover .layui-carousel-arrow[lay-type=add],
+.layui-carousel[lay-arrow=always] .layui-carousel-arrow[lay-type=add] {
+    right: 20%;
+}
+
+.zy-mist .layui-carousel-ind {
+    display: none;
+}
+
+.Certificate {
+    width: 100%;
+    height: 300px;
+    position: relative;
+}
+
+.Certificate_com {
+    width: 1200px;
+    height: 100%;
+    margin: auto;
+    position: relative;
+}
+
+.Certificate_com div {
+    float: left;
+    width: 20%;
+    height: 100%;
+    text-align: center;
+    position: relative;
+    background: url(../img/border_leftimg.png) no-repeat left;
+    padding-top: 100px;
+    box-sizing: border-box
+}
+
+.Certificate_com div b {
+    font-weight: bold;
+    font-size: 60px;
+    color: #0000c0;
+}
+
+.Certificate_com div p {
+    font-size: 12px;
+    color: #0000c0;
+    font-weight: bold;
+}
+
+
+.Certificate_com::after {
+    display: block;
+    clear: both;
+    contain: ''
+}
+
+/* 优秀学员 */
+.excellent {
+    width: 100%;
+    height: auto;
+    background: #ededed;
+    position: relative;
+    padding-top: 62px;
+    padding-bottom: 120px;
+    box-sizing: border-box;
+}
+
+.excellent_com {
+    width: 1200px;
+    height: auto;
+    position: relative;
+    margin: auto;
+}
+
+.excellent_com ul {
+    width: 100%;
+    height: auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.excellent_com ul li {
+    float: left;
+    width: 232px;
+    height: 347px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.excellent_com ul li:nth-of-type(1) {
+    margin-left: 0px;
+}
+
+.excellent_com ul li:nth-of-type(6) {
+    margin-left: 0px;
+}
+
+.excellent_com ul li a {
+    display: inline-block;
+    width: 100%;
+    height: 347px;
+    position: relative;
+}
+
+.excellent_com ul li a p {
+    display: block;
+    width: 100%;
+    height: 347px;
+    position: relative;
+}
+
+.excellent_com ul li a p span {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center
+
+}
+
+.excellent_com ul li a img {
+    position: absolute;
+    width: 232px;
+    height: 347px;
+    top: 0px;
+    left: 0px;
+}
+
+.excellent_bg {
+    position: absolute;
+    top: -347px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: #0000c0;
+    opacity: 0;
+    padding-top: 60px;
+    padding-left: 25px;
+    box-sizing: border-box;
+}
+
+.himg {
+    position: absolute !important;
+    top: 25px !important;
+    left: auto !important;
+    right: 33px !important;
+    width: 18px !important;
+    height: 23px !important;
+}
+
+.rigimg {
+    position: absolute !important;
+    top: 190px !important;
+    right: 33px !important;
+    left: auto !important;
+    width: 20px !important;
+    height: 17px !important;
+}
+
+.excellent_com ul li a:hover .excellent_bg {
+    opacity: 1;
+    transition: 0.6s;
+    position: absolute;
+    top: 0
+}
+
+.exce-py {
+    width: 100%;
+    height: auto;
+    font-size: 32px;
+    color: #f7e921;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.exce-hx {
+    width: 30%;
+    border-bottom: 2px solid #ffffff;
+    padding-top: 24px;
+    box-sizing: border-box;
+}
+
+.exce-name {
+    width: 100%;
+    height: auto;
+    font-size: 32px;
+    color: #ffffff;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-top: 15px;
+    box-sizing: border-box
+}
+
+.exce-zy {
+    width: 100%;
+    height: auto;
+    padding-top: 55px;
+    box-sizing: border-box
+}
+
+.exce-zy span {
+    display: block;
+    width: 100%;
+    height: auto;
+    font-size: 16px;
+    color: #ffffff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.exce-yx {
+    display: block;
+    width: 100%;
+    height: auto;
+    font-size: 16px;
+    color: #ffffff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-top: 20px;
+    box-sizing: border-box
+}
+
+.exce-yx span {
+    color: #f7e921;
+}
+
+/* 每张成绩诉说着青春 */
+.lxqc {
+    width: 100%;
+    height: auto;
+}
+
+.lxqc img {
+    width: 100%;
+    height: auto;
+}
+
+/* 诉说 */
+.Complain {
+    width: 100%;
+    height: auto;
+    background: #ededed;
+    position: relative;
+    padding-top: 53px;
+    padding-bottom: 37px;
+    box-sizing: border-box
+}
+
+.Complain-com {
+    width: 1200px;
+    height: auto;
+    margin: auto;
+    position: relative;
+}
+
+.complain-left {
+    float: left;
+    width: 843px;
+    height: 770px;
+    background: #ffffff;
+    position: relative;
+    padding: 38px 38px;
+    box-sizing: border-box
+}
+
+.complain-right {
+    float: left;
+    width: 293px;
+    height: 770px;
+    background: #ffffff;
+    position: relative;
+    margin-left: 60px;
+    border-radius: 20px;
+    padding-top: 20px;
+    box-sizing: border-box
+}
+
+.Complain-com::after {
+    display: block;
+    clear: both;
+    content: ''
+}
+
+#demo {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#demo ul li {
+    display: inline-block;
+    width: 224px;
+    height: 85px;
+    /* background: #0000c0; */
+    margin: 10px;
+}
+
+#demo ul li a {
+    display: flex
+}
+
+.priazlistimg {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.priazlistimg img {
+    width: 100%;
+    height: 100%;
+}
+
+.priazlist_title {
+    width: 133px;
+    height: 76px;
+    border: 1px solid #0000c0;
+    margin-left: 13px;
+    padding: 3px;
+    background: url(../img/lq_h.png) no-repeat right;
+    background-position-x: 111px;
+    background-position-y: 5px;
+    background-size: 10%;
+    box-sizing: border-box
+}
+
+.priazlist_title span {
+    display: block;
+    width: 100%;
+}
+
+.priazlist-py {
+    width: 75% !important;
+    font-size: 14px;
+    color: #0000c0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
+
+}
+
+.priazlist-name {
+    font-size: 14px;
+    color: #0000c0;
+    font-weight: bold;
+    padding-top: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
+    box-sizing: border-box
+}
+
+.priazlist-lq {
+    font-size: 14px;
+    color: #0000c0;
+    font-weight: 600;
+    padding-top: 6px;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 留言 */
+.complain-right-nav {
+    width: 100%;
+    height: auto;
+    font-size: 15px;
+    color: #0000c0;
+    display: flex
+}
+
+.complain-right-nav dd {
+    width: auto;
+    text-align: center;
+    margin: auto;
+    font-weight: 600;
+    cursor: pointer
+}
+
+.complain-right-nav dl img {
+    width: 24px;
+    height: 20px;
+}
+
+.com_active {
+    border-bottom: 2px solid #0000c0;
+    box-sizing: border-box
+}
+
+.comlist {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding: 0px 40px;
+    padding-top: 42px;
+    box-sizing: border-box
+}
+
+.comlist-ly {
+    width: 100%;
+    height: auto;
+    position: relative;
+
+}
+
+.comlist-zjly {
+    display: none;
+
+}
+
+.comlist-ts {
+    width: 100%;
+    height: auto;
+    font-size: 12px;
+    color: #0000c0;
+    font-weight: 600;
+}
+
+.comlist-inputbox {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding-top: 30px;
+    box-sizing: border-box
+}
+
+.comlist-inputbox dd {
+    width: 100%;
+    height: auto;
+    position: relative;
+    margin-bottom: 20px
+}
+
+.comlist-inputbox dd span {
+    float: left;
+    width: 20%;
+}
+
+.comlist-inputbox dd input {
+    float: left;
+    width: 80%;
+    border: 1px solid #cecece;
+    font-size: 12px;
+    box-sizing: border-box
+}
+
+.comlist-inputbox dd textarea {
+    float: left;
+    width: 80%;
+    border: 1px solid #cecece;
+    font-size: 12px;
+    outline: none;
+    resize: none;
+    box-sizing: border-box
+}
+
+.comlist-button {
+    display: block;
+    width: auto;
+    height: auto;
+    background: #0000c0;
+    color: #ffffff;
+    font-size: 12px;
+    text-align: center;
+    margin: auto;
+    border: none;
+    padding: 3px 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 270px;
+    margin-bottom: 30px;
+    box-sizing: border-box
+}
+
+.comlist-inputbox dd::after {
+    display: block;
+    clear: both;
+    content: ''
+}
+
+.comlist-jy {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    font-size: 12px;
+    margin: auto;
+    color: #000000;
+    font-weight: 600;
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+}
+
+.conlist-zjly-list {
+    width: 100%;
+    height: auto;
+    position: relative; 
+    margin-bottom: 20px
+}
+
+.conlist-zjly-list img {
+    float: left;
+    width: 60px;
+    height: 60px;
+    border: 1px solid #c0c0ef;
+    box-sizing: border-box
+}
+
+.conlist-zjly-list dd {
+    float: left;
+    width: 153px;
+    height: auto;
+    font-size: 12px;
+    color: #0000c0; 
+    padding-left: 20px;
+    box-sizing: border-box
+}
+.conlist-zjly-list::after{
+    display: block;
+    clear: both;
+    content: ''
+}
+.conlist-zjly-list dd .yuan {
+    width: 10px;
+    height: 10px;
+    border: none;
+    position: relative;
+    top: 4px;
+    margin-right: 5px
+}
+
+.conlist-zjly-list dd span {
+    display: contents;
+    width: 100%;
+    font-weight: 600;
+}
+
+/* 加入我们的八大优势 */
+.advantage {
+    width: 100%;
+    height: 1130px;
+    background: url(../img/bdysbg.png)no-repeat center;
+    position: relative;
+}
+
+.advantage-com {
+    width: 1200px;
+    height: auto;
+    position: relative;
+    margin: auto;
+    padding-top: 120px;
+    box-sizing: border-box
+}
+
+.advantage-navname {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    color: #ffffff;
+}
+
+.advantage-navname span {
+    display: block;
+}
+
+.advantage-name1 {
+    font-size: 43px;
+    font-weight: 600;
+}
+
+.advantage-name2 {
+    font-size: 27px;
+    text-decoration: underline
+}
+
+.advantage-list {
+    width: 100%;
+    height: auto;
+    position: relative;
+    margin-top: 60px;
+}
+
+.advantage-list ul {
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+.advantage-list ul li {
+    float: left;
+    width: 290px;
+    height: 245px;
+    margin-left: 10px;
+    margin-bottom: 10px
+}
+.advantage-list ul::after{
+    display: block;
+    clear: both;
+    content: ''
+}
+.advantage-list ul li a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    color: #ffffff;
+    background: #0000c0;
+}
+
+.advatg-py { 
+    font-size: 14px;
+    padding-top: 40px;
+    color: #ffffff; 
+    box-sizing: border-box;
+}
+
+.advatg-name {
+    font-size: 16px;
+    font-weight: 600;
+    box-sizing: border-box;
+
+}
+
+.advatg-img {
+    width: 30px;
+    height: 41px;
+    background: url(../img/bsimg.png) no-repeat center;
+    margin: auto;
+    margin-top: 35px;
+}
+
+.advatg-txt {
+    width: 170px;
+    height: auto;
+    font-size: 12px;
+    margin: auto;
+    font-weight: 600;
+    margin-top: 22px;
+}
+
+.advantage-list ul li a:hover {
+    transition: 0.5s; 
+    background: #ffffff;
+    color: #0000c0;
+}
+.advantage-list ul li a:hover .advatg-py{
+    color: #0000c0;
+}
+
+.advantage-list ul li a:hover .advatg-img {
+    transition: 0.5s;
+    background: url(../img/lsbg.png) no-repeat center;
+}
+.advatg-jd{
+    width: 100%;
+    height: 145px;
+    background: #0000c0;
+    margin-top: 108px;
+    padding-left: 10px;
+    padding-right: 30px;
+    box-sizing: border-box
+}
+.advatg-jd a{
+     float: left;
+     font-size: 31px;
+     color: #ffffff;
+     line-height: 145px;
+     text-decoration: underline
+}
+.advatg-jd span{
+    float: right;
+    font-size: 31px;
+    color: #ffffff;
+    line-height: 145px
+}
+.advatg-jd::after{
+    display: block;
+    clear: both;
+    content: ''
+}
+/* 理想轮播 */
+.ideal-broadcast{
+    width: 100%;
+    height: 1030px; 
+    box-sizing: border-box
+}
+.ideal-broadcast .layui-carousel{
+    height: 1030px !important;
+}
+.ideal-broadcast .layui-carousel[lay-arrow=always] .layui-carousel-arrow{
+    left: 20%;
+}
+.ideal-broadcast .layui-carousel-arrow{
+    background: none;
+    color: #0000c0;
+    font-size: 50px;
+}
+.ideal-broadcast .layui-carousel-ind{
+    display: none
+}
+/* 理想班型 */
+.Class-type{
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding: 75px 0px;
+    border-top: 15px solid #0000c0;
+    box-sizing: border-box
+}
+.Class-type-box{
+    width: 1200px;
+    height: auto;
+    margin: auto;
+    position: relative;
+}
+.Class-type-box ul{
+    width: 100%;
+    height: auto;
+    position: relative;
+    display: flex
+}
+.Class-type-box ul li{
+    width: 240px;
+    height: 615px;
+    text-align: center;
+    background: url(../img/hslximg.png) no-repeat center;
+    border-left: 1px solid #b0b0b0;
+    position: relative;
+    box-sizing: border-box;
+}
+.Class-type-box ul li:last-of-type{
+    border-right: 1px solid #b0b0b0;
+    box-sizing: border-box
+}
+.Class-type-box ul li:hover{
+    background: url(../img/hslx_bgimg.png) no-repeat center; 
+}
+.class-name{
+    font-size: 44px;
+    font-weight: 600;
+    color: #0000c0;
+    padding-top: 200px;
+    box-sizing: border-box
+}
+.class-titile{
+ font-size: 15px;
+ color: #000;
+ font-weight: 600;
+ padding-top: 130px;
+ box-sizing: border-box
+}
+.class-a{
+    position: absolute;
+    bottom: 55px;
+    left: 0;
+    width: 100%;
+    height: auto;
+}
+.class-nav{
+    display: block;
+    width: 90px;
+    height: auto;
+    border: 2px solid #0000c0;
+    padding: 8px 0px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin: auto;
+    margin-top: 130px;
+    box-sizing: border-box
+}
+/* 素描优秀作品 */
+.Sketch{
+    width: 100%;
+    height: 1045px;
+    position: relative;
+}
+.Sketch .layui-carousel{
+    height: 1045px !important;
+}
+.Sketch .layui-carousel[lay-arrow=always] .layui-carousel-arrow{
+    left: 20%;
+}
+.Sketch .layui-carousel-arrow{
+    background: none;
+    color: #0000c0;
+    font-size: 50px;
+}
+.Sketch .layui-carousel-ind li.layui-this{
+   background: #0000c0
+}
+.Sketch .layui-carousel-ind ul{
+    background: none
+} 

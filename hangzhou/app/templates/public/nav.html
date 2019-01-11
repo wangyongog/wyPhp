@@ -1,0 +1,20 @@
+<!-- 导航菜单 -->
+<div class="header">
+    <div class="header_com">
+        <ul class="layui-nav">
+            {foreach from=$menus key=k item=val}
+            <li class="layui-nav-item">
+                <a href="{if $val.url}{U($val.url)}{else}javascript:;{/if}">{$val['typename']}</a>
+                {if !empty($val.children)}
+                <dl class="layui-nav-child">
+                    {foreach from=$val.children key=k item=v}
+                    <dd><a href="{if $v.url}{U($v.url)}{else}javascript:;{/if}">{$v['typename']}</a></dd>
+                    {/foreach}
+                </dl>
+                {/if}
+            </li>
+            {/foreach}
+
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,96 @@
+{include file="public/header.html"}
+	<body>
+    <link rel="stylesheet" href="{$assets}/hzlx/css/excellent.css">
+    <link rel="stylesheet" type="text/css" href="{$assets}/hzlx/css/btl.css">
+    <link rel="stylesheet" type="text/css" href="{$assets}/hzlx/css/lightbox.min.css">
+        
+		<div class="index">
+			{include file="public/nav.html"}
+			<!-- 优秀作品banner -->
+			<div class="team-banner">
+				<img src="{$assets}/hzlx/img/exebaner.jpg" alt="">
+			</div>
+			<!-- 新闻菜单 -->
+			<div class="journalism-nav">
+				<div class="journalism-navcom">
+					<ul>
+                    {foreach from=$menus_title key=k item=v}
+						<li id="{$v['typeid']}"  {if $k eq '0'} class="activecolor" {/if}>
+							<label {if $k eq '0'} class="jouactive" {/if}></label>
+							<span>{$v['typename']}</span>
+						</li>
+					{/foreach}
+
+					</ul>
+				</div>
+				<div class="journalism-com newslist">
+
+				</div>
+				<div class="pages"></div>
+			</div>
+
+		{include file="public/footer.html"}
+        {include file="public/footerJs.html" ispage=1}
+	<!-- 动画插件 -->
+
+	<script src="{$assets}/hzlx/js/lightbox.min.js"></script>
+		</div>
+	</body>
+	
+
+	<script>
+		$(function() {
+			var url = '{U("/works")}';
+		    var aid = $('.journalism-navcom').find('.activecolor').attr('id');
+		    ajax.post_loading( url ,{ id:aid});
+
+			$('.zixun').click(function() {
+				$('.qr-shadow').removeClass('hide');
+			});
+			$('.shadow').click(function() {
+				$(this).addClass('hide');
+			});
+			$('.work').click(function(){
+				$('body').css('overflow','hidden')
+			});
+			$('#lightbox').click(function(){
+				$('body').css('overflow','auto') 
+			});
+			$('#lightboxOverlay').click(function(){
+				$('body').css('overflow','auto') 
+			});
+			$('.journalism-navcom ul li').hover(function() {
+				$(this).children("label").addClass("jouactive").parent().siblings().children("label").removeClass('jouactive');
+				$(this).addClass('activecolor').siblings().removeClass('activecolor')
+				var id = $(this).attr('id');
+				$('.journalism-com .journalsm-combox').each(function(index, e) {
+					var name = $(this).attr('name');
+					if (id == name) {
+						$(this).addClass('joushow').siblings().removeClass('joushow')
+					}
+				});
+				if(id !=aid){
+					aid = id;
+					ajax.post_loading( url ,{ id:id});
+				}
+
+			},function(){
+    		
+			});
+		});
+
+		function animate() {
+			$('.flash-move').each(function() {
+				var win = $(window);
+				var winScrollTop = win.scrollTop();
+				var othis = $(this);
+				var oTop = parseInt(othis.offset().top);
+				if (oTop <= parseInt(win.height() + winScrollTop)) {
+					othis.addClass('move-on');
+				}
+			});
+		}
+	
+	</script>
+
+</html>

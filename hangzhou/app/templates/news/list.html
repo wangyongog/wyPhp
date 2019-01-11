@@ -1,0 +1,76 @@
+
+{include file="public/header.html" newslist=1}
+<body>
+    <div class="index">
+       {include file="public/nav.html"}
+        <!-- 新闻banner -->
+        <div class="journalism">
+            <div class="journalism-bannertiti">
+                <span class="joubannertiti">新闻</span>
+                <span class="joubannertiti2">JOURNALISM</span>
+            </div>
+        </div>
+        <!-- 新闻菜单 -->
+        <div class="journalism-nav">
+            <div class="journalism-navcom">
+                <ul>
+                {foreach from=$menus_title key=k item=v}
+                    <li id="{$v['typeid']}" {if $k eq '0'} class="activecolor" {/if}>
+                        <label  {if $k eq '0'} class="jouactive" {/if}></label>
+                        <span>{$v['typename']}</span>
+                    </li>
+                  {/foreach}  
+                </ul>
+            </div>
+            <div class="journalism-com">
+                <div class="journalsm-combox joushow newslist" >
+                    
+                </div>
+               <div class="pages"></div>
+               
+            </div>
+
+        </div>
+
+		{include file="public/footer.html"}
+        
+    </div>
+    {include file="public/footerJs.html" ispage=1}
+    <script>
+    $(function () {
+		var url = '{U("news/list")}';
+		var aid = $('.journalism-navcom').find('.activecolor').attr('id');
+		ajax.post_loading( url ,{ id:aid});
+        $('.journalism-navcom ul li').hover(function () {
+            $(this).children("label").addClass("jouactive").parent().siblings().children("label").removeClass('jouactive'); 
+            $(this).addClass('activecolor').siblings().removeClass('activecolor')
+            var id=$(this).attr('id');
+            $('.journalism-com .journalsm-combox').each(function(index,e){
+                var name=$(this).attr('name');
+                if(id==name){
+                    $(this).addClass('joushow').siblings().removeClass('joushow')
+                }
+            })
+			if(id !=aid){
+				aid = id;
+				ajax.post_loading( url ,{ id:id});
+			}
+        },function(){
+    		
+		});
+
+        $('.joutiti').each(function () {
+            var maxwidth = 60;
+            if ($(this).text().length > maxwidth) {
+                $(this).text($(this).text().substring(0, maxwidth));
+                $(this).html($(this).html() + "....");
+            }
+        });
+    });
+</script>
+</body>
+
+
+
+
+</html>
