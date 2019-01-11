@@ -1,36 +1,11 @@
-	{include file="public/header.html"}
-    {include file="public/left.html"}
-    <div class="mod-user-main">
-        <div class="mod-nav-bar">
-            管理中心&nbsp;&nbsp;&raquo;&raquo;&nbsp;&nbsp;首页
-        </div>
-        <div class="mod-content">
-            <div class="mod-topic mt20">
-                {$gggg}            </div>
-            <h3 class="title">登录信息2{$data['username']}</h3>
-            <table class="mod-table-basic">
-                
-                <tr>
-                    <td class="title"  width="20%">账户余额：</td>
-                    <td>{$user['leftmoney']} 元 <a href="{U('/money')}">充值</a></td>
-                </tr>
-                <tr>
-                    <td class="title">最后登录时间：</td>
-                    <td>{$dddd}</td>
-                </tr>
-            </table>
-            <h3 class="title">活动公告</h3>
-            <table class="mod-table-basic">
-            {foreach from=$data key=k item=val}
-                <tr>
-                    <td align="left">{$val['notice']}</td>
-                    <td width="20%">{date('Y-m-d', $val['addtime'])}</td>
-                </tr>
-                {/foreach} 
-                </table>
-                </div>
-    </div>
-</div>
-{include file="public/footerJs.html"}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+
+<body>
+<img  src="http://i.wyphp.local/uploads/1704893933937459903_500x400.jpg"/>
 </body>
 </html>
