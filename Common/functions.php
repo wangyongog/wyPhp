@@ -143,8 +143,7 @@ function picSize($str, $size = '',$original=false) {
     $skey = isset($arr[1]) ?  $arr[1] : 'img1';
     $domain = $imgdomArr[$skey]['url'];
     if($size){
-        list($path, $ext) = explode('.', $str);
-		$path = str_replace($skey,'', $path);
+        list($path, $ext) = explode('.', $arr[0]);
         return $domain.'/'.($original ? str_replace('small_','', $path) : $path).'_'.$size.'.'.$ext;
     }
     return $domain.'/'. ($original ? str_replace('small_','', $arr[0]) : $arr[0]);
