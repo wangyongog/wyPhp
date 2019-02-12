@@ -616,3 +616,45 @@ function getTree($array,$id = 'id', $pid = 'pid', $son = 'children'){
     }
     return $tree;
 }
+/**
+ * 判断颠倒图片，放正
+ * @param $imgPath   D:\WWW\ayzxweb-admin\Uploads/614cbed662fcaf2e106450a066b44a34579.jpeg
+ * @param bool $is_cover  是否覆盖，true覆盖
+ */
+function imgRotate($imgPath, $is_cover=true){
+    if(!function_exists('exif_read_data')){
+        return false;
+    }
+    $exif = exif_read_data($imgPath);
+    if(!empty($exif['Orientation'])) {
+        $ext = strtolower(end(explode('.', $imgPath))) ;
+        if($ext == 'jpeg' || $ext == 'jpg'){
+            $image = imagecreatefromjpeg($imgPath);
+        }elseif ($ext == 'png'){
+            $image = imagecreatefrompng($imgPath);
+        }elseif ($ext == 'bmp'){
+            $image = imagecreatefromwbmp($imgPath);
+        }else{
+            $image = imagecreatefromjpeg($imgPath);
+        }
+        switch($exif['Orientation']) {
+            case 8:
+                $image = imagerotate($image,90,0);
+                break;
+            case 3:
+                $image = imagerotate($image,180,0);
+                break;
+            case 6:
+                $image = imagerotate($image,-90,0);
+                break;
+        }
+        if(!$is_cover){
+            $fileName = end(explode('/',$imgPath));
+            $newFileName = md5(time().uniqid()).'.'.$ext;
+            $imgPath = str_replace($fileName, $newFileName, $imgPath);
+        }
+        imagejpeg($image, $imgPath);
+        return true;
+    }
+    return false;
+}
