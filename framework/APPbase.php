@@ -100,7 +100,6 @@ class APPbase{
      */
     protected static function loadApi(){
         // 加载核心方法或第三方类
-        
         WyPhp\CF::get('configs');
         WyPhp\CF::get('db');
         WyPhp\CF::get('api');

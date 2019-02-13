@@ -200,7 +200,7 @@ function isMobile($mobile) {
 function creatOrderId(){
     return date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8).random(3,1);
 }
-function post($url, $param=array()){
+function post($url, $param=array(),$header=array()){
     /*if(!is_array($param)){
         throw new Exception("参数必须为array");
     }*/
@@ -214,14 +214,18 @@ function post($url, $param=array()){
         curl_setopt($httph, CURLOPT_POST, 1);//设置为POST方式
         curl_setopt($httph, CURLOPT_POSTFIELDS, $param);
     }*/
-    curl_setopt($httph, CURLOPT_POST, 1);//设置为POST方式
-    curl_setopt($httph, CURLOPT_POSTFIELDS, $param);
-    //curl_setopt($httph, CURLOPT_HTTPHEADER, array(
-    //        'Content-Type: application/json; charset=utf-8',
-    //        'Content-Length: ' . strlen($param),
-    //        'Accept: application/json, text/javascript, */*; q=0.01'
-    //    )
-    //);
+    if($param){
+        curl_setopt($httph, CURLOPT_POST, 1);//设置为POST方式
+        curl_setopt($httph, CURLOPT_POSTFIELDS, $param);
+    }
+    if($header){
+        curl_setopt($httph, CURLOPT_HTTPHEADER, $header);
+        /*array(
+            'Content-Type: application/json; charset=utf-8',
+            'Content-Length: ' . strlen($param),
+        )*/
+    }
+
     curl_setopt($httph, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($httph, CURLOPT_HEADER, 0);
     $rst = curl_exec($httph);
