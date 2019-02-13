@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Zxing\\' => array($vendorDir . '/khanamiryan/qrcode-detector-decoder/lib'),
+    'Hashids\\' => array($vendorDir . '/hashids/hashids/src'),
 );

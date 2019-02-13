@@ -4,17 +4,20 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitdc3d742169dfaa71da07f0e8c4d331eb
+class ComposerStaticInitefca5f3c47ed913cf6ec62723ac722bb
 {
     public static $files = array (
         'a9ed0d27b5a698798a89181429f162c5' => __DIR__ . '/..' . '/khanamiryan/qrcode-detector-decoder/lib/Common/customFunctions.php',
-        'f084d01b0a599f67676cffef638aa95b' => __DIR__ . '/..' . '/smarty/smarty/libs/bootstrap.php',
     );
 
     public static $prefixLengthsPsr4 = array (
         'Z' => 
         array (
             'Zxing\\' => 6,
+        ),
+        'H' => 
+        array (
+            'Hashids\\' => 8,
         ),
     );
 
@@ -23,13 +26,17 @@ class ComposerStaticInitdc3d742169dfaa71da07f0e8c4d331eb
         array (
             0 => __DIR__ . '/..' . '/khanamiryan/qrcode-detector-decoder/lib',
         ),
+        'Hashids\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/hashids/hashids/src',
+        ),
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitdc3d742169dfaa71da07f0e8c4d331eb::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitdc3d742169dfaa71da07f0e8c4d331eb::$prefixDirsPsr4;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitefca5f3c47ed913cf6ec62723ac722bb::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitefca5f3c47ed913cf6ec62723ac722bb::$prefixDirsPsr4;
 
         }, null, ClassLoader::class);
     }
