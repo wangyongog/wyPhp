@@ -1,8 +1,5 @@
 <?php
 namespace WyPhp\Encrypt;
-/**
- * openssl的rsa加密解密
- */
 class Mcrypt{
     private $_skey = '';
     private $_sResult = '';

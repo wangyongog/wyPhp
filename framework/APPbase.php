@@ -82,7 +82,7 @@ class APPbase{
         if(!is_file($filePath)){
             WyPhp\Error::error('file ['.$filePath.'] not exists');
         }
-        include (realpath($filePath));
+        require_once (realpath($filePath));
         $classInstance = new $classname();
         $method = new \ReflectionMethod($classInstance, $action);
         //self::unregister();
@@ -147,9 +147,9 @@ class APPbase{
     protected static function require_cache($path='', $class=''){
         $file = $path.strstr($class ,'\\'). '.class.php';
         $file = str_replace('\\', DIRECTORY_SEPARATOR,  $file) ;
-        if(!is_file($file)){
+        if(!file_exists($file)){
             $file = ROOT.DIRECTORY_SEPARATOR. (strstr($class, '\\', true)).DIRECTORY_SEPARATOR.self::$app.str_replace('\\', DIRECTORY_SEPARATOR, strstr($class ,'\\')).'.class.php';
-            if(!is_file($file)){
+            if(!file_exists($file)){
                 WyPhp\Error::debug("file [$file] not exists");
             }
         }
