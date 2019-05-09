@@ -3,7 +3,7 @@ namespace WyPhp;
 include FWPATH . '/plugins/smarty/libs/Smarty.class.php';
 class Template {
     //缓存时间
-    protected $cache_life = 3600;
+    //public $cache_life = 3600;
     private static $_cache_data = '/data';
     public $smarty = null;
     public function __construct(){
@@ -14,7 +14,7 @@ class Template {
         $this->smarty->config_dir = ROOT. self::$_cache_data .APP_ROOT.'/configs/';
         $this->smarty->caching = CF('CACHING');
         $this->smarty->debugging = false;
-        $this->cache_lifetime = $this->cache_life;
+        //$this->smarty->cache_lifetime = $this->cache_life;
         $this->smarty->left_delimiter = '{';
         $this->smarty->right_delimiter = '}';
     }
@@ -25,6 +25,12 @@ class Template {
     function __init(){
         $this->smarty->clear_all_assign();
     }
+
+    /**
+     * @param $vars
+     * @param null $value
+     * @param bool $nocache 是否缓存变量 true表示不缓存
+     */
     public function assign($vars, $value = null, $nocache = false){
          $this->smarty->assign($vars, $value, $nocache);
     }
@@ -60,12 +66,12 @@ class Template {
      * @return true | false
      */
     function craetHtml($template='', $filename='', $path = ''){
-        //$path = ROOT.'/'.F('CACHE_HTML').'/'. ($path ? $path : CONTROLLER);
+        $path = $path ? $path : str_replace(\APPbase::$app,'',APP_PATH) ;
         if (!is_dir($path)) {
             cmkdir($path);
         }
         $content = $this->fetch($template);
-        file_put_contents($path . '/' . ($filename ? $filename:ACTION.F('URL_HTML_FIX')), $content);
+        file_put_contents($path . '/' . ($filename ? $filename:ACTION.CF('URL_HTML_FIX')), $content);
     }
     /**
      * 自动定位模板文件
