@@ -24,10 +24,10 @@ class CssJs {
         $ext = end($path_arr);
         switch ($ext){
             case 'js':
-                $str = '<script type="text/javascript" src="'.F('DOMAIN')['assets'].'/'.$path.'?v='.$this->CssJsVersion($path).'"></script>';
+                $str = '<script type="text/javascript" src="'.CF('DOMAIN')['assets'].'/'.$path.'?v='.$this->CssJsVersion($path).'"></script>';
             break;
             case 'css':
-                $str = '<link href="'.F('DOMAIN')['assets'].'/'.$path.'?v='.$this->CssJsVersion($path).'" rel="stylesheet" type="text/css" />';
+                $str = '<link href="'.CF('DOMAIN')['assets'].'/'.$path.'?v='.$this->CssJsVersion($path).'" rel="stylesheet" type="text/css" />';
             break;
         }
         self::$css_js[md5($path)] = $str;

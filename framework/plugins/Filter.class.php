@@ -91,7 +91,7 @@ class Filter{
                 $_str = strip_tags($str);
                 break;
         }
-        return trim($_str);
+        return $_str ? trim($_str) : $default;
     }
     //过滤XSS攻击
     public static function reMoveXss($val) {
