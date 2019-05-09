@@ -11,7 +11,8 @@ class CssJs {
      * @return mixed|string|void
      */
     public function loadCss_js($path_arr){
-        if(!is_array($path_arr)) return;
+        if(!$path_arr) return;
+        $path_arr = is_array($path_arr) ? $path_arr : explode(',', $path_arr);
         foreach ($path_arr as $v){
             $this->cssJsList .= self::getCss_js($v).NL;
         }
