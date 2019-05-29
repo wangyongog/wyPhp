@@ -1,0 +1,71 @@
+
+UEditor关闭/取消html源代码切换时div/script/style等自动过滤
+UEditor关闭/取消html源代码切换时div/script/style等自动过滤 
+
+ 
+
+UEditor切换到html源代码模式，手写一些div/script/style等html代码后，切换回默认模式，会自动把一些标签给过滤掉。以下方法是关闭自动过滤(本文来自http://www.itdos.com 转载请保留此标识，谢谢！)：
+
+1、找到ueditor的js文件：
+
+\Scripts\ueditor.all.js
+\Scripts\ueditor.all.min.js
+
+2、ueditor.all.js定位代码大概9948行(可搜索【UE.plugins['defaultfilter']】)
+
+我这里是直接【return;】,因为这个filter目前对我来说没什么用。你也可以自行修改下面的代码。
+
+如图所示：
+
+直接返回return
+Html代码  收藏代码
+
+    // plugins/defaultfilter.js  
+    ///import core  
+    ///plugin 编辑器默认的过滤转换机制  
+      
+    UE.plugins['defaultfilter'] = function () {  
+        return;   //在这里添加return，不执行下面的格式化  
+        var me = this;  
+        me.setOpt({  
+            'allowDivTransToP':false,  
+            'disabledTableInTable':true  
+        });  
+        //默认的过滤处理  
+        //进入编辑器的内容处理  
+
+ 
+
+ 
+
+3、ueditor.all.min.js定位代码（可搜索【defaultfilter】定位，大概157行）
+
+直接返回return
+Html代码  收藏代码
+
+    UE.plugins.defaultfilter=  
+    function(){return;var d=this;d.setOpt({allowDivTransToP:!0,d  
+
+ 
+
+ 
+
+百度的Ueditor编辑器出于安全xìng考虑，用户在html模式下粘贴进去的html文档会自动被去除样式和转义。虽然安全的，但是非常不方便。 
+做一下修改把这个功能去掉。 
+一、打开ueditor.all.js 
+二、大概9300行找到 ///plugin 编辑器默认的过滤转换机制，把下面的
+'allowDivTransToP':true
+
+值改成false。为true的时候会自动把div转成p。 
+三、大概9429行，有个case 'li'，这个是把li里面的样式去掉，把这个case注释掉。 
+四、大概14058行，下面的第一个utils.each功能注释掉，这个是自动给li里面的内容增加一个p。 
+五、大概14220行，
+node.className = utils.trim(node.className.replace(/list-paddingleft-\w+/,'')) + ' list-paddingleft-' + type;
+
+注释掉，这个是自动给ul增加一个内置的样式。 
+下面的14222行
+li.style.cssText && (li.style.cssText = '');
+
+注释掉，这个是自动去除粘贴进去的代码的li的style样式 
+  
+至此，我们粘贴进去的html格式的ul和li就不会被转义了。 
