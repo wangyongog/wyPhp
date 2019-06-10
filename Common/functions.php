@@ -544,6 +544,22 @@ function select_input($arr, $ext_data=[]){
     return $str;
 }
 /**
+ * 获取一个类目的顶级类目id
+ * @param $id
+ * @return mixed
+ */
+function GetTopid($data, $id){
+    static $tree;
+    if(empty($data[$id]['pid'])) {
+        $tree[] = $data[$id]['name'];
+        krsort($tree);
+        return $tree;
+    } else {
+        $tree[] = $data[$id]['name'];
+        return GetTopid($data, $data[$id]['pid']);
+    }
+}
+/**
  * 获取前端栏目下所有子栏目
  * @param $data 栏目数据
  * @param $id 栏目id
