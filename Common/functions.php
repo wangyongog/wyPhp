@@ -183,21 +183,13 @@ function random($length =6, $type = 0,$noO = false, $hash = '') {
  * @param $skey 加密串
  * @return string
  */
-function mcrypt($value, $operation = 'ENCODE', $skey = '') {
+function mcrypt($value, $operation = 'ENCODE', $skey = '',$expiry=0) {
     if (empty($value)) return false;
     $str ='';
     $en_type = ucfirst(CF('ENCRYPT'));
     $class = '\\WyPhp\\Encrypt\\'.$en_type;
-    $mode = new $class($skey);
-    switch ($operation){
-        case 'ENCODE':
-            $str = $mode->encrypt($value);
-            break;
-        case 'DECODE':
-            $str = $mode->decrypt($value);
-            break;
-    }
-    return $str;
+    $mode = new $class($skey, $expiry);
+    return $operation == 'ENCODE' ? $mode->encrypt($value) : $mode->decrypt($value);
 }
 /**
  * 二位数据排序
