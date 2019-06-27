@@ -3,7 +3,7 @@ class CutImg{
     protected $width;
     protected $height;
     protected $srcfile;//来源图片地址 D:\WWW\wyPhp\attaches/uploads/1704893933937459903.jpg
-    protected $tofile; //保存地址 D:\WWW\wyPhp\attaches/uploads/1704893933937459903_200x200_1_1.jpg
+    public $tofile; //保存地址 D:\WWW\wyPhp\attaches/uploads/1704893933937459903_200x200_1_1.jpg
     /**
      * 截取类型
      * 1=>固定比例裁剪，不足空白补齐
@@ -35,6 +35,7 @@ class CutImg{
     protected $cut;
     protected $pos;
     protected $alowType = 'gif|jpg|jpeg|png|bmp';
+    public $ext;
 
     public function __construct($url){
         $this->root = __DIR__;
@@ -45,23 +46,22 @@ class CutImg{
     /**
      * @param $url
      */
-    protected function init($url){
+    protected function init($url=''){
         if(!$url){
             die('404 not found 01');
         }
-
         preg_match("/(.*?)\_(\w+)\.(".$this->alowType.")$/i", $url,$match);
 
         $cut_num = count($match);
         if($cut_num<0){
             die('404 not found 02');
         }
-        $ext = end($match);
-        if(!in_array(strtolower($ext) , explode('|', $this->alowType))){
+        $this->ext = end($match);
+        if(!in_array(strtolower($this->ext) , explode('|', $this->alowType))){
             die('not alow img');
         }
 
-        $this->srcfile = empty($match[1]) ? '' : $this->root.$match[1].'.'.$ext;
+        $this->srcfile = empty($match[1]) ? '' : $this->root.$match[1].'.'.$this->ext;
         $this->tofile = empty($match[0]) ? '' : $this->root.$match[0];
 
         $imgPar = explode('_', $match[2]);
@@ -116,4 +116,10 @@ class CutImg{
 //file_put_contents("D:/WWW/wyPhp/test.txt",json_encode($_GET));
 $cutimg = new CutImg($_GET['url']);
 $cutimg->creatImg();
-header("location:".$_GET['url']);
+if(is_file($cutimg->tofile)){
+    header('Content-type: image/'.$cutimg->ext);
+    header('Content-Length:'.filesize($cutimg->tofile));
+    header("Accept-Ranges: bytes");
+    readfile($cutimg->tofile);
+}
+//header("location:".$_GET['url']);
