@@ -1,7 +1,7 @@
 <?php
 namespace App\Controller;
 //use Admin\Model\LoginModel;
-
+use Zxing\QrReader;
 use WyPhp\Trace;
 
 class login extends baseController {
@@ -11,6 +11,25 @@ class login extends baseController {
         //$_SESSION['var2'] = "111";
         //$_SESSION['var3'] = "顶顶顶顶";
         $this->render();
+    }
+    public function actionHashids(){
+        //Hashids是一个小型PHP库，可以从数字中生成类似YouTube的ID。当您不希望向用户公开数据库数字ID时使用它
+        require FWPATH . "/plugins/Vendor/autoload.php";
+        $hashids = NEW \Hashids\Hashids();
+        //$s = $hashids->encode('123a');
+        $id = $hashids->encodeHex('123a'); // y42LW46J9luq3Xq9XMly
+        $hex = $hashids->decodeHex($id); // 507f1f77bcf86cd799439011
+        echo $id.'<br>';
+        $numbers = $hashids->decodeHex($id);
+        print_r($numbers) ;
+        exit;
+    }
+    public function actionQrReader(){
+        //解析二维码图片信息
+        require FWPATH . "/plugins/Vendor/autoload.php";
+        $qrcode = new QrReader(ROOT.'/assets/www/images/QR.png');
+        $url = $qrcode->text(); //return decoded text from QR Code
+        echo $url;
     }
     public function actionLogin(){
         $username = G('username');

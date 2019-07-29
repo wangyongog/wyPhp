@@ -55,9 +55,6 @@
                 label: '<i class="fa fa-check"></i> 确定',
                 cssClass: 'btn btn-primary',
                 action: function (dialog) {
-					//console.log(backFun)
-					//eval(backFun+'()');
-					//dailogAlert.confirms('sssssssss',function(){alert(1)},function(){alert(2)});
                 	var formObj = $('.modal-body').find('form');
                 	if(typeof backFun !='undefined'){
 						eval(backFun+'("'+formObj.attr('action')+'","'+formObj+'")');
