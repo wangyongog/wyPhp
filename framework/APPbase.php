@@ -50,7 +50,6 @@ class APPbase{
     public static function _initApp(){
         $url = parse_url($_SERVER['REQUEST_URI']);
         if(empty($url)){
-            
             \WyPhp\Error::http_status();
         }
         $url = trim($url['path'], '/');

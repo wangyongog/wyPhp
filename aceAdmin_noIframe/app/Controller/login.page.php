@@ -21,7 +21,7 @@ class login extends baseController {
         $hex = $hashids->decodeHex($id); // 507f1f77bcf86cd799439011
         echo $id.'<br>';
         $numbers = $hashids->decodeHex($id);
-        print_r($numbers) ;
+        print_r($numbers);
         exit;
     }
     public function actionQrReader(){
