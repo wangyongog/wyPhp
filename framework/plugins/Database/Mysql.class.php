@@ -29,14 +29,13 @@ class Mysql extends Driver{
         $query = trim(str_replace("\r", " ", $query));
         try {
             $this->PDOStatement = $this->_linkID->prepare($query);
-            //echo $query;
             if(false === $this->PDOStatement){
                 $this->ExceptionLog('PDOStatement NOT find', $query);
                 return false;
             }
             if (!empty($this->bind)) {
                 foreach ($this->bind as $key => $value) {
-                    switch ($value) {
+                    /*switch ($value) {
                         case is_int($value):
                             $type = \PDO::PARAM_INT;
                             break;
@@ -48,8 +47,8 @@ class Mysql extends Driver{
                             break;
                         default:
                             $type = \PDO::PARAM_STR;
-                    }
-                    $this->PDOStatement->bindValue($key, $value, $type);
+                    }*/
+                    $this->PDOStatement->bindValue($key, $value, \PDO::PARAM_STR);
                 }
             }
             $this->lastSql = $query;
@@ -116,7 +115,7 @@ class Mysql extends Driver{
      * @param string $having
      * @return bool
      */
-    public function select($table, $fields='*', $condition=null, $order='', $limit='', $page=0 , $group='', $having = ''){
+    public function select($table, $fields='*', $condition=null, $order='', $limit='', $page=1 , $group='', $having = ''){
         $sql = 'SELECT '.$this->parseFields($fields).' FROM '.$this->parseTable($table);
         if ($condition != null) {
             $sql .= $this->parseWhere($condition);
@@ -475,7 +474,7 @@ class Mysql extends Driver{
             if(is_string($val[0])) {
                 $exp = strtolower($val[0]);
                 if(in_array($exp,['eq','neq','gt','egt','lt','elt'])) { // 比较运算
-                    $whereStr .= $key . ' ' . $this->exp[$exp] . ' ' . $this->escapeString($val[1]);
+                    $whereStr .= $key . ' ' . $this->exp[$exp] . ' ' . $this->parseValue($val[1]);
                 }
                 if(in_array($exp, ['notlike','like'])){// like 运算
                     if(is_array($val[1])) {
