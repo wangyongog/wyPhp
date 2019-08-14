@@ -474,7 +474,7 @@ class Mysql extends Driver{
             if(is_string($val[0])) {
                 $exp = strtolower($val[0]);
                 if(in_array($exp,['eq','neq','gt','egt','lt','elt'])) { // 比较运算
-                    $whereStr .= $key . ' ' . $this->exp[$exp] . ' ' . $this->escapeString($val[1]);
+                    $whereStr .= $key . ' ' . $this->exp[$exp] . ' ' . $this->parseValue($val[1]);
                 }
                 if(in_array($exp, ['notlike','like'])){// like 运算
                     if(is_array($val[1])) {
