@@ -382,33 +382,38 @@ function post($url, $param=array(),$header=array()){
  * 产生表单hash值
  * @return bool|string
  */
-function formhash(){
+function formhash($str=''){
+    $expire = TIMESTAMP + 1200;
     $user = APPbase::$user;
-    $uid = isset($user['uid']) ? $user['uid'] : '';
-    $hash = isset($user['hash']) ? $user['hash'] : '';
-    $skey = 'formhash_'.$uid.$hash;
-    $hashCode = S($skey);
-    if(empty($hashCode) ){
-        $hashCode = random(20);
-        S($skey, $hashCode,3600);
-    }
-    return substr(md5( $hashCode.$hash . $uid  . substr(CF('AUTOKEY'),5,6) ), 8, 20);
+    $uid = isset($user['uid']) ? $user['uid'] : 0;
+    $hash = isset($user['hash']) ? $user['hash'] : 0;
+    $key = $uid.'|'.$hash.'|'.$str.'|'.$expire;
+    $sign = md5($key.'|'.substr(CF('AUTOKEY'),5,10) );
+    return mcrypt($key.'|'.$sign);
 }
 
 /**
  * 验证表单hash值
  * @return bool
  */
-function check_formhash(){
+function check_formhash($check_str=''){
     $formhash = G('formhash') ? G('formhash') : $_SERVER['HTTP_X_CSRF_TOKEN'];
-    $user = APPbase::$user;
-    $uid =isset($user['uid']) ? $user['uid'] : '';
-    $hash = isset($user['hash']) ? $user['hash'] : '';
-    $skey = 'formhash_'.$uid.$hash;
-    if($formhash == substr(md5( S($skey).$hash . $uid  . substr(CF('AUTOKEY'),5,6)), 8, 20)){
-        return true;
+    $token = mcrypt($formhash,'DECODE');
+    if (empty($token)) {
+        return false;
     }
-    return false;
+    list($uid, $hash, $str, $expire, $sign) = explode('|', $token);
+    if ($expire < TIMESTAMP) {
+        return false;
+    }
+    if($check_str && $str != $check_str){
+        return false;
+    }
+    $check_sign = md5($uid.'|'.$hash.'|'.$str.'|'.$expire.'|'.substr(CF('AUTOKEY'),5,10));
+    if ($sign != $check_sign) {
+        return false;
+    }
+    return true;
 }
 /**
  * 创建Token
