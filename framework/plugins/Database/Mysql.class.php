@@ -493,7 +493,7 @@ class Mysql extends Driver{
                 if('exp' == $exp ){ // 使用表达式
                     $whereStr .= $key.' '.$val[1];
                 }
-                if(in_array($exp, ['notin','in'])) { // IN 运算
+                if(in_array($exp, ['notin','not in','in'])) { // IN 运算
                     if(isset($val[2]) && 'exp'==$val[2]) {
                         $whereStr .= $key.' '.$this->exp[$exp].' '.$val[1];
                     }else{
@@ -501,7 +501,7 @@ class Mysql extends Driver{
                         $whereStr .= $key.' '.$this->exp[$exp].' ('.$val[1].')';
                     }
                 }
-                if(in_array($exp, ['notbetween','between'])){ // BETWEEN运算
+                if(in_array($exp, ['notbetween','not between','between'])){ // BETWEEN运算
                     $data = is_string($val[1]) ? explode(',',$val[1]) : $val[1];
                     $whereStr .=  $key.' '.$this->exp[$exp].' '.$this->parseValue($this->escapeString($data[0])).' AND '.$this->escapeString($data[1]);
                 }
