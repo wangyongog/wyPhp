@@ -116,6 +116,9 @@ function parse_res_name($name,$layer,$level=1){
         list($module,$name) =  explode('/',$name,2);
     }else{
         $module = 'Common';
+        if(!is_file(ROOT.DIRECTORY_SEPARATOR.$module.DIRECTORY_SEPARATOR.$layer.DIRECTORY_SEPARATOR.$name.$layer. '.class.php')){
+            $module = end( explode(DIRECTORY_SEPARATOR,$_SERVER['DOCUMENT_ROOT']));
+        }
     }
     $array  =   explode('/',$name);
     $class  =   $module.'\\'.$layer;
