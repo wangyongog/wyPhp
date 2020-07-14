@@ -4,16 +4,25 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitefca5f3c47ed913cf6ec62723ac722bb
+class ComposerStaticInite382d9f022061fa031edee3f98e95a37
 {
     public static $files = array (
+        'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
         'a9ed0d27b5a698798a89181429f162c5' => __DIR__ . '/..' . '/khanamiryan/qrcode-detector-decoder/lib/Common/customFunctions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
+        'p' => 
+        array (
+            'phpseclib\\' => 10,
+        ),
         'Z' => 
         array (
             'Zxing\\' => 6,
+        ),
+        'P' => 
+        array (
+            'PhpAmqpLib\\' => 11,
         ),
         'H' => 
         array (
@@ -22,9 +31,17 @@ class ComposerStaticInitefca5f3c47ed913cf6ec62723ac722bb
     );
 
     public static $prefixDirsPsr4 = array (
+        'phpseclib\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
+        ),
         'Zxing\\' => 
         array (
             0 => __DIR__ . '/..' . '/khanamiryan/qrcode-detector-decoder/lib',
+        ),
+        'PhpAmqpLib\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-amqplib/php-amqplib/PhpAmqpLib',
         ),
         'Hashids\\' => 
         array (
@@ -35,8 +52,8 @@ class ComposerStaticInitefca5f3c47ed913cf6ec62723ac722bb
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitefca5f3c47ed913cf6ec62723ac722bb::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitefca5f3c47ed913cf6ec62723ac722bb::$prefixDirsPsr4;
+            $loader->prefixLengthsPsr4 = ComposerStaticInite382d9f022061fa031edee3f98e95a37::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInite382d9f022061fa031edee3f98e95a37::$prefixDirsPsr4;
 
         }, null, ClassLoader::class);
     }

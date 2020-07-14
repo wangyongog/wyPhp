@@ -1,6 +1,13 @@
 {
     "require": {
         "hashids/hashids": "^3.0",
-        "khanamiryan/qrcode-detector-decoder": "^1.0"
+        "khanamiryan/qrcode-detector-decoder": "^1.0",
+        "php-amqplib/php-amqplib": "^2.11.3"
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
     }
 }
