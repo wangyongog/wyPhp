@@ -116,7 +116,6 @@ class APPbase{
                 }
             }
         }*/
-        
         $conname = [
             ROOT.'/Common/functions.php',
             FWPATH.'/plugins/Common/functions.php'
