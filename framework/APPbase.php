@@ -92,7 +92,7 @@ class APPbase{
         }
     }
     protected static function loadConfig(){
-        $include_file = include ROOT.'/config/api.inc.php';
+        /*$include_file = include ROOT.'/config/api.inc.php';
         if(isset($include_file['core'])){
             foreach ($include_file['core'] as $file){
                 if(is_file($file)){
@@ -114,6 +114,25 @@ class APPbase{
                 if(is_file($file)) {
                     CF(load_config($file));
                 }
+            }
+        }*/
+        $conname = [
+            ROOT.'/Common/functions.php',
+            FWPATH.'/plugins/Common/functions.php'
+        ];
+        foreach ($conname as $file){
+            if(is_file($file)){
+                load_config($file);
+            }
+        }
+        $con = ROOT.'/config';
+        $filename = scandir($con);
+        foreach($filename as $k=>$v){
+            // 跳过两个特殊目录   continue跳出循环
+            if($v=="." || $v==".."){continue;}
+            $file = $con.'/'.$v;
+            if(is_file($file)){
+                CF(load_config($file));
             }
         }
     }
