@@ -13,7 +13,7 @@ class Redis extends WyPhp\Cache{
     protected $redis;
     protected static $redis_link;
     //自定义前缀
-    private $_prefix = '_';
+    private $_prefix = 'wy_';
     //redis主机标示
     private $_redis_id;
 
@@ -242,6 +242,15 @@ class Redis extends WyPhp\Cache{
      */
     public function rpush($key,$value){
         return $this->redis->rpush($this->config['prefix'].$key,$value);
+    }
+
+    /**
+     * 取出队列信息
+     * @param $key
+     * @return mixed
+     */
+    public function lpop($key){
+        return bccomp($this->lLen($key),0)!=1 ? '' : $this->redis->lpop($this->config['prefix'].$key);
     }
     /**
      * 在队列尾部插入一个元素 如果key不存在，什么也不做
