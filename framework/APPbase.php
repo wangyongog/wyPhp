@@ -122,7 +122,7 @@ class APPbase{
         ];
         foreach ($conname as $file){
             if(is_file($file)){
-                load_config($file);
+                include_once($file);
             }
         }
         $con = ROOT.'/config';
