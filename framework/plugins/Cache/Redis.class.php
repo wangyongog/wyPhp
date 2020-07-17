@@ -21,7 +21,7 @@ class Redis extends WyPhp\Cache{
         if(!class_exists('redis', false)){
             WyPhp\Error::error('not drive :redis');
         }
-        $this->config = F('redis');
+        $this->config = CF('redis');
         $this->_redis_id = isset($config['hostId']) ? $config['hostId'] : $this->config['hostId'];
         $this->redis = self::$redis_link[$this->_redis_id];
         if($this->redis == null){
