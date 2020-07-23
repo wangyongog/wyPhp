@@ -1,10 +1,12 @@
 <?php
 namespace App\Controller;
+use Common\Model\PaymentsModel;
+use WyPhp\Cache\Redis;
 use WyPhp\DB;
 use WyPhp\Filter;
 
 class main extends baseController {
-    public function actionIndex(){echo 'gggg';exit;
+    public function actionIndex(){
         $banner = D('Banner');
         $banner_arr = $banner->getlist('img,url,pos', ['pos' =>['in',[1,2,3]]],'o desc',10);
         foreach ($banner_arr as $v){
@@ -87,6 +89,68 @@ class main extends baseController {
             $this->success('提交成功');
         }
         $this->error('提交失败');
+    }
+    public function actionPostJoin(){
+        $formhash = $_SERVER['HTTP_X_CSRF_TOKEN'];
+        if($formhash != formhash()){
+            $this->error('无效提交，刷新后再提交');
+        }
+        $this->outData['method'] = 'write';
+        $this->outData['runFunctionJson'] = 'joinbackfun';
+        $data = Filter::$gp['data'];
+        $this->outData['data']['status'] = 0;
+        if(!$data['name']){
+            $this->outData['data']['msg'] = '请填写姓名';
+            $this->printJson();
+        }
+        if(!isMobile( $data['phone'])){
+            $this->outData['data']['msg'] = '请填写正确的电话';
+            $this->printJson();
+        }
+
+        if(!$data['address']){
+            $this->outData['data']['msg'] = '请填写详细地址';
+            $this->printJson();
+        }
+        if(!$data['money']){
+            $this->outData['data']['msg'] = '请选择资金范围';
+            $this->printJson();
+        }
+        $data['addtime'] = TIMESTAMP;
+
+        if(DB::insert('join',$data)){
+            $status = 1;
+        }
+        $this->outData['data']['status'] = $status;
+        $this->printJson();
+    }
+    public function actionMongo(){
+        /*DB::$db_checks = [
+            'db_tag'=>'mongo_'
+        ];
+        $data['list'] = DB::fetch_all('mydb','*',['age'=>['in',[3,4]],'name'=>'菜鸟教程2']);
+        $data['list1'] = DB::fetch_all('mydb','*',['age'=>['in',[3,4]],'name'=>'菜鸟教程42']);
+        print_r($data);*/
+    }
+    public function actionRabbitmqsend(){
+        /*require_once FWPATH . '/plugins/vendor/autoload.php';
+        $X = new Rabbitmq();
+        $X->sendMessage('hello',date('Y-m-d H:i:s'));*/
+        $redis = new Redis();
+        $redis->rpush('hello', date('Y-m-d H:i:s'));
+    }
+    public function actionRabbitmqget(){
+        $redis = new Redis();
+        $s = $redis->lpop('hello');
+        print_r($s);
+    }
+    public function actionAlipay(){
+        $paymentsModel =  new PaymentsModel();
+        $data = $paymentsModel->alipay(1,2,3,4);
+        if($data == false){
+            print_r($paymentsModel->getError());
+        }
+        print_r($data);
     }
 
 }

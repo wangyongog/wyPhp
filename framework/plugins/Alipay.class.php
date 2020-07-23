@@ -2,36 +2,36 @@
 namespace WyPhp;
 require_once(FWPATH . '/plugins/Tools/alipay-sdk/aop/AopClient.php');
 require_once(FWPATH . '/plugins/Tools/alipay-sdk/aop/request/AlipayTradeCreateRequest.php');
+require_once(FWPATH . '/plugins/Tools/alipay-sdk/aop/request/AlipaySystemOauthTokenRequest.php');
 class Alipay{
-
     /**
      * 支付宝小程序，统一收单交易创建接口
      * @param $data
      * @return array|bool
      */
     public function aliPayMini($data){
-        $aop = new AopClient();
-        $aop->appId = SConstant::$alipay_config['app_id'];
-        $aop->rsaPrivateKeyFilePath = SConstant::$alipay_config['rsa_private'];
+        $aop = new \AopClient();
+        $alipay_config = CF('alipay_config');
+        $aop->appId = $alipay_config['app_id'];
+        $aop->rsaPrivateKeyFilePath = $alipay_config['rsa_private'];
 
-        $aop->alipayrsaPublicKey = file_get_contents(SConstant::$alipay_config['rsa_public']);
-
+        $aop->alipayrsaPublicKey = file_get_contents($alipay_config['rsa_public']);
         $aop->signType = 'RSA2';
 
-        $request = new AlipayTradeCreateRequest();
+        $request = new \AlipayTradeCreateRequest();
         try {
             if(empty($data)){
-                throw new Exception('无效数据');
+                throw new \Exception('无效数据');
             }
-            $data['total_amount'] = floatval($data['total_amount']);
+            $data['total_amount'] = getMoney($data['total_amount']);
             if(empty($data['total_amount'])){
-                throw new Exception('请输入金额');
+                throw new \Exception('请输入金额');
             }
             if(empty($data['out_trade_no'])){
-                throw new Exception('订单号不能为空');
+                throw new \Exception('订单号不能为空');
             }
             if(empty($data['buyer_id'])){
-                throw new Exception('购买人不能为空');
+                throw new \Exception('购买人不能为空');
             }
             $biz_data['out_trade_no'] = $data['out_trade_no'];
             $biz_data['total_amount'] = $data['total_amount'];
@@ -40,13 +40,13 @@ class Alipay{
             $biz_data['buyer_logon_id'] = isset($data['buyer_logon_id']) ? $data['buyer_logon_id'] : '';
 
             $biz = json_encode($biz_data);
-            $request->setNotifyUrl(SConstant::$alipay_config['notify_url']);
+            $request->setNotifyUrl($alipay_config['notify_url']);
             $request->setBizContent($biz);
             $result = $aop->execute($request);
 
             $responseNode = str_replace(".", "_", $request->getApiMethodName()) . "_response";
             $resultCode = $result->$responseNode->code;
-            file_put_contents('./alipay.txt', print_r($result, true),FILE_APPEND);
+            Logs::save( print_r($result, true),'alipay');
             //成功
             if(!empty($resultCode)&&$resultCode == 10000){
                 return [
@@ -55,11 +55,8 @@ class Alipay{
                     'out_trade_no' =>$result->$responseNode->out_trade_no
                 ];
             }
-            return [
-                'code' =>$resultCode,
-                'msg' =>$result->$responseNode->sub_msg,
-            ];
-        }catch (Exception $e) {
+            throw new \Exception($result->$responseNode->sub_msg);
+        }catch (\Exception $e) {
             return [
                 'code' =>-101,
                 'msg' =>$e->getMessage(),
@@ -76,16 +73,16 @@ class Alipay{
     public function oauthToken($code, $grant_type='authorization_code', $refresh_token =''){
         try {
             if(empty($code)){
-                throw new Exception('授权码不正确');
+                throw new \Exception('授权码不正确');
             }
-            require_once(PLUGINS_DIR . '/tools/paytools/alipay-sdk/aop/request/AlipaySystemOauthTokenRequest.php');
-            $aop = new AopClient();
-            $aop->appId = SConstant::$alipay_config['app_id'];
-            $aop->rsaPrivateKeyFilePath = SConstant::$alipay_config['rsa_private'];
+            $alipay_config = CF('alipay_config');
+            $aop = new \AopClient();
+            $aop->appId = $alipay_config['app_id'];
+            $aop->rsaPrivateKeyFilePath = $alipay_config['rsa_private'];
 
-            $aop->alipayrsaPublicKey = file_get_contents(SConstant::$alipay_config['rsa_public']);
+            $aop->alipayrsaPublicKey = file_get_contents($alipay_config['rsa_public']);
             $aop->signType = 'RSA2';
-            $request = new AlipaySystemOauthTokenRequest();
+            $request = new \AlipaySystemOauthTokenRequest();
 
             $request->setGrantType($grant_type);
             $request->setCode($code);
@@ -107,10 +104,12 @@ class Alipay{
                     're_expires_in'=>$result->$responseNode->re_expires_in,
                 ];
             }
-            throw new Exception($result->$responseNode->sub_msg);
-        }catch (Exception $e) {
-            $this->setError(-101,$e->getMessage());
-            return false;
+            throw new \Exception($result->$responseNode->sub_msg);
+        }catch (\Exception $e) {
+            return [
+                'code' =>-101,
+                'msg' =>$e->getMessage(),
+            ];
         }
     }
 
@@ -121,25 +120,25 @@ class Alipay{
     public function alipayTradeRefund($data){
         try {
             if(empty($data['trade_no'])){
-                throw new Exception('交易号不能为空');
+                throw new \Exception('交易号不能为空');
             }
             $money = isset($data['refund_amount']) ? floatval($data['refund_amount']) : 0;
             if(!$money){
-                throw new Exception('金额不能为空');
+                throw new \Exception('金额不能为空');
             }
-            $money = SCalc::getMoney($money);
-            require_once(PLUGINS_DIR . '/tools/paytools/alipay-sdk/aop/request/AlipayTradeRefundRequest.php');
-            $aop = new AopClient();
-            $aop->appId = SConstant::$alipay_config['app_id'];
-            $aop->rsaPrivateKeyFilePath = SConstant::$alipay_config['rsa_private'];
-            $aop->alipayrsaPublicKey = file_get_contents(SConstant::$alipay_config['rsa_public']);
+            $money = getMoney($money);
+            $alipay_config = CF('alipay_config');
+            $aop = new \AopClient();
+            $aop->appId = $alipay_config['app_id'];
+            $aop->rsaPrivateKeyFilePath = $alipay_config['rsa_private'];
+            $aop->alipayrsaPublicKey = file_get_contents($alipay_config['rsa_public']);
             $aop->signType = 'RSA2';
-            $request = new AlipayTradeRefundRequest();
-            $request->setNotifyUrl(SConstant::$alipay_config['notify_url']);
+            $request = new \AlipayTradeRefundRequest();
+            $request->setNotifyUrl($alipay_config['notify_url']);
             $biz_data = [
                 'trade_no' =>$data['trade_no'],//支付宝交易号
                 'refund_amount' =>$money,//退款金额
-                'out_request_no' =>isset($data['out_request_no']) ? $data['out_request_no'] : SUtil::random(6,3),//标识一次退款请求，同一笔交易多次退款需要保证唯一，如需部分退款，则此参数必传。
+                'out_request_no' =>isset($data['out_request_no']) ? $data['out_request_no'] : creatOrderId(),//标识一次退款请求，同一笔交易多次退款需要保证唯一，如需部分退款，则此参数必传。
             ];
             //订单号
             if(isset($data['out_trade_no'])){
@@ -159,14 +158,17 @@ class Alipay{
 
             $responseNode = str_replace(".", "_", $request->getApiMethodName()) . "_response";
             $resultCode = $result->$responseNode->code;
-            file_put_contents('./alipay_refund.txt', print_r($result, true),FILE_APPEND);
+            Logs::save(print_r($result, true),'alipay');
+
             if(!empty($resultCode)&&$resultCode == 10000){
                 return true;
             }
-            throw new Exception($result->$responseNode->sub_msg);
-        }catch (Exception $e) {
-            $this->setError(-101,$e->getMessage());
-            return false;
+            throw new \Exception($result->$responseNode->sub_msg);
+        }catch (\Exception $e) {
+            return [
+                'code' =>-101,
+                'msg' =>$e->getMessage(),
+            ];
         }
     }
 }

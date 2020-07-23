@@ -1,11 +1,5 @@
 <?php
 namespace WyPhp;
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2016/6/22
- * Time: 17:15
- */
 class Model {
     // 操作状态
     const MODEL_INSERT = 1;      //  插入模型数据

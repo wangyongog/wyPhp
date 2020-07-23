@@ -35,7 +35,7 @@ function sort_time($tm, $month = false, $year = false, $format = 'Y-m-d') {
  * 统一金额格式
  * @param $amount
  */
-function price_cut($amount){
+function getMoney($amount){
     return sprintf("%.2f",$amount);
 }
 /**

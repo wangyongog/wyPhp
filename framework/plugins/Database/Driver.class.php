@@ -1,13 +1,6 @@
 <?php
 namespace WyPhp\Database;
 use WyPhp\Error;
-
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2016/7/22
- * Time: 11:13
- */
 abstract class Driver{
     // 数据库连接ID 支持多个连接
     protected $linkID = [];

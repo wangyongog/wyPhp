@@ -17,7 +17,8 @@ class Logs{
     static function record($message, $level='') {
         $level = $level ? $level : 'file';
         $message = is_array($message) ? json_encode($message) : $message;
-        self::$log[] = $level.' : '. $message.'\r\n';
+        //self::$log[] = $level.' : '. $message;
+        return $message;
     }
     /**
      * 日志保存
@@ -27,15 +28,15 @@ class Logs{
      * @return void
      */
     public static function save($msg ,$type='file') {
-        self::record($msg, $type);
+        $message = self::record($msg, $type);
         if(!self::$storage){
             $log_type = CF('ERROR_TYPE');
             $class  =   'WyPhp\\Logs\\'. ucfirst($log_type);
             self::$storage = new $class();
         }
-        $message = implode('',self::$log);
+        //$message = implode('',self::$log);
         self::$storage->write($message,$type);
         // 保存后清空日志缓存
-        self::$log = [];
+        //self::$log = [];
     }
 }

@@ -2,12 +2,13 @@
 namespace Common\Model;
 use WyPhp\DB;
 use WyPhp\Model;
+use WyPhp\Alipay;
 class PaymentsModel extends Model {
     public $table = 'payments';
     /**
      * 支付宝小程序
      * @param $uid
-     * @param $buyer_id
+     * @param $buyer_id 买家id,支付宝的用户id，可以授权oauthToken获取
      * @param $order_id
      * @param $amount
      * @param string $type
@@ -15,7 +16,7 @@ class PaymentsModel extends Model {
      */
     public function alipay($uid, $buyer_id, $order_id, $amount, $type = 'order', $subject='订单'){
         try{
-            $amount = price_cut($amount);
+            $amount = getMoney($amount);
             $payments_id = $this->initData($order_id, $uid, $amount, $type,'alipay');
             if (!$payments_id) {
                 throw new \Exception($this->getError());
@@ -26,17 +27,17 @@ class PaymentsModel extends Model {
                 'subject' =>$subject,
                 'buyer_id' =>$buyer_id
             ];
-            $res = $this->aliPayMini($pay_data);
-            $paymentsModel = new Model_fi_payments();
-            $paymentsModel->update(
-                ['payments_id' =>$payments_id],
-                [
-                    'trade_no' =>isset($res['trade_no']) ? $res['trade_no'] : '',
-                    'back_message' =>json_encode($res)
-                ]
-            );
-            if($res['code'] !=10000){
+
+            $alipay = new Alipay();
+            $res = $alipay->aliPayMini($pay_data);
+            if($res['code'] == -101){
                 throw new \Exception($res['msg']);
+            }
+            if(!DB::update($this->table, [
+                'trade_no' =>isset($res['trade_no']) ? $res['trade_no'] : '',
+                'back_message' =>json_encode($res)
+            ],['payments_id' =>$payments_id])){
+                throw new \Exception('更新失败');
             }
             return $res;
         }catch (\Exception $e) {
@@ -58,7 +59,7 @@ class PaymentsModel extends Model {
         try{
             $order_id = intval($order_id);
             $uid = intval($uid);
-            $amount = price_cut($amount);
+            $amount = getMoney($amount);
             $payments_type = $payments_type;
             $payway_arr = CF('payway');
             if(!isset($payway_arr[$payway])){
@@ -81,9 +82,9 @@ class PaymentsModel extends Model {
             $idata['trade_no'] = '';
             $idata['payway'] = $payway;
 
-            $payments_id = DB::insert($this->table, $idata,false, ['prefix' =>'pay_']);
+            $payments_id = DB::insert($this->table, $idata,false, ['prefix'=>'fi_']);
             if(!$payments_id){
-                return false;
+                throw new \Exception('支付记录创建失败');
             }
             return $payments_id;
         }catch (\Exception $e){
