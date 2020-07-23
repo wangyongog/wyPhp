@@ -255,6 +255,10 @@ class Model {
      * @return string
      */
     public function getError(){
-        return $this->error;
+        return $this->error['msg'];
+    }
+    public function setError($code, $msg){
+        $this->error['code'] = $code;
+        $this->error['msg'] = $msg;
     }
 }

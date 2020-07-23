@@ -30,6 +30,14 @@ function sort_time($tm, $month = false, $year = false, $format = 'Y-m-d') {
     }
     return $str;
 }
+
+/**
+ * 统一金额格式
+ * @param $amount
+ */
+function price_cut($amount){
+    return sprintf("%.2f",$amount);
+}
 /**
  * 截取utf8字符串,完美支持中文
  * @param string $str 截取的字符串

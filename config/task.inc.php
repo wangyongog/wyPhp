@@ -1,5 +1,9 @@
 <?php
 return [
+    'payway' =>[
+        'alipay'=>'支付宝',
+        'weixin'=>'微信'
+    ],
     'POSITION' => [
         1 =>'首页第一个banner',
         2 =>'首页第二个banner',
