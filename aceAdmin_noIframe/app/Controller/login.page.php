@@ -35,6 +35,7 @@ class login extends baseController {
         $username = G('username');
         $password = G('password');
         $code = G('code');
+
         if(check_formhash() === false){
             $this->error('无效操作！');
         }

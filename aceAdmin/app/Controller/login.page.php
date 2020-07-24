@@ -1,13 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2017/1/5
- * Time: 16:14
- */
 namespace App\Controller;
-//use aceAdmin\Model\LoginModel;
-
 use WyPhp\DB;
 use WyPhp\Trace;
 
@@ -26,23 +18,12 @@ class login extends baseController {
         if(check_formhash() === false){
             $this->error('无效操作！');
         }
-        $login = D('aceAdmin/Manager');
-        $uid = $login->login($username, $password);
-        if($uid>0){
-            $this->success('登录成功','/main');
+        $login = D('Manager');
+        $flag = $login->login($username, $password);
+        if(!$flag){
+            $this->error($login->getError());
         }
-        switch ($uid) {
-            case - 1 :
-                $error = '用户不存在或被禁用！';
-                break; // 系统级别禁用
-            case - 2 :
-                $error = '密码错误！';
-                break;
-            default :
-                $error = '未知错误！';
-                break;
-        }
-        $this->error($error);
+        $this->success('登录成功','/main');
     }
     public function actionVerify(){
         $config = array(

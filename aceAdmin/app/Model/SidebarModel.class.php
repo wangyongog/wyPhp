@@ -1,26 +1,21 @@
 <?php
 namespace aceAdmin\Model;
-use App\Controller\baseController;
 use WyPhp\DB;
 use WyPhp\Model;
 
 class SidebarModel extends Model {
     public $_tabal = 'auth_rule';
     protected $data = [];
-    public function getAll(){
-        $items = S('sidebarlistall');
-        if($items){
-            return $items;
-        }
-        $items = DB::fetch_all($this->_tabal ,'id,pid,title,url,icon,o,status',[] ,'o ASC');
-        S('sidebarlistall' ,$items);
+    public function getAll(array $where=[]){
+        $where = $where ? $where : [];
+        $items = DB::fetch_all($this->_tabal ,'id,pid,title,url,icon,o,status',$where ,'o ASC');
         return $items;
     }
     public function sidebarList($uid){
         $data = [];
         $where['status'] = 1;
         if(!in_array($uid, CF('SYSTEM_USERID')) ) {
-            $group = D('aceAdmin/Group');
+            $group = D('Group');
             $group_arr = $group->getGroups($uid);
             $rules = $group_arr['rules'];
             if(!$rules){
@@ -33,7 +28,6 @@ class SidebarModel extends Model {
             return $this->data;
         }
         $this->data = getTree($items);
-        S('sidebarlist'.$uid ,$this->data);
         return $this->data;
     }
 
@@ -43,30 +37,21 @@ class SidebarModel extends Model {
      * @return array
      */
     public function getHeadTitle(){
-        $arr = S('breadcrumbs');
-        $data = $arrlist = [];
-        if(empty($arr)){
-            $arr = DB::fetch_all($this->_tabal ,'id,pid,title,url',[] ,'o ASC');
-            S('breadcrumbs', $arr);
-        }
-        list($act, $par) = explode('?', $_SERVER['REQUEST_URI']);
-        foreach($arr as $value){
-            if(rtrim($act, CF('URL_HTML_FIX'))  == strtolower($value['url'])){
-                $data[] = [
-                    'name' =>$value['title'],
-                    //'url' =>$value['url'],
-                    'last' =>1
-                ] ;
-                $pid = $value['pid'];
+        $group = D('Group');
+        $rule_id = $group->authRuleId(CONTROLLER.'/'.ACTION);
+        $position= [];
+        if($rule_id){
+            $data = $this->getAll();
+            foreach ($data as $v){
+                $tree[$v['id']] = [
+                    'name' =>$v['title'],
+                    'pid' =>$v['pid'],
+                    'url' =>U($v['url'])
+                ];
             }
-            $items[$value['id']] = $value;
+            $position = GetTopid($tree,$rule_id);
         }
-        if($pid){
-            $arrlist = $this->cateSort($items, $pid);
-        }
-        $data = array_merge($data, $arrlist);
-        krsort($data);
-        return $data;
+        return $position;
     }
     public function cateSort($data, $pid=0, $level=0) {
         static $arr=[];

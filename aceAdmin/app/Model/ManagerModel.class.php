@@ -48,18 +48,23 @@ class ManagerModel extends Model{
         return DB::fetch_first($table, ['a.uid,a.user,a.hash,a.lasttime,a.addtime','ag.*'], ['a.uid'=>$uid,'a.status'=>1,'ag.status' =>1]);
     }
     public function login($username='', $password=''){
-        if(!$password || !$username){
-            return -1;
+        try{
+            if(!$password || !$username){
+                throw new \Exception('请输入账号或密码');
+            }
+            $data = DB::fetch_first($this->table, 'uid,password,hash' ,array('user'=>$username,'status'=>1));
+            if(empty($data)){
+                throw new \Exception('无效账号');
+            }
+            if($this->pwdVerify($password, $data['password'] ) != true){
+                throw new \Exception('密码错误');
+            }
+            $this->_updateLogin($data['uid']); //更新用户登录信息
+            return $data['uid']; //登录成功，返回用户ID
+        }catch (\Exception $e){
+            $this->setError(-1, $e->getMessage());
+            return false;
         }
-        $data = DB::fetch_first($this->table, 'uid,password,hash' ,array('user'=>$username,'status'=>1));
-        if(empty($data)){
-           return -1;
-        }
-        if($this->pwdVerify($password, $data['password'] ) != true){
-            return -2;
-        }
-        $this->_updateLogin($data['uid']); //更新用户登录信息
-        return $data['uid']; //登录成功，返回用户ID
     }
     private function _updateLogin($uid){
         if(!$uid){
@@ -98,13 +103,12 @@ class ManagerModel extends Model{
      * @param $password
      */
     public function creatPassWorld($password=''){
-        $password = $password ? $password : I('password');
         /*$options = [
             'salt' => $this->custom_function_for_salt(),
             'cost' => 10 // the default cost is 10
         ];*/
         if($password){
-            return password_hash(trim($password) .substr(CF('AUTOKEY'),2,12), PASSWORD_DEFAULT);
+            return password_hash(trim($password) .substr(CF('AUTOKEY'),2,12),PASSWORD_DEFAULT);
         }
         return false;
     }
@@ -116,6 +120,6 @@ class ManagerModel extends Model{
      * @return bool
      */
     public function pwdVerify($password, $hashPwd){
-        return password_verify($password.substr(CF('AUTOKEY'),2,12), $hashPwd);
+        return password_verify(trim($password).substr(CF('AUTOKEY'),2,12), $hashPwd);
     }
 }

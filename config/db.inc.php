@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 return [
     'hm_' =>[
         'master' =>'host:127.0.0.1,port:3306,user:root,database:chinawy_web,password:root,charset:utf8mb4,dbtype:mysql,prefix:nf_',

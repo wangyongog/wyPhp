@@ -3,16 +3,15 @@ return [
     'DEFAULT_DB' =>'hm_',//默认数据库,表前缀区分
     'RW_SEPARATE' =>false, //true 开启,false读写分离是否开启
     'DOMAIN' =>[
-        'web' =>'http://www.wyphp.local',//pc主域名
-        'adminweb' =>'http://admin.wyphp.local',//后端
-        'hzweb' =>'http://newhz.wyphp.local',//后端
-        'assets' =>'http://static.wyphp.local',//js+css
+        'web' =>'http://www.web.local',//pc主域名
+        'admin' =>'http://admin.web.local',//后端
+        'assets' =>'http://assets.web.local',//js+css
         'attach' =>[//上传文件域名,可多服务
             'img1' =>[
-                'url' =>'http://i.wyphp.local'
+                'url' =>'http://i.web.local'
             ],
             'img2' =>[
-                'url' =>'http://img.wyphp.local'
+                'url' =>'http://img.web.local'
             ]
         ]
     ],

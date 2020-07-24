@@ -12,7 +12,7 @@ use WyPhp\DB;
 class Sidebar extends baseController{
     public function actionIndex(){
         if(IS_AJAX){
-            $sidebarModel = D('aceAdmin/Sidebar');
+            $sidebarModel = D('Sidebar');
             $data = getTree($sidebarModel->getAll());
             $html_row = $this->menList($data);
             $this->tbody_html = $html_row;
@@ -49,7 +49,7 @@ class Sidebar extends baseController{
                 $this->error('栏目名不能为空！');
             }
             $data['pid'] = G('pid','int',0);
-            $data['url'] = substr(G('url'),0 ,1) == '/' ? G('url') : '/'.G('url');
+            $data['url'] = G('url');
             $data['title'] = G('title');
             $data['icon'] = G('icon');
             $data['status'] = G('status') ? 1 : 2;
@@ -64,8 +64,7 @@ class Sidebar extends baseController{
                 $id = $sidebar->add($data);
             }
             if($id || $row){
-                S('sidebarlistall',null);
-                S('sidebarlist'.$this->admin['uid'],null);
+                $this->outData['reload'] = 1;
                 $this->success($msg);
             }
             $this->error('操作失败！');
@@ -93,6 +92,7 @@ class Sidebar extends baseController{
         if(DB::delete('auth_rule',array('id'=>['in',$ids]))){
             $this->outData['reload'] = 1;
             S('sidebarlist'.$this->admin['uid'],null);
+            S('sidebarlistall' ,null);
             $this->success('操作成功!');
         }
         $this->error('删除失败！');

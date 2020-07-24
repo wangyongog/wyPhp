@@ -7,9 +7,9 @@ return [
     'alipay_config' =>[
         'rsa_public' =>FWPATH . '/plugins/Tools/alipay-sdk/rsa/rsa_public_key.txt',//支付宝公钥
         'rsa_private' =>FWPATH . '/plugins/Tools/alipay-sdk/rsa/rsa_private_key.pem',//支付宝私钥
-        'screct_key' =>'',//AES内容加密秘钥
-        'app_id' =>'',
-        'notify_url' =>''
+        'screct_key' =>'EylSA5+T3POVShVnDtPOLQ==',//AES内容加密秘钥
+        'app_id' =>'2021001162622860',
+        'notify_url' =>'https://apishop.cailaobao.xhe8.com/payback/alipay.html'
     ],
     'POSITION' => [
         1 =>'首页第一个banner',

@@ -20,7 +20,6 @@ class Sidebar extends baseController{
             //$this->count = DB::count('auth_rule');
             //$data = DB::fetch_all('auth_rule' ,'*','','o ASC',$this->limit,$this->page);
             $data = S('sidebarlist');
-            //print_r($data);exit;
             $html_row = '';
             if($data){
                 foreach ($data as $val){

@@ -386,32 +386,41 @@ function post($url, $param=array(),$header=array()){
     curl_close($httph);
     return $rst;
 }
+
 /**
  * 产生表单hash值
- * @return bool|string
+ * @param string $str
+ * @param int $expire 有效期
+ * @return string
  */
-function formhash($str=''){
-    $expire = TIMESTAMP + 1200;
+function formhash($str='', $expire=0){
     $user = APPbase::$user;
-    $uid = isset($user['uid']) ? $user['uid'] : 0;
-    $hash = isset($user['hash']) ? $user['hash'] : 0;
-    $key = $uid.'|'.$hash.'|'.$str.'|'.$expire;
-    $sign = md5($key.'|'.substr(CF('AUTOKEY'),5,10) );
+    $data['uid'] = isset($user['uid']) ? $user['uid'] : 0;
+    $data['hash'] = isset($user['hash']) ? $user['hash'] : 0;
+    $data['str'] = $str;
+    $data['expire'] = $expire ? TIMESTAMP + $expire : 0;
+    $data['sign'] = substr(CF('AUTOKEY'),5,10);
+    $sign = md5(implode('|', $data));
+    unset($data['sign']);
+    $key = implode('|',  $data);
     return mcrypt($key.'|'.$sign);
 }
 
+
 /**
  * 验证表单hash值
+ * @param string $check_str
+ * @param bool $checkExpire 是否验证有效期，false不
  * @return bool
  */
-function check_formhash($check_str=''){
+function check_formhash($check_str='', $checkExpire=false){
     $formhash = G('formhash') ? G('formhash') : $_SERVER['HTTP_X_CSRF_TOKEN'];
     $token = mcrypt($formhash,'DECODE');
     if (empty($token)) {
         return false;
     }
     list($uid, $hash, $str, $expire, $sign) = explode('|', $token);
-    if ($expire < TIMESTAMP) {
+    if (($expire < TIMESTAMP) && $checkExpire) {
         return false;
     }
     if($check_str && $str != $check_str){
@@ -626,16 +635,14 @@ function GetSonIdsLogic($id,$sArr,$channel=0,$addthis=true){
 function getTree($array,$id = 'id', $pid = 'pid', $son = 'children'){
     $items = $tree = [];
     foreach($array as $value){
-        $value['url'] = $value['url'] ? '/'.strtolower(ltrim($value['url'],'/') ) : '';
+        $value['url'] = $value['url'] ? ltrim($value['url'],'/')  : '';
         $items[$value[$id]] = $value;
     }
     foreach($items as $key => $value){
         if(isset($items[$value[$pid]])){
             $items[$value[$pid]][$son][$key] = &$items[$key];
-            $items[$value[$pid]]['acts'][] = $value['url'];
         }else{
             $tree[$key] = &$items[$key];
-            $value['url'] && !$value[$pid] and $items[$key]['acts'][] = $value['url'];
         }
     }
     return $tree;

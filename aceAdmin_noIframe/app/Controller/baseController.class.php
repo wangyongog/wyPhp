@@ -27,9 +27,10 @@ class baseController extends Controller {
              $this->error('无权操作！');
          }
          $this->getMem();
-         list($act, $par) = explode('?', $_SERVER['REQUEST_URI']);
-         $this->assign('act', rtrim($act, CF('URL_HTML_FIX')));
-         //$this->assign('act','/'.CONTROLLER.'/'.ACTION);
+         /*list($act, $par) = explode('?', $_SERVER['REQUEST_URI']);
+         $this->assign('act', rtrim($act, CF('URL_HTML_FIX')));*/
+         ///echo ucfirst(CONTROLLER).'/'.ACTION;exit;
+         $this->assign('act',ucfirst(CONTROLLER).'/'.ACTION);
          $this->assign('user',$this->admin);
      }
 
