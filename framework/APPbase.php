@@ -80,6 +80,7 @@ class APPbase{
         if(!is_file($filePath)){
             WyPhp\Error::error('file ['.$filePath.'] not exists');
         }
+
         require_once (realpath($filePath));
         $classInstance = new $classname();
         $method = new \ReflectionMethod($classInstance, $action);
