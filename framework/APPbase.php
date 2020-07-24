@@ -3,7 +3,7 @@ class APPbase{
     protected static $map = [];
     protected static $classes =[];
     public static $app = 'app';
-    protected static $view = 'Index';
+    public static $view = 'Index';
     protected static $controller = 'main';
     public static $env = [];
     public static $user =[];
