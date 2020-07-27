@@ -1,6 +1,7 @@
 <?php
-
-namespace App\Controller;
+namespace App;
+use Admin\MenusModel;
+use Common\ArchivesModel;
 use WyPhp\DB;
 use WyPhp\Filter;
 
@@ -74,7 +75,7 @@ class archives extends baseController{
             if(!$bdata['article_body']){
                 $this->error('请填写文章内容');
             }
-            $arcModel = D('aceAdmin/Archives');
+            $arcModel = new ArchivesModel();
             $data['flag'] = $flag ? implode(',', $flag) : '';
 
             $data['adduid'] = $this->admin['uid'];
@@ -94,7 +95,7 @@ class archives extends baseController{
             }
         }
 
-        $actwebsModel = D('aceAdmin/Menus');
+        $actwebsModel = new MenusModel();
         $menus = $actwebsModel->getAll(['stype'=>G('stype')] );
         $this->assign('menus', $menus);
         if($arid){
@@ -124,7 +125,7 @@ class archives extends baseController{
         if(!$id){
             $this->error('无效操作！');
         }
-        $archivesModel = D('aceAdmin/Archives');
+        $archivesModel = new ArchivesModel();
         if($archivesModel->del(['arid'=>$id])){
             $this->outData['reload'] = 1;
             $this->success('操作成功！');

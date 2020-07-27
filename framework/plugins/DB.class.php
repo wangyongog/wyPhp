@@ -42,16 +42,12 @@ class DB{
 
     /**
      * 判断读写分离
-     * @param $params 服务器相关配置信息
-     * @param bool $master  是否连接从服务器，true否，false从服务器 用于insert,select update,del的区分
+     * @param $params 服务器相关配置信息 [prefix=>数据库标识, slave=>是否连接从服务器，true是，false否] 用于insert,select update,del的区分
      * @return mixed
      */
-    static function checkSlave($params, $master=true){
+    static function checkSlave($params){
         //开启读写分离，并且是从服务器，链接从服务器
-        if(CF('RW_SEPARATE') === true && $master === false){
-            //指定了从库，以指定为准
-            $params['slave'] = isset($params['slave']) ? $params['slave'] : 'slave';
-        }
+        $params['slave'] = (CF('RW_SEPARATE') == true && $params['slave'] == true) ? 'slave' : 'master';
         self::_connect($params);
     }
 
@@ -59,11 +55,13 @@ class DB{
      * 原生SQL操作
      * @param $sql
      * @param array $params
-     * @param bool $master 是否调用从服务器 true 否，false是
      * @return mixed
      */
-    public static function query($sql, $params=[], $master=false){
-        self::checkSlave($params,$master);
+    public static function query($sql, $params=[]){
+        $rawStatement = explode(' ', preg_replace("/\s+|\t+|\n+/", " ", $sql));
+        $statement = strtolower($rawStatement[0]);
+        $params['slave']= isset($params['slave']) ? $params['slave'] : (in_array($statement, ['select']) ? true : false);
+        self::checkSlave($params);
         return self::$_link->query($sql);
     }
 
@@ -88,7 +86,8 @@ class DB{
  * @return mixed
  */
     public static function fetch_all($table, $fields='*', $condition=null, $order='', $limit='', $page=1 , $group='', $having = '', $params=[]){
-        self::checkSlave($params, false);
+        $params['slave']= isset($params['slave']) ? $params['slave'] : true;
+        self::checkSlave($params);
         return self::$_link->select($table , $fields, $condition,$order,$limit,$page,$group,$having);
     }
 
@@ -104,7 +103,8 @@ class DB{
      * @return mixed
      */
     public static function fetch_first($table, $fields='*', $condition=null, $order='', $group='', $having = '', $params=[]){
-        self::checkSlave($params, false);
+        $params['slave']= isset($params['slave']) ? $params['slave'] : true;
+        self::checkSlave($params);
         return self::$_link->fetch_first($table , $fields, $condition, $order,$group, $having);
     }
 
@@ -120,7 +120,8 @@ class DB{
      * @return mixed
      */
     public static function result_first($table, $fields='*', $condition=null, $order='', $group='', $having = '', $params=[]){
-        self::checkSlave($params, false);
+        $params['slave']= isset($params['slave']) ? $params['slave'] : true;
+        self::checkSlave($params);
         return self::$_link->result_first($table , $fields, $condition, $order,$group, $having);
     }
 
@@ -131,10 +132,12 @@ class DB{
      * @param array $params
      */
     public static function count($table, $condition=null, $params=[]){
+        $params['slave']= isset($params['slave']) ? $params['slave'] : true;
         self::checkSlave($params);
         return self::$_link->count($table,$condition);
     }
     static function numRows($params=[]){
+        $params['slave']= isset($params['slave']) ? $params['slave'] : true;
         self::checkSlave($params);
         return self::$_link->numRows;
     }
@@ -144,7 +147,7 @@ class DB{
      * @param $condition  array|string  uid=2 and sss=3
      * @param array $params
      */
-    public static function delete($table, $condition=null , array $params=[]){
+    public static function delete($table, $condition=null , $params=[]){
         self::checkSlave($params);
         return self::$_link->delete($table,$condition);
     }
@@ -156,7 +159,7 @@ class DB{
      * @param array $condition 条件
      * @param array $params
      */
-    public static function update($table, $data, $condition=null, array $params=[]){
+    public static function update($table, $data, $condition=null, $params=[]){
         self::checkSlave($params);
         return self::$_link->update($table, $data,$condition);
     }
@@ -189,7 +192,7 @@ class DB{
      * @param bool $replace	替换插入
      * @return int|false	新插入行的id 或 失败
      */
-    public static function multi_insert($table ,$data=[],array $params=[]){
+    public static function multi_insert($table ,$data=[], $params=[]){
         if(empty($data) || empty($table)){
             return false;
         }

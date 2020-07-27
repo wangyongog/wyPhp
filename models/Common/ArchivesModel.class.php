@@ -1,16 +1,19 @@
 <?php
-namespace aceAdmin\Model;
+namespace Common;
 use WyPhp\DB;
 use WyPhp\Model;
-
 class ArchivesModel extends Model {
     public $table = 'archives';
-    public $error = '操作失败';
-    public function getError(){
-        return $this->error;
+    public function getlist($field='*', $where=[], $order='',$limit=20,$page=1){
+        return DB::fetch_all($this->table,$field, $where,$order,$limit,$page);
     }
-    public function get($field='*', $where=[], $order='',$limit=10){
-        $Banner = D('Common/Banner');
+    public function getOne($field='*', $where=[]){
+        $table = array(
+            'archives' =>'ac',
+            'left' =>'ac.arid=at.arid',
+            'article' =>'at',
+        );
+        return DB::fetch_first($table, $field , $where);
     }
     public function add($data,$bdata){
         if (empty($data)){

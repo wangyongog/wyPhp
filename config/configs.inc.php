@@ -16,7 +16,6 @@ return [
         ]
     ],
     'IMG_SEVERS' =>'#img2',//默认图片服务标识
-    //'LOAD_CONFIG' =>'menu,task', //扩展配置文件
     'SYSTEM_USERID' => [10000,2], //超级管理员
     'AUTOKEY' =>'ksd%#5$8Yh4dj6JHo42&O)fh4ed9', //秘钥
     'ATTACHMENT_UPLOAD' => [

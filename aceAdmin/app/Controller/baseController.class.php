@@ -1,16 +1,10 @@
 <?php
-namespace App\Controller;
-use aceAdmin\Model\SidebarModel;
+namespace App;
+use Admin\GroupModel;
+use Admin\ManagerModel;
 use WyPhp\Controller;
 use WyPhp\DB;
 
-
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2017/1/4
- * Time: 15:28
- */
 class baseController extends Controller {
      public $admin = [];
      public function _initialize(){
@@ -45,7 +39,7 @@ class baseController extends Controller {
      */
     protected function auth(){
          if(!in_array($this->admin['uid'], CF('SYSTEM_USERID')) ){
-             $group = D('aceAdmin/Group');
+             $group = new GroupModel();
              return $group->checks(CONTROLLER.'/'.ACTION, $this->admin['uid']);
          }
          return true;
@@ -57,7 +51,7 @@ class baseController extends Controller {
      */
     protected function getMem(){
         $sidebarlist = S('sidebarlist'.$this->admin['uid']);
-        $sidebar = new SidebarModel();
+        $sidebar = new \Admin\SidebarModel();
         if(empty($sidebarlist)){
             $sidebarlist = $sidebar->sidebarList($this->admin['uid']);
         }
@@ -74,7 +68,7 @@ class baseController extends Controller {
              list($uid, $hash) = explode("\t", mcrypt($uidHash, 'DECODE')  ,2);
              $uid = intval($uid);
              if($uid && $hash){
-                 $manager = D('aceAdmin/Manager');
+                 $manager = new ManagerModel();
                  $user = $manager->checkLogin($uid);
                  if ($user && $user['hash'] == $hash) {
                      $this->admin = $user;

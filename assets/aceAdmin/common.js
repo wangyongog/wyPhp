@@ -1,4 +1,4 @@
-﻿var adminJs = {
+var adminJs = {
 	dialog : null,
 	showIframe :function(title,url,w,h,noshade){
 		w =w?w+"px":'';h=h?h+"px":'';

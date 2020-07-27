@@ -1,6 +1,6 @@
 <?php
-namespace App\Controller;
-use Common\Model\PaymentsModel;
+namespace App;
+use Common\PaymentsModel;
 use WyPhp\Cache\Redis;
 use WyPhp\DB;
 use WyPhp\Filter;
@@ -137,7 +137,7 @@ class main extends baseController {
         $X = new Rabbitmq();
         $X->sendMessage('hello',date('Y-m-d H:i:s'));*/
         $redis = new Redis();
-        $redis->rpush('hello', date('Y-m-d H:i:s'));
+        $redis->rpush('hello', date('Y-m-d H:i:s',TIMESTAMP));
     }
     public function actionRabbitmqget(){
         $redis = new Redis();

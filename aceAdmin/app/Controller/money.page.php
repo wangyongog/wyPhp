@@ -13,10 +13,10 @@ use WyPhp\DB;
 class money extends baseController{
     public function actionIndex(){
         if(IS_AJAX){
-            if(I('status')){
+            if(G('status')){
                 $where['status'] = I('status');
             }
-            if(I('username')){
+            if(G('username')){
                 $where['username'] = I('username');
             }
             $this->count = DB::count('recharge', $where);

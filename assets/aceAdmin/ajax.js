@@ -1,4 +1,4 @@
-﻿var formAjax = {
+var formAjax = {
 	live:function(){
 		/*var formObj = $('form');
 		formObj.Validform({

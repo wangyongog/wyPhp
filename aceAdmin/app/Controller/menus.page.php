@@ -1,5 +1,5 @@
 <?php
-namespace App\Controller;
+namespace App;
 use WyPhp\DB;
 use WyPhp\Filter;
 

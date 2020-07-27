@@ -1,5 +1,6 @@
 <?php
-namespace App\Controller;
+namespace App;
+use Admin\ManagerModel;
 use WyPhp\DB;
 use WyPhp\Trace;
 
@@ -18,7 +19,7 @@ class login extends baseController {
         if(check_formhash() === false){
             $this->error('无效操作！');
         }
-        $login = D('Manager');
+        $login = new ManagerModel();
         $flag = $login->login($username, $password);
         if(!$flag){
             $this->error($login->getError());

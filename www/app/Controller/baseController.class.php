@@ -1,5 +1,5 @@
 <?php
-namespace App\Controller;
+namespace App;
 use WyPhp\Controller;
 
 class baseController extends Controller {

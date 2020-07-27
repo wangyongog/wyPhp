@@ -1,18 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2016/7/1
- * Time: 17:01
- */
-namespace App\Controller;
-use aceAdmin\Model\SidebarModel;
+namespace App;
+
+use Admin\SidebarModel;
 use WyPhp\DB;
 
 class Sidebar extends baseController{
     public function actionIndex(){
         if(IS_AJAX){
-            $sidebarModel = D('Sidebar');
+            $sidebarModel = new SidebarModel();
             $data = getTree($sidebarModel->getAll());
             $html_row = $this->menList($data);
             $this->tbody_html = $html_row;

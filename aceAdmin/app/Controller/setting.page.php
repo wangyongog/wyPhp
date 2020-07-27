@@ -1,5 +1,6 @@
 <?php
-namespace App\Controller;
+namespace App;
+use Admin\SettingModel;
 use WyPhp\DB;
 use WyPhp\Filter;
 
@@ -23,7 +24,7 @@ class setting extends baseController {
             $this->success('提交成功！');
             die();
         }
-        $set = D('aceAdmin/Setting');
+        $set = new SettingModel();
         $data = $set->get_setting('', 'all');
         $this->assign('web_name',CF('WEB_NAME'));
         $this->assign('data', $data);

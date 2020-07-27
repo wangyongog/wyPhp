@@ -1,15 +1,17 @@
 <?php
-namespace App\Controller;
+namespace App;
+use Admin\GroupModel;
+use Admin\ManagerModel;
 use WyPhp\DB;
 
 class manager extends baseController{
     public function actionIndex(){
         if(IS_AJAX){
-            $manager = D('aceAdmin/Manager');
+            $manager = new ManagerModel();
             $this->count = DB::count($manager->table);
             $data = DB::fetch_all($manager->table,'*','',' uid ASC',$this->limit,$this->page);
             $html_row = '';
-            $groupModel = D('aceAdmin/Group');
+            $groupModel = new GroupModel();
             $group = $groupModel->getGroup();
             if($data){
                 foreach ($data as $val){
@@ -30,7 +32,7 @@ class manager extends baseController{
         $this->render();
     }
     public function actionAdd(){
-        $manager = D('aceAdmin/Manager');
+        $manager = new ManagerModel();
         $uid = G('uid','int',0);
         if(IS_AJAX){
             if(creatToken($uid) != G('formhash')){
@@ -72,7 +74,7 @@ class manager extends baseController{
 
             $this->assign('data', $data);
         }
-        $groupModel = D('aceAdmin/Group');
+        $groupModel = NEW GroupModel();
         $group = $groupModel->getGroup();
         $this->assign('uid', $uid);
         $this->assign('group', $group);

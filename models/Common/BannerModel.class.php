@@ -1,16 +1,11 @@
 <?php
-namespace aceAdmin\Model;
+namespace Common;
 use WyPhp\DB;
 use WyPhp\Model;
-
 class BannerModel extends Model {
-    public $table = 'banner';
-    public $error = '操作失败';
-    public function getError(){
-        return $this->error;
-    }
-    public function get($field='*', $where=[], $order='',$limit=10){
-        $Banner = D('Common/Banner');
+    protected $table = 'banner';
+    public function getlist($field='*', $where=[], $order='',$limit=20){
+        return DB::fetch_all($this->table,$field, $where,$order,$limit);
     }
     public function add($data){
         if (empty($data)){

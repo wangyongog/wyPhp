@@ -1,5 +1,5 @@
 <?php
-namespace aceAdmin\Model;
+namespace Admin;
 use WyPhp\DB;
 use WyPhp\Model;
 class ManagerModel extends Model{

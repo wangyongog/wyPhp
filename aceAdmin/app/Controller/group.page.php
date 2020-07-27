@@ -1,12 +1,13 @@
 <?php
-namespace App\Controller;
+namespace App;
+use Admin\GroupModel;
 use WyPhp\DB;
 use WyPhp\Filter;
 
 class group extends baseController{
     public function actionIndex(){
 
-        $groupModel = D('aceAdmin/Group');
+        $groupModel = new GroupModel();
         $data = $groupModel->getGroup();
         $this->assign('data', $data);
         $this->render();

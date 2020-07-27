@@ -1,4 +1,4 @@
-﻿var dailogAjax = {
+var dailogAjax = {
 	dailogPost:function(url,formObj,dialog){
 		var formObj = formObj || $('form');
 		var ex = url.indexOf('?') == -1 ? '?' : '&';

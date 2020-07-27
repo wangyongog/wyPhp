@@ -13,6 +13,8 @@ class APPbase{
         define('TIMESTAMP', $_SERVER['REQUEST_TIME']);
         define('FWPATH', __DIR__);//框架目录
         define('ROOT', substr(__DIR__,0, -10));  //根目录
+        // 设置系统时区
+        date_default_timezone_set('PRC');
         //应用程序目录
         if(defined('APP_PATH')){
             self::$app = APP_PATH;
@@ -47,7 +49,7 @@ class APPbase{
         //启动
         self::_initApp();
     }
-    public static function _initApp(){
+    protected static function _initApp(){
         $url = parse_url($_SERVER['REQUEST_URI']);
         if(empty($url)){
             \WyPhp\Error::http_status();
@@ -73,7 +75,7 @@ class APPbase{
         }
         $filePath = APP_PATH.'/Controller/'. CONTROLLER.'.page.php';
         //命名空间类
-        $classname = '\\App\\Controller\\'. CONTROLLER;
+        $classname = '\\App\\'. CONTROLLER;
         if (class_exists($classname, false)) {
             WyPhp\Error::error('class ['.$classname.'] not exists');
         }
@@ -84,13 +86,13 @@ class APPbase{
         require_once (realpath($filePath));
         $classInstance = new $classname();
         $method = new \ReflectionMethod($classInstance, $action);
-        //self::unregister();
         if($method->isPublic() && method_exists($classInstance, $action)) {
             $method->invoke($classInstance);
         }else{
             WyPhp\Error::error("method[$action] not isPublic in [$classname]");
             return false;
         }
+        self::unregister();
     }
     protected static function loadConfig(){
         /*$include_file = include ROOT.'/config/api.inc.php';
@@ -130,7 +132,7 @@ class APPbase{
         $filename = scandir($con);
         foreach($filename as $k=>$v){
             // 跳过两个特殊目录   continue跳出循环
-            if($v=="." || $v==".."){continue;}
+            if($v=='.' || $v=='..'){continue;}
             $file = $con.'/'.$v;
             if(is_file($file)){
                 CF(load_config($file));
@@ -138,41 +140,42 @@ class APPbase{
         }
     }
     protected static function loadClass($class){
+        $phpClassSuffix = '.class.php';
         if(isset(self::$classes[$class])) {
             return include self::$classes[$class];
         }
-        $path = FWPATH.'/plugins';
-        if(false !== strpos($class, '\\')){
+        $fileName = '';
+        $namespace = '';
+        if (false !== ($lastNsPos = strripos($class, '\\'))) {
             $name = strstr($class, '\\', true);
-            if('App' === $name){
-                return self::require_cache(APP_PATH, $class);
+
+            $includePath = ROOT.DIRECTORY_SEPARATOR.'models';
+            $namespace = substr($class, 0, $lastNsPos);
+            $className = substr($class, $lastNsPos + 1);
+            $fileName = str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
+
+            $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . $phpClassSuffix;
+           // echo $fileName.'<br>';
+            $fullFileName = $includePath . DIRECTORY_SEPARATOR . $fileName;
+            if($name == 'WyPhp'){
+                //echo $className;exit;
+                $className = ltrim(strstr($class ,'\\'),'\\') . $phpClassSuffix;
+                $fullFileName = FWPATH.'/plugins/'.$className;
+                //echo $fullFileName.'<br>';
             }
-            if('Common' === $name){
-                return self::require_cache(ROOT.'/'.$name, $class);
+            if('App' == $name){
+                $fullFileName = APP_PATH.DIRECTORY_SEPARATOR.'Controller'.DIRECTORY_SEPARATOR.$className.$phpClassSuffix;
             }
-            if(!in_array($name,['Common','WyPhp']) && substr($class,-5) =='Model'){
-                return self::require_cache(APP_PATH, $class);
+            //$fullFileName = str_replace('\\', DIRECTORY_SEPARATOR, $fullFileName);
+            //echo $fullFileName.'<br>';
+            if (file_exists($fullFileName)) {
+                self::$classes[$class] = $fullFileName;
+                require_once $fullFileName;
+            } else {
+                WyPhp\Error::debug("file [$fullFileName] not exists");
             }
-            if(!in_array($name,['WyPhp'.'App']) && is_dir(FWPATH.'/plugins/'.$name)){
-                // plugins目录下面的命名空间自动定位
-                $path = FWPATH.'/plugins/'.$name;
-                return self::require_cache($path, $class);
-            }
-            return self::require_cache($path, $class);
         }
         return false;
-    }
-    protected static function require_cache($path='', $class=''){
-        $file = $path.strstr($class ,'\\'). '.class.php';
-        $file = str_replace('\\', DIRECTORY_SEPARATOR,  $file) ;
-        if(!file_exists($file)){
-            $file = ROOT.DIRECTORY_SEPARATOR. (strstr($class, '\\', true)).DIRECTORY_SEPARATOR.self::$app.str_replace('\\', DIRECTORY_SEPARATOR, strstr($class ,'\\')).'.class.php';
-            if(!file_exists($file)){
-                WyPhp\Error::debug("file [$file] not exists");
-            }
-        }
-        self::$classes[$class] = $file;
-        require_once($file);
     }
 
     /**
