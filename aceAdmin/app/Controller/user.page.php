@@ -4,6 +4,15 @@ use WyPhp\DB;
 use WyPhp\Filter;
 
 class user extends baseController{
+    public function actionIndex(){
+        $where = [];
+        $this->count = DB::count('member', $where);
+        $data = DB::fetch_all('member','*',$where, 'uid DESC',$this->limit,$this->page);
+        $this->pageBar();
+
+        $this->assign('data', $data);
+        $this->render();
+    }
     public function actionPretest(){
         $where = [];
         $this->count = DB::count('pretest', $where);
@@ -22,5 +31,4 @@ class user extends baseController{
         $this->assign('data', $data);
         $this->render();
     }
-
 }

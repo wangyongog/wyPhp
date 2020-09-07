@@ -120,7 +120,7 @@ class APPbase{
             }
         }*/
         $conname = [
-            ROOT.'/Common/functions.php',
+            ROOT.'/Source/functions.php',
             FWPATH.'/plugins/Common/functions.php'
         ];
         foreach ($conname as $file){
@@ -149,7 +149,7 @@ class APPbase{
         if (false !== ($lastNsPos = strripos($class, '\\'))) {
             $name = strstr($class, '\\', true);
 
-            $includePath = ROOT.DIRECTORY_SEPARATOR.'models';
+            $includePath = ROOT.DIRECTORY_SEPARATOR.'Source'.DIRECTORY_SEPARATOR.'Models';
             $namespace = substr($class, 0, $lastNsPos);
             $className = substr($class, $lastNsPos + 1);
             $fileName = str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;

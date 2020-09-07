@@ -104,7 +104,7 @@
         }
         if(typeof app == 'undefined'){
             return false;
-        } 
+        }
 		var layars=layer.load(0,{shade:[0.8,'#fff']});
 		var dataArr = app.split('_');
         var page = page || 1;

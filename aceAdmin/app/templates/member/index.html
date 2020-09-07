@@ -1,0 +1,86 @@
+{include file="public/header.html"}
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+				try{
+					ace.settings.loadState('main-container')
+					}catch(e){
+				}
+			</script>
+			<div class="main-content">
+				<div class="main-content-inner">
+					<div class="page-content">
+						<div class="page-header">
+							<form action="" method="get" class="form-inline">
+							<label class="inline">宝宝姓名：</label>
+							<input type="text" class="form-control" name="name" value="{G('title')}"/>
+							<label class="inline">电话：</label>
+							<input type="text" class="form-control" name="phone" value="{G('phone')}"/>
+
+							<button type="submit" class="btn btn-purple btn-sm">
+								<span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+								搜索
+							</button>
+							</form>
+						</div><!-- /.page-header -->
+						<div class="row">
+							<div class="col-xs-12">
+								<table id="simple-table" class="table  table-bordered table-hover">
+									<thead>
+									<tr>
+										<th class="center" style="width:60px">
+											<label class="pos-rel">
+												<input type="checkbox"  class="ace check-all">
+												<span class="lbl"></span>
+											</label>
+										</th>
+										<th>宝宝姓名</th>
+                                        <th>手机号</th>
+                                        <th class="hidden-480">宝宝年龄</th>
+                                        <th class="hidden-480">地址</th>
+										<th class="hidden-480">提交时间</th>
+                						<th>操作</th>
+									</tr>
+									</thead>
+
+									<tbody>
+                                    {foreach from=$data key=k item=val}
+									<tr>
+										<td class="center">
+											<label class="pos-rel">
+												<input type="checkbox" class="ace ids" name="ids[]" value="{$val.id}">
+												<span class="lbl"></span>
+											</label>
+										</td>
+										<td>{$val['name']}</td>
+										<td>{$val['phone']}</td>
+										<td class="hidden-480">{$val.age}</td>
+                                        <td class="hidden-480">{$val.address}</td>
+                                        <td class="hidden-480">{date('Y-m-d H:i',$val['addtime'])}</td>
+                                        <td>
+
+
+                                        <a class="red del" href="javascript:;" _url="{U('member/del',['id'=>$val['uid'],'token'=>creatToken($val['id'])])}" title="删除">
+                                            <i class="ace-icon fa fa-trash-o bigger-130"></i>
+                                        </a>
+                                        </td>
+									</tr>
+
+
+										{/foreach}
+									</tbody>
+								</table>
+                                <div class="pagin" >{$_page}</div>
+							</div>
+						</div>
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+
+
+		{include file="public/footer.html"}
+		</div><!-- /.main-container -->
+
+		{include file="public/footerJs.html" isdate=1}
+
+</body>
+</html>

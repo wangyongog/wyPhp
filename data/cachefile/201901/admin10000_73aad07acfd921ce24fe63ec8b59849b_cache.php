@@ -1,1 +1,0 @@
-{"value":{"uid":10000,"groupid":1,"user":"wangyong","hash":"xNnDLW","lasttime":1546915697,"addtime":0},"sid":"","timeout":1547022982}
