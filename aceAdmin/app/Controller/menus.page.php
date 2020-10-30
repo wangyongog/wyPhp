@@ -1,13 +1,14 @@
 <?php
 namespace App\Controller;
+use aceAdmin\Model\MenusModel;
 use WyPhp\DB;
 use WyPhp\Filter;
 
 class menus extends baseController{
-    public function actionHzlx(){
+    public function actionIndex(){
         if(IS_AJAX){
-            $actwebsModel = D('aceAdmin/Menus');
-            $data = $actwebsModel->getAll(['stype'=>1]);
+            $actwebsModel = new MenusModel();
+            $data = $actwebsModel->getAll();
 
             $html_row = $this->menList($data);
             $this->tbody_html = $html_row;
@@ -42,7 +43,8 @@ class menus extends baseController{
         return $html_row;
     }
     public function actionAdd(){
-        $actwebsModel = D('aceAdmin/Menus');
+        $actwebsModel = new MenusModel();
+        //$actwebsModel = D('aceAdmin/Menus');
         $id = G('id','int',0);
         if(IS_AJAX){
             $data = Filter::$gp['data'];
@@ -61,20 +63,19 @@ class menus extends baseController{
                 $id = $actwebsModel->add($data);
             }
             if($id || $row){
-                S('menus1',null);
                 $this->outData['reload'] = 1;
                 $this->success($msg);
             }
             $this->error('操作失败！');
         }
         if($id){
-            $data = DB::fetch_first('menus','*', ['typeid'=>$id]);
+            $data = DB::fetch_first('menus','*', []);
             $this->assign('data', $data);
         }
         $pid = isset($data['pid']) ? $data['pid'] : 0;
         $this->assign('pid', $pid);
         $this->assign('id', $id);
-        $this->assign('sidebarlist', $actwebsModel->getAll(['stype'=>1]));
+        $this->assign('sidebarlist', $actwebsModel->getAll());
         $this->render();
     }
     public function actionDel(){
@@ -84,10 +85,9 @@ class menus extends baseController{
         if(!$id || $token !=creatToken($id) && $ids){
             $this->error('无效操作！');
         }
-        $menusModel = D('aceAdmin/Menus');
+        $menusModel = new MenusModel();;
         if($menusModel->del(array('typeid'=>['in',$ids]))){
             $this->outData['reload'] = 1;
-            S('menus0',null);
             $this->success('操作成功!');
         }
         $this->error('删除失败！');

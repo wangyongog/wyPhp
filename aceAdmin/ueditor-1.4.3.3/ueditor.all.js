@@ -9965,6 +9965,7 @@ var LocalStorage = UE.LocalStorage = (function () {
 ///plugin 编辑器默认的过滤转换机制
 
 UE.plugins['defaultfilter'] = function () {
+    return;
     var me = this;
     me.setOpt({
         'allowDivTransToP':true,

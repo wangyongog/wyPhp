@@ -11,9 +11,11 @@
 					<div class="page-content">
 						<div class="page-header">
 							<form action="" method="get" class="form-inline">
+								{if showActionButton('banner/add')}
                             	<button type="button"  class="btn btn-info btn-sm show_dialog" _url="{U('banner/add')}">
                                 添加
                             	</button>
+								{/if}
                             	<label class="inline">Banner位：</label>
                                 <select name="pos" class="form-control">
                                     <option value="">全部</option>
@@ -22,9 +24,9 @@
             						{/foreach}
                                 </select>
                                 <label class="inline">开始时间：</label>
-                            	<input type="text" class="form-control" name="startime" id="startime" value=""/>
+                            	<input type="text" readonly class="form-control" name="startime" id="startime" value=""/>
                                 <label class="inline">结束时间：</label>
-                            	<input type="text" class="form-control" name="endtime" id="endtime" value=""/>
+                            	<input type="text" readonly class="form-control" name="endtime" id="endtime" value=""/>
                                 <button type="submit" class="btn btn-purple btn-sm">
                                     <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
                                     搜索
@@ -49,6 +51,7 @@
                                         <th class="hidden-480">开始时间</th>
                                         <th class="hidden-480">结束时间</th>
                                         <th>排序</th>
+										<th>说明</th>
 										<th>操作</th>
 									</tr>
 									</thead>
@@ -62,7 +65,7 @@
 												<span class="lbl"></span>
 											</label>
 										</td>
-										<td><img src="{picSize($val.img)}" style="max-width:160px; max-height:100px"/></td>
+										<td><img src="{picSize($val.img)}" class="img-thumbnail" style="max-width:160px; max-height:100px"/></td>
 										<td>{$pos[$val.pos]}</td>
 										<td class="hidden-480">{$val.url}</td>
 										<td class="hidden-480">{if !empty( $val.startime)}{date('Y-m-d H:i:s', $val.startime)} {/if}</td>
@@ -70,6 +73,7 @@
 										{if !empty( $val.endtime)}	{date('Y-m-d H:i:s', $val.endtime)} {/if}
 										</td>
 										<td>{$val.o}</td>
+										<td>{$val.contens}</td>
 										<td>
 										
 											<div class="hidden-sm hidden-xs action-buttons">	
@@ -129,21 +133,21 @@
 <script type="text/javascript">
     jQuery(function ($) {
         $('#startime').datetimepicker({
-           format: 'yyyy-mm-dd hh:ii:ss',//'yyyy-mm-dd hh:ii:ss'
+           format: 'yyyy-mm-dd',//'yyyy-mm-dd hh:ii:ss'
             autoclose: true,
 			//minView: 30,
 			language : 'zh-CN',
-			minuteStep:1,
+			//minuteStep:1,
 			todayBtn: true,
-			startView:2,
-			startDate: new Date() 
+			//startView:2,
+			//startDate: new Date()
         });
 		$('#endtime').datetimepicker({
-           format: 'yyyy-mm-dd hh:ii:ss',//'yyyy-mm-dd hh:ii:ss'
+           format: 'yyyy-mm-dd',//'yyyy-mm-dd hh:ii:ss'
             autoclose: true,
-			//minView: 30,
+			minView: 30,
 			language : 'zh-CN',
-			minuteStep:1,
+			//minuteStep:1,
 			todayBtn: true,
 			startView:2,
 			startDate: new Date() 

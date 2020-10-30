@@ -19,9 +19,12 @@
 				
 
 						<div class="page-header">
-                            <button type="button" class="btn btn-info btn-sm add" _wh="550,450" _url="{U('manager/add')}">
-                                添加
-                            </button>
+							{if showActionButton('manager/add')}
+							<button class="btn btn-white btn-primary btn-bold show_dialog" data-url="{U('manager/add')}">
+								<i class="ace-icon fa glyphicon-plus align-top bigger-125"></i>
+								添加
+							</button>
+							{/if}
 						</div><!-- /.page-header -->
 
 						<div class="row">

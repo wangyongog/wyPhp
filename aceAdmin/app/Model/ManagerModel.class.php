@@ -6,7 +6,7 @@ class ManagerModel extends Model{
     public $table = 'admin';
     /* 用户模型自动验证 */
     protected $_validate = array(
-        array('user', '5,16', '用户名长度必须在16个字符以内', self::EXISTS_VALIDATE, 'length'), //用户名长度不合法
+        array('user', '2,16', '用户名长度必须在2-16个字符以内', self::EXISTS_VALIDATE, 'length'), //用户名长度不合法
         array('user', '', '用户名被占用！', self::EXISTS_VALIDATE, 'unique'), //用户名被占用
         //array('password', 'require', '3333', self::MUST_VALIDATE, ''),
         array('password', '6,30', '密码长度必须在6-30个字符之间！', self::EXISTS_VALIDATE, 'length'), //密码长度不合法
@@ -45,26 +45,21 @@ class ManagerModel extends Model{
             'left' =>'a.groupid=ag.groupid',
             'auth_group' =>'ag'
         );
-        return DB::fetch_first($table, ['a.uid,a.user,a.hash,a.lasttime,a.addtime','ag.*'], ['a.uid'=>$uid,'a.status'=>1,'ag.status' =>1]);
+        return DB::fetch_first($table, ['a.uid,a.password,a.user,a.hash,a.lasttime,a.addtime','ag.*'], ['a.uid'=>$uid,'a.status'=>1,'ag.status' =>1]);
     }
     public function login($username='', $password=''){
-        try{
-            if(!$password || !$username){
-                throw new \Exception('请输入账号或密码');
-            }
-            $data = DB::fetch_first($this->table, 'uid,password,hash' ,array('user'=>$username,'status'=>1));
-            if(empty($data)){
-                throw new \Exception('无效账号');
-            }
-            if($this->pwdVerify($password, $data['password'] ) != true){
-                throw new \Exception('密码错误');
-            }
-            $this->_updateLogin($data['uid']); //更新用户登录信息
-            return $data['uid']; //登录成功，返回用户ID
-        }catch (\Exception $e){
-            $this->setError(-1, $e->getMessage());
-            return false;
+        if(!$password || !$username){
+            return -1;
         }
+        $data = DB::fetch_first($this->table, 'uid,password,hash' ,array('user'=>$username,'status'=>1));
+        if(empty($data)){
+           return -1;
+        }
+        if($this->pwdVerify($password, $data['password'] ) != true){
+            return -2;
+        }
+        $this->_updateLogin($data['uid']); //更新用户登录信息
+        return $data['uid']; //登录成功，返回用户ID
     }
     private function _updateLogin($uid){
         if(!$uid){
@@ -103,12 +98,13 @@ class ManagerModel extends Model{
      * @param $password
      */
     public function creatPassWorld($password=''){
+        $password = $password ? $password : I('password');
         /*$options = [
             'salt' => $this->custom_function_for_salt(),
             'cost' => 10 // the default cost is 10
         ];*/
         if($password){
-            return password_hash(trim($password) .substr(CF('AUTOKEY'),2,12),PASSWORD_DEFAULT);
+            return password_hash(trim($password) .substr(CF('AUTOKEY'),2,12), PASSWORD_DEFAULT);
         }
         return false;
     }
@@ -120,6 +116,6 @@ class ManagerModel extends Model{
      * @return bool
      */
     public function pwdVerify($password, $hashPwd){
-        return password_verify(trim($password).substr(CF('AUTOKEY'),2,12), $hashPwd);
+        return password_verify($password.substr(CF('AUTOKEY'),2,12), $hashPwd);
     }
 }

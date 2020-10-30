@@ -18,6 +18,7 @@ class baseController extends Controller {
          $this->outData['append'] = [];     // 追加
          $this->outData['html'] = [];       // 替换内容
          $this->outData['remove'] = [];     // 删除
+         $this->outData['status'] = 0;
          $this->outData['data'] = '';            // 方法中的数据
          $this->outData['runFunction'] = '';            // 方法中的数据
          $this->outData['method'] = 'write';     // write需要写入    alert 只做提示
@@ -29,13 +30,22 @@ class baseController extends Controller {
              return true;
          }
          if(!$this->admin){
+             if(IS_AJAX){
+                 $this->outData['msg'] = '登录超时,请重新登录';
+                 $this->outData['location'] = U('/login');
+                 $this->printJson();
+             }
              redirect(U('/login'));
          }
          if(!$this->auth()){
+             if(IS_AJAX){
+                 $this->outData['msg'] = '无权操作';
+                 $this->printJson();
+             }
              $this->error('无权操作！');
          }
          $this->getMem();
-
+         $this->assign('act', CONTROLLER.'/'.ACTION);
          $this->assign('user',$this->admin);
      }
 
@@ -56,12 +66,9 @@ class baseController extends Controller {
      *
      */
     protected function getMem(){
-        $sidebarlist = S('sidebarlist'.$this->admin['uid']);
         $sidebar = new SidebarModel();
-        if(empty($sidebarlist)){
-            $sidebarlist = $sidebar->sidebarList($this->admin['uid']);
-        }
-        $this->assign('head_itle', $sidebar->getHeadTitle());
+        $sidebarlist = $sidebar->sidebarList($this->admin['uid']);
+        $this->assign('head_title', $sidebar->getHeadTitle());
         $this->assign('sidebarlist', $sidebarlist);
     }
     /**
@@ -77,7 +84,7 @@ class baseController extends Controller {
                  $manager = D('aceAdmin/Manager');
                  $user = $manager->checkLogin($uid);
                  if ($user && $user['hash'] == $hash) {
-                     $this->admin = $user;
+                     $this->admin = \APPbase::$user = $user;
                  }else{
                      session('uidHahs',null);
                  }

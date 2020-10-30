@@ -39,26 +39,33 @@ class group extends baseController{
             }
             $data['rules'] = $rules;
             $this->outData['location'] = 1;
-            S('group',null);
             if ($groupid) {
                 $group = DB::update('auth_group', $data, ['groupid'=>$groupid]);
                 if ($group) {
-                    $this->success('恭喜，用户组修改成功！',U('/group'));
+                    $this->outData['goback'] = 1;
+                    $this->success('恭喜，用户组修改成功！');
                 } else {
-                    $this->error('未修改内容',U('/group'));
+                    $this->error('未修改内容');
                 }
             } else {
+                $this->outData['goback'] = 1;
                 DB::insert('auth_group', $data);
-                $this->success('恭喜，新增用户组成功！',U('/group'));
+                $this->success('恭喜，新增用户组成功！');
             }
             die();
         }
         if($groupid){
             $group = DB::fetch_first('auth_group','*', ['groupid'=>$groupid]);
+            $group['rules'] = $group['rules'] ? explode(',',$group['rules']) : [];
+
             $this->assign('data', $group);
         }
+        $sidebarModel = D('aceAdmin/Sidebar');
+        $data = getTree($sidebarModel->getAll());
+        $this->assign('ruleslist', $data);
         $this->render();
     }
+
     public function actionDel(){
         $id = G('groupid','int',0);
         $token = G('token');

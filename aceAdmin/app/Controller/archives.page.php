@@ -1,27 +1,26 @@
 <?php
 
 namespace App\Controller;
+use WyPhp\CF;
 use WyPhp\DB;
 use WyPhp\Filter;
 
 class archives extends baseController{
     public function actionIndex(){
-        $typeid = G('typeid','int');
-        if(!$typeid){
-            $this->error('无效参数');
+        $where = [];
+        $typeid = G('typeid','int',0);
+        if($typeid){
+            $where['typeid'] = $typeid;
         }
-        $ids = GetMenusIds($typeid);
-        $where['ac.typeid'] = ['in',$ids];
-        $table = array(
-            'archives' =>'ac',
-            'left' =>'ac.typeid=mn.typeid',
-            'menus' =>'mn',
-        );
-        $this->count = DB::count($table, $where);
+        if(G('title')){
+            $where['title'] = ['like','"%'.G('title').'%"'];
+        }
 
-        $data = DB::fetch_all($table,['ac.*','mn.typename'],$where, 'arid DESC',$this->limit,$this->page);
+        $this->count = DB::count('archives', $where);
+
+        $data = DB::fetch_all('archives',['*'],$where, 'arid DESC',$this->limit,$this->page);
         $this->pageBar();
-
+        $this->assign('typeMenus', CF('WEB_TYPEID'));
         $this->assign('data', $data);
         $this->render();
     }
@@ -70,7 +69,7 @@ class archives extends baseController{
             if(!$data['title']){
                 $this->error('请填写标题');
             }
-            $bdata['article_body'] = G('contents','','',htmlspecialchars);
+            $bdata['article_body'] = G('contents','','','htmlspecialchars');
             if(!$bdata['article_body']){
                 $this->error('请填写文章内容');
             }
@@ -78,25 +77,26 @@ class archives extends baseController{
             $data['flag'] = $flag ? implode(',', $flag) : '';
 
             $data['adduid'] = $this->admin['uid'];
+            $data['hide'] = isset($data['hide']) ? 0 : 1;
+            $data['puttime'] = $data['puttime'] ? strtotime($data['puttime']) : TIMESTAMP;
+
             if($arid){
                 if($arcModel->edit($data, $bdata,['arid'=>$arid])){
-                    $this->success('提交成功',U('archives/index',['stype'=>G('stype'),'typeid'=>G('typeid')]));
+                    $this->success('提交成功',U('archives/index'));
                 }else{
                     $this->error('提交失败');
                 }
             }else{
                 $data['addtime'] = TIMESTAMP;
                 if($arcModel->add($data, $bdata)){
-                    $this->success('提交成功',U('archives/index',['stype'=>G('stype'),'typeid'=>G('typeid')]));
+                    $this->success('提交成功',U('archives/index'));
                 }else{
                     $this->error('提交失败');
                 }
             }
         }
 
-        $actwebsModel = D('aceAdmin/Menus');
-        $menus = $actwebsModel->getAll(['stype'=>G('stype')] );
-        $this->assign('menus', $menus);
+
         if($arid){
             $table = array(
                 'archives' =>'ac',
@@ -109,13 +109,14 @@ class archives extends baseController{
             $this->assign('data', $data);
             $this->assign('arid', $arid);
         }
-        $template = DB::result_first('menus', 'add_article',['typeid' =>G('typeid')]);
-        $template = $template ? $template : '';
+
+
+        $typeMenus = CF('WEB_TYPEID');
         $typeid = G('typeid','int');
         $this->assign('extend_list', getExtend($typeid, $data['ext_data']));
         $this->assign('typeid',$typeid);
-        $this->assign('flag_arr', CF('FLAG'));
-        $this->render($template);
+        $this->assign('typeMenus',$typeMenus);
+        $this->render();
     }
 
     public function actionDel(){

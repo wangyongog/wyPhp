@@ -1,44 +1,35 @@
 <?php
 namespace App\Controller;
+use aceAdmin\Model\GroupModel;
+use aceAdmin\Model\ManagerModel;
 use WyPhp\DB;
 
 class manager extends baseController{
     public function actionIndex(){
         if(IS_AJAX){
-            $manager = D('aceAdmin/Manager');
-            $this->count = DB::count($manager->table);
-            $data = DB::fetch_all($manager->table,'*','',' uid ASC',$this->limit,$this->page);
-            $html_row = '';
-            $groupModel = D('aceAdmin/Group');
+            $this->count = DB::count('admin');
+            $data = DB::fetch_all('admin','*','',' uid ASC',$this->limit,$this->page);
+
+            $groupModel = new GroupModel();
             $group = $groupModel->getGroup();
-            if($data){
-                foreach ($data as $val){
-                    $html_row .= '<tr>
-                        <td class="center"><label class="pos-rel"><input id="ids" name="ids[]" value="'.$val['uid'].'" type="checkbox" class="ace ids"><span class="lbl"></span></label></td>
-                        <td>'.$val['user'].'</td>
-                        <td>'.$group[$val['groupid']]['title'].'</td>
-                        <td>'. ($val['lasttime'] ? date('Y-m-d H:i:s', $val['lasttime']):'') .'</td>
-                        <td>'.($val['status'] == 1 ? '正常':'锁定').'</td>
-                        <td>'.($val['addtime'] ? date('Y-m-d H:i:s', $val['addtime']):'') .'</td>
-                        <td><a href="javascript:;" _url="'.U('manager/add',array('uid'=>$val['uid'],'token'=>creatToken($val['uid']))).'" _wh="550,450" class="edit">编辑</a> | <a href="javascript:;" _url="'.U('manager/del',array('uid'=>$val['uid'],'token'=>creatToken($val['uid']))).'" class="del">删除</a></td>
-                      </tr>';
-                }
-            }
-            $this->tbody_html = $html_row;
+            $this->assign('group', $group);
+            $this->assign('data', $data);
+            $this->tbody_html = $this->fetch('manager/index_data.html');
             $this->dynamicOutPrint();
         }
         $this->render();
     }
     public function actionAdd(){
-        $manager = D('aceAdmin/Manager');
+        $manager = new ManagerModel();
         $uid = G('uid','int',0);
-        if(IS_AJAX){
+        if(IS_POST){
             if(creatToken($uid) != G('formhash')){
                 $this->error('无效操作！');
             }
 
             $data['groupid'] = G('group');
-            $data['status'] = G('status') ? 1 : 2;
+            $data['status'] = G('status') == 'on' ? 1 : 2;
+            //$data['status'] = G('status') ? 1 : 2;
             if(G('password')){
                 $data['password'] = G('password');
                 $data['password1'] = G('password1');
@@ -60,7 +51,8 @@ class manager extends baseController{
                 }
                 $data['user'] =G('user');
                 $uid = $manager->add($data);
-                if($uid !=false){
+                if($uid){
+                    $this->outData['reload'] = 1;
                     $this->success($msg);
                 }
                 $this->error($manager->getError());
@@ -69,7 +61,6 @@ class manager extends baseController{
         }
         if($uid){
             $data = $manager->getAdminUser($uid);
-
             $this->assign('data', $data);
         }
         $groupModel = D('aceAdmin/Group');
@@ -79,7 +70,7 @@ class manager extends baseController{
         $this->render();
     }
     public function actionDel(){
-        $id = G('uid','int',0);
+        $id = G('ids');
         $token = G('token');
         if(!$id || $token !=creatToken($id)){
             $this->error('无效操作！');

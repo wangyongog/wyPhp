@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2016/7/1
- * Time: 17:01
- */
 namespace App\Controller;
 use aceAdmin\Model\SidebarModel;
 use WyPhp\DB;
@@ -12,7 +6,7 @@ use WyPhp\DB;
 class Sidebar extends baseController{
     public function actionIndex(){
         if(IS_AJAX){
-            $sidebarModel = D('Sidebar');
+            $sidebarModel = new SidebarModel();
             $data = getTree($sidebarModel->getAll());
             $html_row = $this->menList($data);
             $this->tbody_html = $html_row;
@@ -87,12 +81,8 @@ class Sidebar extends baseController{
             $this->error('无效操作！');
         }
         $items = DB::fetch_all('auth_rule' ,'id,pid',[] ,'o ASC');
-
-
         if(DB::delete('auth_rule',array('id'=>['in',$ids]))){
             $this->outData['reload'] = 1;
-            S('sidebarlist'.$this->admin['uid'],null);
-            S('sidebarlistall' ,null);
             $this->success('操作成功!');
         }
         $this->error('删除失败！');

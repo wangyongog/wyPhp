@@ -21,11 +21,6 @@
 
 				<div class="navbar-buttons navbar-header pull-right" role="navigation">
 					<ul class="nav ace-nav">
-						
-						
-
-						
-
 						<li class="light-blue dropdown-modal">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
 								<img class="nav-user-photo" src="{$assets}/aceAdmin/images/avatars/user.jpg" alt="Jason's Photo" />
@@ -39,7 +34,13 @@
 
 							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 								<li>
-									<a href="javascript:void();" _msg="确定清空缓存？" class="tiphands" _url="{U('main/clear')}">
+									<a data-title="修改密码" href="javascript:;" class="show_dialog" data-url="{U('user/pass')}" >
+										<i class="ace-icon fa fa-user"></i>
+										个人中心
+									</a>
+								</li>
+								<li>
+									<a href="javascript:;" _msg="确定清空缓存？" class="JclearCache" _url="{U('main/clear')}">
 										<i class="ace-icon fa fa-cog"></i>
 										清空缓存
 									</a>

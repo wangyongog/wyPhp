@@ -772,7 +772,7 @@
         getInsertList: function () {
             var i, data, list = [],
                 align = getAlign(),
-                prefix = 'http://www.baidu.com';
+                prefix = editor.getOpt('imageUrlPrefix');
             for (i = 0; i < this.imageList.length; i++) {
                 data = this.imageList[i];
                 list.push({
