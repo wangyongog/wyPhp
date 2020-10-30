@@ -1,0 +1,946 @@
+.container {
+  width: 1380px;
+  margin: 0 auto;
+}
+
+html, body {
+  max-width: 1920px;
+  height: 100%;
+  margin: 0 auto;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-weight:400;
+}
+
+.menu {
+  margin: 0 auto;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 126px;
+  box-shadow: 0 0 6px 0 rgba(0,0,0,0.1);
+  background: #fff;
+  z-index: 999;
+  overflow: hidden;
+}
+
+.menu .container {
+  position: relative;
+}
+
+.menu .logo {
+  width:160px;
+  height:88px;
+  position: absolute;
+  left: 0;
+  top: 19px;
+  background: url("../img/index/logo_r.png") no-repeat center center;
+  background-size: 100% 100%;
+}
+
+.menu ul {
+  position: absolute;
+  right: 0;
+  top: 50px;
+  margin: 0;
+}
+
+
+.menu ul li {
+  list-style: none;
+  float: left;
+  text-align: center;
+  margin-right: 60px;
+  position: relative;
+  width: 64px;
+}
+
+.menu ul li a {
+  color: #4E4D4D;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.menu ul li.active a {
+  color: #222121;
+}
+
+.menu ul li.active:before {
+  content: "";
+  display: block;
+  width:48px;
+  height:4px;
+  background:#F7D631;
+  border-radius:2px;
+  position: absolute;
+  left: calc(50% - 24px);
+  top: 30px;
+}
+
+.footer {
+  width: 100%;
+  height:74px;
+  background:rgba(255,255,255,1);
+  margin: 0 auto;
+  border-top: 1px solid #f4f4f4;
+  font-size:14px;
+  font-weight:400;
+  color:#4E4D4D;
+  line-height:74px;
+  padding-left: 0;
+  
+}
+
+.footer span {
+  margin-right: 60px;
+}
+
+.formModal {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.85);
+  display: none;
+}
+
+.formModal .content,
+.content1 {
+  width: 1140px;
+  height: 808px;
+  position: absolute;
+  left: calc(50% - 570px);
+  top: calc(50% - 404px);
+  background: #fff;
+}
+
+.formModal .cha {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: url("../img/xg.png") no-repeat center center;
+  background-size: 100% 100%;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.formModal .modaltitle {
+  width: 100%;
+  font-size: 36px;
+  font-weight: 500;
+  color: rgba(34, 33, 33, 1);
+  position: absolute;
+  top: 200px;
+  text-align: center;
+}
+
+.formModal .input {
+  width: 480px;
+  position: absolute;
+  top: 276px;
+  left: calc(50% - 240px);
+}
+
+.formModal .input input {
+  width: 450px;
+  height: 60px;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 2px;
+  border: 1px solid rgba(221, 221, 221, 1);
+  margin-bottom: 24px;
+  outline: none;
+  padding-left: 30px;
+}
+
+.formModal .input input::-webkit-input-placeholder {
+  font-size: 18px;
+  font-weight: 400;
+  color: #bbb;
+}
+
+.formModal .btn {
+  width: 260px;
+  height: 80px;
+  background: rgba(202, 207, 210, 1);
+  border-radius: 2px;
+  position: absolute;
+  top: 650px;
+  left: calc(50% - 130px);
+  line-height: 80px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 1);
+  cursor: pointer;
+}
+
+.content1 .modaltitle {
+  top: 473px;
+}
+
+.content1 .itr {
+  width: 384px;
+  height: 64px;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(119, 119, 117, 1);
+  line-height: 32px;
+  position: absolute;
+  top: 541px;
+  left: calc(50% - 192px);
+}
+
+.content1 .img {
+  width: 220px;
+  height: 220px;
+  background: url('../img/Success.jpg') no-repeat center center;
+  background-size: 100% 100% ;
+  border-radius: 50%;
+  position: absolute;
+  top: 200px;
+  left: calc(50% - 110px);
+}
+
+.content1 .img.fail {
+  width: 220px;
+  height: 220px;
+  background: url('../img/fail.jpg') no-repeat center center;
+  background-size: 100% 100% ;
+  border-radius: 50%;
+  position: absolute;
+  top: 200px;
+  left: calc(50% - 110px);
+}
+
+.formModal1 {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.85);
+  display: none;
+}
+
+.formModal1 .content,
+.formModal1 .content1 {
+  width: 1140px;
+  height: 808px;
+  position: absolute;
+  left: calc(50% - 570px);
+  top: calc(50% - 404px);
+  background: #fff;
+}
+
+.formModal1 .cha {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: url("../img/xg.png") no-repeat center center;
+  background-size: 100% 100%;
+  cursor: pointer;
+}
+
+.formModal1 .modaltitle {
+  width: 288px;
+  font-size: 36px;
+  font-weight: 500;
+  color: rgba(34, 33, 33, 1);
+  position: absolute;
+  top: 200px;
+  left: calc(50% - 144px);
+  text-align: center;
+}
+
+.formModal1 .input,.formModal1 select {
+  width: 480px;
+  position: absolute;
+  top: 276px;
+  left: calc(50% - 240px);
+}
+
+.formModal1 .input input,.formModal1 .input select {
+  width: 450px;
+  height: 60px;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 2px;
+  border: 1px solid rgba(221, 221, 221, 1);
+  margin-bottom: 24px;
+  outline: none;
+  padding-left: 30px;
+}
+
+.formModal1 .input select {
+  width: 480px;
+}
+
+.formModal1 .input input::-webkit-input-placeholder {
+  font-size: 18px;
+  font-weight: 400;
+  color: #bbb;
+}
+
+.formModal1 .btn {
+  width: 260px;
+  height: 80px;
+  background: rgba(202, 207, 210, 1);
+  border-radius: 2px;
+  position: absolute;
+  top: 650px;
+  left: calc(50% - 130px);
+  line-height: 80px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 1);
+  cursor: pointer;
+}
+.formModal1 #Error_join {
+	color:#F00;
+	margin-top:82px
+}
+.formModal1 .content1 .modaltitle {
+  top: 473px;
+  text-align: center;
+}
+
+.formModal1 .content1 .itr {
+  width: 384px;
+  height: 64px;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(119, 119, 117, 1);
+  line-height: 32px;
+  position: absolute;
+  top: 541px;
+  left: calc(50% - 192px);
+}
+
+.formModal1 .content1 .img {
+  width: 220px;
+  height: 220px;
+  background: url('../img/Success.jpg') no-repeat center center;
+  background-size: 100% 100%;
+  border-radius: 50%;
+  position: absolute;
+  top: 200px;
+  left: calc(50% - 110px);
+}
+
+.formModal1 .content1 .img.fail {
+  width: 220px;
+  height: 220px;
+  background: url('../img/fail.jpg') no-repeat center center;
+  background-size: 100% 100% ;
+  border-radius: 50%;
+  position: absolute;
+  top: 200px;
+  left: calc(50% - 110px);
+}
+
+.formModal1 .top,
+.formModal .top {
+  width: 100%;
+  height: 156px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: url('../img/box_top.jpg') no-repeat center center;
+  background-size: 100% 100%;
+}
+
+.formModal1 .bottom,
+.formModal .bottom {
+  width: 100%;
+  height: 70px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: url('../img/box_bottom.png') no-repeat center center;
+  background-size: 100% 100%;
+}
+
+.rightbar {
+  height: 300px;
+  width: 60px;
+  position: fixed;
+  right: 0;
+  top: calc(50% - 150px);
+  z-index: 9999;
+}
+
+.rightbar div {
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  padding: 16px;
+  border-radius: 2px;
+  z-index: 9999;
+}
+
+.rightbar .weixin {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: url("../img/WeChat.png") no-repeat center center;
+  background-size: 100% 100%;
+}
+
+.rightbar .phone {
+  position: absolute;
+  top: 61px;
+  right: 0;
+  background: url("../img/Telephone.png") no-repeat center center;
+  background-size: 100% 100%;
+}
+
+.rightbar .zx {
+  position: absolute;
+  top: 122px;
+  right: 0;
+  background: url("../img/appointment.png") no-repeat center center;
+  background-size: 100% 100%;
+}
+
+.rightbar .jm {
+  position: absolute;
+  top: 183px;
+  right: 0;
+  background: url("../img/Join.png") no-repeat center center;
+  background-size: 100% 100%;
+}
+
+.rightbar .totop {
+  position: absolute;
+  top: 244px;
+  right: 0;
+  background: url("../img/top.png") no-repeat center center;
+  background-size: 100% 100%;
+  display: none;
+}
+
+.rightbar .weixinr {
+  background: #241F09;
+  font-size:14px;
+  font-weight:400;
+  color:#F7D631;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+}
+
+.rightbar .phoner {
+  background: #241F09;
+  font-size:14px;
+  font-weight:400;
+  color:#F7D631;
+  position: absolute;
+  top: 61px;
+  left: 0;
+  display: none;
+}
+
+.rightbar .zxr {
+  background: #241F09;
+  font-size:14px;
+  font-weight:400;
+  color:#F7D631;
+  position: absolute;
+  top: 122px;
+  left: 0;
+  display: none;
+}
+
+.rightbar .jmr {
+  background: #241F09;
+  font-size:14px;
+  font-weight:400;
+  color:#F7D631;
+  position: absolute;
+  top: 183px;
+  left: 0;
+  display: none;
+}
+
+.rightbar .totopr {
+  background: #241F09;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(247, 214, 49, 1);
+  position: absolute;
+  top: 244px;
+  left: 0;
+  display: none;
+}
+
+.rightbar .weixinimg {
+  width: 93px;
+  height: 88px;
+  background: url("../img/fbox_qr.png") no-repeat center center;
+  background-size: 100% 100%;
+  position: absolute;
+  right: 60px;
+  top: -28px;
+  display: none;
+  z-index:9999;
+}
+
+.rightbar .phoneimg {
+  width: 119px;
+  height: 8px;
+  background: url("../img/fbox_call.png") no-repeat center center;
+  background-size: 100% 100%;
+  position: absolute;
+  right: 60px;
+  top: 72px;
+  display: none;
+  z-index:9999;
+}
+
+
+@media screen and (max-width:1500px) {
+  .container {
+    width: 966px;
+    margin: 0 auto;
+  }
+  
+  html, body {
+    max-width: 1366px;
+    height: 100%;
+    margin: 0 auto;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-weight:400;
+  }
+  
+  .menu {
+   width: 100%;
+    margin: 0 auto;
+    position: fixed;
+    top: 0;
+    left: calc(50% - 683px);
+    height: 88.2px;
+    box-shadow: 0 0 6px 0 rgba(0,0,0,0.1);
+    background: #fff;
+    z-index: 999;
+  }
+  
+  .menu .container {
+    position: relative;
+  }
+  
+  .menu .logo {
+    width:112px;
+    height:61.6px;
+    position: absolute;
+    left: 0;
+    top: 13.3px;
+    background: url("../img/index/logo_r.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
+  
+  .menu ul {
+    position: absolute;
+    right: 0;
+    top: 35px;
+    margin: 0;
+  }
+  
+  .menu ul li {
+    list-style: none;
+    float: left;
+    text-align: center;
+    margin-right: 42px;
+    position: relative;
+    width: 64px;
+  }
+  
+  .menu ul li a {
+    color: #4E4D4D;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+  .menu ul li.active a {
+    color: #222121;
+  }
+  
+  .menu ul li.active:before {
+    content: "";
+    display: block;
+    width:48px;
+    height:4px;
+    background:#F7D631;
+    border-radius:2px;
+    position: absolute;
+    left: calc(50% - 24px);
+    top: 21px;
+  }
+  
+  .footer {
+    width: 100%;
+    height:51.8px;
+    background:rgba(255,255,255,1);
+    margin: 0 auto;
+    border-top: 1px solid #f4f4f4;
+    font-size:14px;
+    font-weight:400;
+    color:#4E4D4D;
+    line-height:51.8px;
+    padding-left: 189px;
+    position: fixed;
+    bottom: 0;
+    left: calc(50% - 683px);
+    z-index: 9999;
+  }
+  
+  .footer span {
+    margin-right: 42px;
+  }
+
+  .formModal {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+  }
+
+  .formModal .content,
+  .content1 {
+    width: 798px;
+    height: 565.6px;
+    position: absolute;
+    left: calc(50% - 399px);
+    top: calc(50% - 282.8px);
+    background: #fff;
+  }
+
+  .formModal .cha {
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: url("./img/xg.png") no-repeat center center;
+    background-size: 100% 100%;
+    cursor: pointer;
+  }
+
+  .formModal .modaltitle {
+    width: 100%;
+    font-size: 36px;
+    font-weight: 500;
+    color: rgba(34, 33, 33, 1);
+    position: absolute;
+    top: 140px;
+    text-align: center;
+  }
+
+  .formModal .input {
+    width: 480px;
+    position: absolute;
+    top: 193.2px;
+    left: calc(50% - 240px);
+  }
+
+  .formModal .input input {
+    width: 450px;
+    height: 42px;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 2px;
+    border: 1px solid rgba(221, 221, 221, 1);
+    margin-bottom: 16.8px;
+    outline: none;
+    padding-left: 30px;
+  }
+
+  .formModal .input input::-webkit-input-placeholder {
+    font-size: 18px;
+    font-weight: 400;
+    color: #bbb;
+  }
+
+  .formModal .btn {
+    width: 182px;
+    height: 56px;
+    background: rgba(202, 207, 210, 1);
+    border-radius: 2px;
+    position: absolute;
+    top: 439.6px;
+    left: calc(50% - 91px);
+    line-height: 56px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 1);
+    cursor: pointer;
+  }
+
+  .content1 .modaltitle {
+    top: 331px;
+  }
+
+  .content1 .itr {
+    width: 384px;
+    height: 64px;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(119, 119, 117, 1);
+    line-height: 32px;
+    position: absolute;
+    top: 378.7px;
+    left: calc(50% - 192px);
+  }
+
+  .content1 .img {
+    width: 154px;
+    height: 154px;
+    background: #000;
+    border-radius: 50%;
+    position: absolute;
+    top: 140px;
+    left: calc(50% - 77px);
+  }
+
+ .content1 .img.fail {
+    width: 154px;
+    height: 154px;
+    background: url('../img/fail.jpg') no-repeat center center;
+    background-size: 100% 100% ;
+    border-radius: 50%;
+    position: absolute;
+    top: 140px;
+    left: calc(50% - 77px);
+  }
+
+  .formModal {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+  }
+
+  .formModal .content,
+  .content1 {
+    width: 798px;
+    height: 565.6px;
+    position: absolute;
+    left: calc(50% - 399px);
+    top: calc(50% - 282.8px);
+    background: #fff;
+  }
+
+  .formModal .cha {
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: url("../img/xg.png") no-repeat center center;
+    background-size: 100% 100%;
+    cursor: pointer;
+  }
+
+  .formModal1 .input,
+  .formModal1 select {
+    width: 480px;
+    position: absolute;
+    top: 276px;
+    left: calc(50% - 240px);
+  }
+
+  .formModal1 .input input,
+  .formModal1 .input select {
+    width: 450px;
+    height: 60px;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 2px;
+    border: 1px solid rgba(221, 221, 221, 1);
+    margin-bottom: 24px;
+    outline: none;
+    padding-left: 30px;
+  }
+
+  .formModal1 .input select {
+    width: 482px;
+    height: 46px;
+    top: 185px;
+  }
+
+  .formModal .input input::-webkit-input-placeholder {
+    font-size: 18px;
+    font-weight: 400;
+    color: #bbb;
+  }
+
+  .formModal .btn {
+    width: 182px;
+    height: 56px;
+    background: rgba(202, 207, 210, 1);
+    border-radius: 2px;
+    position: absolute;
+    top: 460.6px;
+    left: calc(50% - 91px);
+    line-height: 56px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 1);
+    cursor: pointer;
+  }
+
+  .content1 .modaltitle {
+    top: 331px;
+  }
+
+  .content1 .itr {
+    width: 384px;
+    height: 64px;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(119, 119, 117, 1);
+    line-height: 32px;
+    position: absolute;
+    top: 378.7px;
+    left: calc(50% - 192px);
+  }
+
+  .formModal1 {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+  }
+
+  .formModal1 .content,
+  .formModal1 .content1 {
+    width: 798px;
+    height: 565.6px;
+    position: absolute;
+    left: calc(50% - 399px);
+    top: calc(50% - 282.8px);
+    background: #fff;
+  }
+
+  .formModal1 .cha {
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: url("../img/xg.png") no-repeat center center;
+    background-size: 100% 100%;
+    cursor: pointer;
+    z-index: 1;
+  }
+
+  .formModal1 .modaltitle {
+    width: 288px;
+    font-size: 36px;
+    font-weight: 500;
+    color: rgba(34, 33, 33, 1);
+    position: absolute;
+    top: 140px;
+    left: calc(50% - 144px);
+  }
+
+  .formModal1 .input {
+    width: 480px;
+    position: absolute;
+    top: 193.2px;
+    left: calc(50% - 240px);
+  }
+
+  .formModal1 .input input {
+    width: 450px;
+    height: 42px;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 2px;
+    border: 1px solid rgba(221, 221, 221, 1);
+    margin-bottom: 16.8px;
+    outline: none;
+    padding-left: 30px;
+  }
+
+  .formModal1 .input input::-webkit-input-placeholder {
+    font-size: 18px;
+    font-weight: 400;
+    color: #bbb;
+  }
+
+  .formModal1 .btn {
+    width: 182px;
+    height: 56px;
+    background: rgba(202, 207, 210, 1);
+    border-radius: 2px;
+    position: absolute;
+    top: 460.6px;
+    left: calc(50% - 91px);
+    line-height: 56px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 1);
+    cursor: pointer;
+  }
+.formModal1 #Error_join {
+		color:#F00;
+		margin-top:52px
+	}
+  .formModal1 .content1 .modaltitle {
+    top: 331px;
+  }
+
+  .formModal1 .content1 .itr {
+    width: 384px;
+    height: 64px;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(119, 119, 117, 1);
+    line-height: 32px;
+    position: absolute;
+    top: 378.7px;
+    left: calc(50% - 192px);
+  }
+
+  .formModal1 .content1 .img {
+    width: 154px;
+    height: 154px;
+    background: url('../img/Success.jpg') no-repeat center center;
+    background-size: 100% 100%;
+    border-radius: 50%;
+    position: absolute;
+    top: 140px;
+    left: calc(50% - 77px);
+  }
+
+  .formModal1 .content1 .img.fail {
+    width: 154px;
+    height: 154px;
+    background: url('../img/fail.jpg') no-repeat center center;
+    background-size: 100% 100% ;
+    border-radius: 50%;
+    position: absolute;
+    top: 140px;
+    left: calc(50% - 77px);
+  }
+}

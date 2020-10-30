@@ -1,45 +1,6 @@
-﻿var formAjax = {
-	live:function(){
-		/*var formObj = $('form');
-		formObj.Validform({
-			btnSubmit:".ajaxFrom", 
-			tiptype:function(msg,o,cssctl){
-				if(o.type==3){
-					layer.tips(msg,o.obj,{tips:[1,'#3595CC']});
-					//layer.msg(msg);
-					return false;
-				}
-			},
-			callback:function(form){
-				var url = formObj.attr('action') || $(this).attr('_url');
-				formAjax.ajaxPost(url,formObj);
-				return false;
-			}
-		});*/
-		
-		$('.ajaxFrom').on('click',function(){
-			var formObj = $(this).parents('form');
-			var url = formObj.attr('action') || $(this).attr('_url');
-			formAjax.ajaxPost(url,formObj);
-			return false;
-			/*formObj.Validform({
-				btnSubmit:'.ajaxFrom', 
-				tiptype:function(msg,o,cssctl){
-					if(o.type==3){
-						layer.tips(msg,o.obj,{tips:[1,'#3595CC']});
-						//layer.msg(msg);
-						return false;
-					}
-				},
-				callback:function(form){
-					formAjax.ajaxPost(url,formObj);
-					return false;
-				}
-			});*/
-		});
-	},
-	ajaxPost:function(url,formObj){
-		var layars=layer.load(0,{shade:[0.8,'#fff']});
+﻿var layars = null;
+var dailogAjax = {
+	dailogPost:function(url,formObj,dialog){
 		var formObj = formObj || $('form');
 		var ex = url.indexOf('?') == -1 ? '?' : '&';
 		$.ajax({
@@ -49,56 +10,105 @@
 			url:url+ex+'t='+(new Date().getTime()),
 			data:formObj.serialize(),
 			success:function(data){
-				formAjax.runAjaxResSuccess(data);
+				if(data.status == 1){
+					parent.adminJs.dailogClose();
+					if(data.msg){
+						parent.adminJs.showMsg(data.msg,data.status );
+					}
+					setTimeout(function(){dailogAjax.dailogSuccess();},2000);
+					
+				}else{
+					parent.adminJs.bootstrap_alert(data.msg);
+				}
 			},complete:function(XMLHttpRequest, textStatus){
-				layer.close(layars);
+				
 			},beforeSend:function(){
 				
 			},error:function(){
-				adminJs.showAlert('服务器异常，请联系管理员',2);return ;
+				parent.adminJs.bootstrap_alert('服务器异常，请联系管理员!');
 			}
 		});
 	}
 	,
+	dailogSuccess:function(){
+		parent.$.learuntab.refreshTab();
+		//parent.$(".main_iframe:visible")[0].contentWindow.location.reload();
+	}
+}
+
+var formAjax = {
+	ajaxPost:function(url,formObj){
+		layars = layer.load(0,{shade:[0.2,'#fff'],time: 1000});
+		setTimeout(function(){
+            var formObj = formObj || $('form');
+			var ex = url.indexOf('?') == -1 ? '?' : '&';
+			$.ajax({
+				type:'POST',
+				enctype: 'multipart/form-data',
+				dataType:'json',
+				url:url+ex+'t='+(new Date().getTime()),
+				data:formObj.serialize(),
+				success:function(data){
+					formAjax.runAjaxResSuccess(data);
+				},complete:function(XMLHttpRequest, textStatus){
+					layer.close(layars);
+				},beforeSend:function(){
+					
+				},error:function(){
+					$evt.showAlert('服务器异常，请联系管理员',2);return ;
+				}
+			});
+        },1000);
+	}
+	,
 	runAjaxResSuccess:function(data){
 		if(data.status == 1){
-			layer.msg(
+			parent.layer.msg(
 				data.msg,
-				{icon:1,time:2000,shade:[0.8,'#fff']},
+				{icon:1,time:2000,shade:[0.2,'#fff']},
 				function(index){
-					var indexbox=parent.layer.getFrameIndex(window.name);
+					var indexbox = parent.layer.getFrameIndex(window.name);
 					if(indexbox){
-						if(typeof parent.IframeCount =='undefined' ||(parent.IframeCount&&parent.IframeCount<=1)){
+						$evt.closeThis(indexbox);
+						/*if(typeof parent.IframeCount =='undefined' ||(parent.IframeCount&&parent.IframeCount<=1)){
 							if(data.url&&data.url!='javascript:history.back(-1);'){
-								adminJs.goUrl(data.url,parent);
+								$evt.goUrl(data.url,parent);
 							}else{
-								parent.location.reload();
+								parent.$.learuntab.refreshTab();
 							}
-						}
-						adminJs.closeThis();
-					}else if(data.reload){
-						window.location.reload();
-					}else if(data.location){
-						adminJs.goUrl(data.url);
+						}*/
 					}
-					layer.close(index);
+					if(data.reload){
+						parent.$.learuntab.refreshTab();
+						return;
+					}
+					if(data.goback){
+						$evt.goback();
+						return;
+					}
+					if(data.url){
+						$evt.goUrl(data.url,data.tab_name);
+						return;
+					}
+					parent.adminJs.closeThis();
 				}
 			);
 			return;
 		}else{
-			layer.alert(data.msg,{title:data.msg,icon:2},
+			$evt.showAlert(data.msg,2);
+			/*layer.alert(data.msg,{icon:2},
 			function(index){
 				//var indexBox=parent.layer.getFrameIndex(window.name);
 				var indexBox = top.location!=self.location ? true : false;
 				if(indexBox){
 					if(data.url&&data.url!='javascript:history.back(-1);'){
-						adminJs.goUrl(data.url,parent);
+						$evt.goUrl(data.url,parent);
 					}
-					//adminJs.closeThis();
+					//$evt.closeThis();
 				}
-				layer.close(index);
+				parent.layer.close(index);
 				//layer.closeAll('loading');
-			});
+			});*/
 		}
 	},
 	tbodyLoading:function(page,inajax){
@@ -108,7 +118,7 @@
         if(typeof app == 'undefined'){
             return false;
         } 
-		var layars=layer.load(0,{shade:[0.8,'#fff']});
+		parent.adminJs.loading();
 		var dataArr = app.split('_');
         var page = page || 1;
         var url = ('/'+dataArr[0]+'/'+dataArr[1]+dataArr[2]+'?inajax=1&page='+page);
@@ -127,16 +137,17 @@
         if(sync == 'yes'){
             $.ajax({
                 type:'POST',
+                dataType:'json',
                 url:url+'t='+(new Date().getTime()),
                 data:data,
                 success:function(data){
                     //var data = eval("("+data+")");
                     formAjax.responseLoading(data);
                 },complete:function(XMLHttpRequest, textStatus){
-					adminJs.closeAllf();
+					parent.adminJs.layer_close();
 				},beforeSend:function(){
 				},error:function(){
-					adminJs.showAlert('服务器异常，请联系管理员',2);return ;
+					parent.adminJs.showAlert('服务器异常，请联系管理员',2);return ;
 				}
             });
         } else {
@@ -153,14 +164,13 @@
     * 返回装载值
     */
     responseLoading : function(data){
+		var icon = data.status == 1 ? 1 : 2;
         if(data.method == 'write'){
             if(data.append){
                 $.each(data.append,function(k,v){
                     if(!v){
                         return true;
                     }
-                    //console.log(k,v);
-                    //console.log($("[data-name='"+k+"']").length);
                     $("[data-name='"+k+"']").append(v);
                 });
             }
@@ -190,67 +200,33 @@
                 eval(data.runFunctionJson+"(data.data)");      
             }
         }else if(data.method == 'alert'){   // 仅提示一下
-            if($('.ui-dialog-close').length==1){
-                $('.ui-dialog-close').click();    
-            }
-            if(data.reload == 'ok'){
-                if(data.reload_id == ""){
-                    xrefresh(data.msg,data.page,data.searchurl);
-                    
-                }else{
-                    if(data.reload_type == "append"){
-                        $("#"+data.reload_id).append(data.reload_html);
-                    }else{
-                        $("#"+data.reload_id).html(data.reload_html);
-                    }
-                }
-            }else{
-                show_loading(data.msg,3000);
-            }
-            return false;    
-        }else if(data.method == 'form'){
-            adminBox.formBoxShow(data.form.title,data.form.content);
-        }else if(data.method == 'dform'){  // 弹出层表单提交
-            if(data.stats == 'ok'){
-                show_loading(data.msg,3000);
-                $('.ui-dialog-close').click();
-                return false;    
-            }else{
-                show_loading(data.msg,3000);
-                return true;
-            }
-        }else if(data.method == 'location'){ // 跳转url
-            window.location.href = data.location;
+			if(data.msg){
+				parent.adminJs.showMsg(data.msg,icon);
+			}
+            if(data.location){
+				setTimeout(function(){window.location.href = data.location;},2000);
+				return;
+			}
+			if(data.parent){
+				setTimeout(function(){window.parent.location.href = data.parent;},2000);
+				return;
+			}
+			if(data.reload){
+				setTimeout(function(){parent.$.learuntab.refreshTab();},2000);
+				return;
+			}
             return false;
-        }else if(data.method == 'parent'){ // 跳转url
-            window.parent.location.href = data.location;
-            return false;
-        }else if(data.method == 'write2'){
-            if(data.html){
-                $.each(data.html,function(k,v){
-                    if(!v){
-                        return true;
-                    }
-                    $("[data-name='"+k+"']").html(v);
-                });
-            } 
-            
-            if($('.ui-dialog-close').length==1){
-                $('.ui-dialog-close').click();    
-            }
-            
-            //show_loading(data.msg,3000);
-        }else if(data.method == 'alert2'){ // 系统提示
-            if($('.ui-dialog-close').length==1){
-                $('.ui-dialog-close').click();    
-            }
-            adminBox.alert2(data.msg);
-            return false;
+        }else if(data.method == 'iframe'){
+			parent.adminJs.addframes(data.url,data.tab_name);
+            return;
+        }else if(data.method == 'alert1'){ // 系统提示
+            if(data.msg){
+				parent.adminJs.showAlert(data.msg,icon);
+			}
         }
-    }
+    },
 	 
 }
 $(function () {
-	formAjax.live();
 	formAjax.tbodyLoading();
 });
