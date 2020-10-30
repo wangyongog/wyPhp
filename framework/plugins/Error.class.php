@@ -39,7 +39,7 @@ class Error extends \Exception{
             Logs::save($error, $ltype);
             //header(self::https());
             //header('Status:404 Not Found');
-            redirect(U('/error/404')) ;
+            redirect(U('Error/index')) ;
         }
     }
     /**

@@ -55,23 +55,28 @@ function CF($name=null, $value=null,$default=null) {
  * @return array
  */
 function load_config($file,$parse=''){
-    $ext  = pathinfo($file,PATHINFO_EXTENSION);
-    switch($ext){
-        case 'php':
-            return include $file;
-        case 'ini':
-            return parse_ini_file($file,true);
-        case 'yaml':
-            return yaml_parse_file($file);
-        case 'xml':
-            return (array)simplexml_load_file($file);
-        case 'json':
-            return json_decode(file_get_contents($file), true);
-        default:
-            if(function_exists($parse)){
-                return $parse($file);
-            }
+    try{
+        $ext  = pathinfo($file,PATHINFO_EXTENSION);
+        switch($ext){
+            case 'php':
+                return include $file;
+            case 'ini':
+                return parse_ini_file($file,true);
+            case 'yaml':
+                return yaml_parse_file($file);
+            case 'xml':
+                return (array)simplexml_load_file($file);
+            case 'json':
+                return json_decode(file_get_contents($file), true);
+            default:
+                if(function_exists($parse)){
+                    return $parse($file);
+                }
+        }
+    }catch (\Exception $e){
+        throw new \Exception($e->getMessage());
     }
+
 }
 /**
  * D函数用于实例化模型类 格式 [资源://][模块/]模型

@@ -88,6 +88,7 @@ abstract class Controller extends Template{
             $pars['page'] = $params['pages'][$i]['page'];
             $params['pages'][$i]['url'] = U($inPath, $pars);
         }
+        $page_str = '';
         $this->assign('_p',$params);
         $this->totalPage >=2 and $page_str = $this->fetch($page_html ? $page_html : 'public/page/style2.html');
         $this->assign('_page', $page_str);
@@ -133,7 +134,7 @@ abstract class Controller extends Template{
                 $page_str = $this->fetch($pageHtml ? $pageHtml : 'public/page/page.html');
                 $this->outData['html']['pagin'] = $this->totalPage>1 ? $page_str : '&nbsp;';
             }
-            $this->outData['html']['tbody_data'] = $this->tbody_html ? $this->tbody_html : '暂无查询结果！';
+            $this->outData['html']['tbody_data'] = $this->tbody_html ? $this->tbody_html : '<tr><td colspan="100%">暂无查询结果！</td></tr>';
             $this->printJson();
         }
         $this->error();
@@ -171,6 +172,7 @@ abstract class Controller extends Template{
      */
     private function dispatchJump($msg='',$url, $status, $tpl='') {
         if(IS_AJAX){
+            $this->outData['method'] = 'alert';
             $this->outData['msg'] = $msg;
             $this->outData['url'] = $url;
             $this->outData['status'] = $status;

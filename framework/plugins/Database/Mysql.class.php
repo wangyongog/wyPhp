@@ -1,6 +1,8 @@
 <?php
 namespace WyPhp\Database;
 
+use WyPhp\Logs;
+
 /**
  * Created by PhpStorm.
  * User: Administrator
@@ -453,7 +455,8 @@ class Mysql extends Driver{
                 }
             }
             $whereStr .= !empty($arr) ? implode(' AND ',$arr) : '';
-            $whereStr = rtrim($whereStr,' AND ');
+            $whereStr = trim($whereStr,' AND ');
+            //Logs::save($whereStr);
             //$where = implode(' AND ',$arr);
         }
         if(is_string($where)){
@@ -498,7 +501,7 @@ class Mysql extends Driver{
                         $whereStr .= $key.' '.$this->exp[$exp].' '.$val[1];
                     }else{
                         $val[1] = is_array($val[1]) ? implode(',', $this->parseValue($val[1])) : $val[1];
-                        $whereStr .= $key.' '.$this->exp[$exp].' ('.$val[1].')';
+                        $val[1] and $whereStr .= $key.' '.$this->exp[$exp].' ('.$val[1].')';
                     }
                 }
                 if(in_array($exp, ['notbetween','not between','between'])){ // BETWEEN运算
