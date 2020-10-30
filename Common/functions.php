@@ -30,14 +30,6 @@ function sort_time($tm, $month = false, $year = false, $format = 'Y-m-d') {
     }
     return $str;
 }
-
-/**
- * 统一金额格式
- * @param $amount
- */
-function getMoney($amount){
-    return sprintf("%.2f",$amount);
-}
 /**
  * 截取utf8字符串,完美支持中文
  * @param string $str 截取的字符串
@@ -53,6 +45,9 @@ function substring($str, $len, $adddot = '...', $from = 0) {
     } else {
         return preg_replace('#^(?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,' . $from . '}' . '((?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,' . $len . '}).*#s', '$1', $str);
     }
+}
+function getMoney($amount){
+    return sprintf('%.2f', $amount);;
 }
 /**
  * 动态加载css js
@@ -191,13 +186,21 @@ function random($length =6, $type = 0,$noO = false, $hash = '') {
  * @param $skey 加密串
  * @return string
  */
-function mcrypt($value, $operation = 'ENCODE', $skey = '',$expiry=0) {
+function mcrypt($value, $operation = 'ENCODE', $skey = '') {
     if (empty($value)) return false;
     $str ='';
     $en_type = ucfirst(CF('ENCRYPT'));
     $class = '\\WyPhp\\Encrypt\\'.$en_type;
-    $mode = new $class($skey, $expiry);
-    return $operation == 'ENCODE' ? $mode->encrypt($value) : $mode->decrypt($value);
+    $mode = new $class($skey);
+    switch ($operation){
+        case 'ENCODE':
+            $str = $mode->encrypt($value);
+            break;
+        case 'DECODE':
+            $str = $mode->decrypt($value);
+            break;
+    }
+    return $str;
 }
 /**
  * 二位数据排序
@@ -221,6 +224,34 @@ function my_sort($arrays, $sort_key, $sort_order=SORT_ASC, $sort_type=SORT_NUMER
     }
     array_multisort($key_arrays,$sort_order,$sort_type,$arrays);
     return $arrays;
+}
+/**
+ * 产生随机数 并且设置出现该随机数的概率
+ *
+ * @param mixed $proArr
+ * **
+ * array(
+ *   num=>概率值,
+ *   num=>概率值
+ * )
+ */
+function get_rand($proArr) {
+    $result = '';
+    //概率数组的总概率精度
+    $proSum = array_sum($proArr);
+    //概率数组循环
+    foreach ($proArr as $key => $proCur) {
+        mt_srand((double) microtime() * 1000000);
+        $randNum = mt_rand(1, $proSum);
+        if ($randNum <= $proCur) {
+            $result = $key;
+            break;
+        } else {
+            $proSum -= $proCur;
+        }
+    }
+    unset ($proArr);
+    return $result;
 }
 /**
  * 创建目录
@@ -282,7 +313,7 @@ function getIP($type = false,$adv=false) {
  */
 function session($key='', $value='', $type=NULL,$options=[]){
     if(!$key) return false;
-    NEW \WyPhp\Session();
+    new \WyPhp\Session();
     if(!empty($value) ){
         $_SESSION[$key] = $value;
         return true;
@@ -342,7 +373,7 @@ function isMobile($mobile) {
     if (!is_numeric($mobile)) {
         return false;
     }
-    return preg_match("/^1[3456789]{1}\d{9}$/",$mobile);
+    return preg_match('#^13[\d]{9}$|^14[5,7]{1}\d{8}$|^15[^4]{1}\d{8}$|^17[0,6,7,8]{1}\d{8}$|^18[\d]{9}$#', $mobile) ? true : false;
 }
 /**
  * 生成唯一订单号
@@ -351,10 +382,13 @@ function isMobile($mobile) {
 function creatOrderId(){
     return date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8).random(3,1);
 }
-function post($url, $param=array(),$header=array()){
+function post($url, $param=[],$header=[]){
+    /*if(!is_array($param)){
+        throw new Exception("参数必须为array");
+    }*/
     $httph =curl_init($url);
     curl_setopt($httph, CURLOPT_SSL_VERIFYPEER, 0);
-    curl_setopt($httph, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($httph, CURLOPT_SSL_VERIFYHOST, 1);
     curl_setopt($httph,CURLOPT_RETURNTRANSFER,1);
     curl_setopt($httph, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);//"Mozilla/5.0 (compatible; MSIE 6.1; Windows NT 5.0)"
     /*if ($param) {
@@ -362,21 +396,13 @@ function post($url, $param=array(),$header=array()){
         curl_setopt($httph, CURLOPT_POST, 1);//设置为POST方式
         curl_setopt($httph, CURLOPT_POSTFIELDS, $param);
     }*/
-    //curl_setopt($httph, CURLOPT_HTTPHEADER, array(
-    //        'Content-Type: application/json; charset=utf-8',
-    //        'Content-Length: ' . strlen($param),
-    //        'Accept: application/json, text/javascript, */*; q=0.01'
-    //    )
-    //);
-    if($param){
-        curl_setopt($httph, CURLOPT_POST, 1);//设置为POST方式
-        curl_setopt($httph, CURLOPT_POSTFIELDS, $param);
-    }
+    curl_setopt($httph, CURLOPT_POST, 1);//设置为POST方式
+    curl_setopt($httph, CURLOPT_POSTFIELDS, $param);
     if($header){
-        curl_setopt($httph, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($httph,CURLOPT_HTTPHEADER, $header);
     }
-    curl_setopt($httph, CURLOPT_CONNECTTIMEOUT , 10);
-    curl_setopt($httph, CURLOPT_TIMEOUT, 120);
+
+    curl_setopt($httph, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($httph, CURLOPT_HEADER, 0);
     $rst = curl_exec($httph);
     if (curl_errno($httph)) {
@@ -386,12 +412,9 @@ function post($url, $param=array(),$header=array()){
     curl_close($httph);
     return $rst;
 }
-
 /**
  * 产生表单hash值
- * @param string $str
- * @param int $expire 有效期
- * @return string
+ * @return bool|string
  */
 function formhash($str='', $expire=0){
     $user = APPbase::$user;
@@ -406,11 +429,8 @@ function formhash($str='', $expire=0){
     return mcrypt($key.'|'.$sign);
 }
 
-
 /**
  * 验证表单hash值
- * @param string $check_str
- * @param bool $checkExpire 是否验证有效期，false不
  * @return bool
  */
 function check_formhash($check_str='', $checkExpire=false){
@@ -562,91 +582,124 @@ function select_input($arr, $ext_data=[]){
  * @param $id
  * @return mixed
  */
-function GetTopid($data, $id){
+function GetTopid($data, $id, $p_key='pid'){
     static $tree;
-    if(empty($data[$id]['pid'])) {
-        $tree[] = $data[$id]['name'];
+    if(empty($data[$id][$p_key])) {
+        $tree[] = $data[$id];
         krsort($tree);
         return $tree;
-    } else {
-        $tree[] = $data[$id]['name'];
-        return GetTopid($data, $data[$id]['pid']);
     }
+    $tree[] = $data[$id];
+    return GetTopid($data, $data[$id][$p_key]);
 }
-/**
- * 获取前端栏目下所有子栏目
- * @param $data 栏目数据
- * @param $id 栏目id
- * @param int $channel
- * @param bool $addthis 是否包含本身
- * @return string
- */
-function GetMenusIds($id, $channel=0, $addthis=true){
-    $GLOBALS['idsarrr'] = [];
-    $menusModel = D('aceAdmin/Menus');
-    $arr = $menusModel->getAll();
-    foreach ($arr as $v){
-        $tree[$v['typeid']] = $v['pid'];
-    }
-    GetSonIdsLogic($id,$tree,$channel,$addthis);
-    $rquery = join(',',$GLOBALS['idsarrr']);
-    return $rquery;
+function showActionButton($action){
+    $group = new \aceAdmin\Model\GroupModel();
+    return $group->checkShowAction($action);
 }
 
 /**
- * 获取后台栏目下所有子栏目
- * @param $data 栏目数据
- * @param $id 栏目id
- * @param int $channel
- * @param bool $addthis 是否包含本身
- * @return string
+ * 子类ID找父类导航,面包屑
+ * @param $array
+ * @param int $pid 父类ID
+ * @param string $id_key 主键id字段
+ * @param string $pid_key 上级id字段
+ * @param bool $is_self  是否包子类ID
+ * @param int $leave
+ * @return array
  */
-function GetSonIds($id, $channel=0, $addthis=true){
-    $GLOBALS['idsarrr'] = [];
-    $sidebar = D('aceAdmin/Sidebar');
-    $arr = $sidebar->getAll();
-    foreach ($arr as $v){
-        $tree[$v['id']] = $v['pid'];
+function get_parent_nav($array, $pid = 0, $id_key = 'type_id', $pid_key = 'pid', $is_self = true, $mark = 1) {
+    static $list;
+    if ($mark == 1) {
+        $list = null;
     }
-    GetSonIdsLogic($id,$tree,$channel,$addthis);
-    $rquery = join(',',$GLOBALS['idsarrr']);
-    return $rquery;
-}
-
-//递归逻辑
-function GetSonIdsLogic($id,$sArr,$channel=0,$addthis=true){
-    if($id!=0 && $addthis) {
-        $GLOBALS['idsarrr'][$id] = $id;
-    }
-    if(is_array($sArr)) {
-        foreach($sArr as $k=>$v) {
-            if( $v==$id && ($channel==0)) {
-                GetSonIdsLogic($k,$sArr,$channel,true);
-            }
+    foreach ($array as $key => $value) {
+        if ($value[$id_key] == $pid) {
+            $info = array(
+                'type_id' => $value[$id_key],
+                'type_name' => $value['type_name'],
+            );
+            $is_self and $list[] = $info;
+            unset($array[$key]);
+            get_parent_nav($array, $value[$pid_key], $id_key, $pid_key, true, 2);
         }
     }
+    $type_id = array_column($list, 'type_id');
+    array_multisort($type_id, SORT_ASC, $list);
+    $type_nav='';
+    foreach ($list as $value){
+        $type_nav .=$value['type_name'].'>';
+    }
+    $type_nav=  trim($type_nav, '>');
+    return $type_nav;
+}
+/**
+ * 获取栏目下所有子栏目
+ * @param $array 栏目数据
+ * param $pid 栏目ID
+ * @param  $id_key 自增ID
+ * @param  $pid_key 上级ID
+ * @param bool $is_self 是否包含本身 true是
+ * @return array
+ */
+function GetSonIds($array, $pid=0, $id_key='id', $pid_key='pid', $is_self=true,$mark=1){
+    static $list = [];
+    if($mark==1){
+        $list=null;
+    }
+    $is_self and $list[] = $pid;
+    foreach ($array as $key => $value){
+        if ($value[$pid_key] == $pid){
+            $list[] = $value[$id_key];
+            unset($array[$key]);
+            GetSonIds($array, $value[$id_key],$id_key,$pid_key,false,2);
+        }
+    }
+    return $list;
+}
+/**
+ * 子类ID找所有父类ID
+ * @param $array
+ * @param int $pid 父类ID
+ * @param string $id_key 主键id字段
+ * @param string $pid_key 上级id字段
+ * @param bool $is_self  是否包子类ID
+ * @return array
+ */
+function get_parent_ids($array, $pid=0, $id_key='type_id', $pid_key='pid', $is_self=true,$mark=1){
+    static $list = [];
+    if($mark==1){
+        $list=null;
+    }
+    foreach ($array as $key => $value){
+        if ($value[$id_key] == $pid){
+            $is_self and $list[] = $value[$id_key];
+            unset($array[$key]);
+            get_parent_ids($array,$value[$pid_key],$id_key,$pid_key,true,2);
+        }
+    }
+    return $list;
 }
 
 /**
- * 组装栏目
+ * 递归栏目
  * @param $array
  * @return array
  */
 function getTree($array,$id = 'id', $pid = 'pid', $son = 'children'){
     $items = $tree = [];
     foreach($array as $value){
-        $value['url'] = $value['url'] ? ltrim($value['url'],'/')  : '';
         $items[$value[$id]] = $value;
     }
     foreach($items as $key => $value){
         if(isset($items[$value[$pid]])){
-            $items[$value[$pid]][$son][$key] = &$items[$key];
+            $items[$value[$pid]][$son][] = &$items[$key];
         }else{
-            $tree[$key] = &$items[$key];
+            $tree[] = &$items[$key];
         }
     }
     return $tree;
 }
+
 /**
  * 判断颠倒图片，放正
  * @param $imgPath   D:\WWW\ayzxweb-admin\Uploads/614cbed662fcaf2e106450a066b44a34579.jpeg
