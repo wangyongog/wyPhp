@@ -1,0 +1,91 @@
+{include file="public/header.html"}
+
+
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+				try{
+					ace.settings.loadState('main-container')
+					}catch(e){
+				}
+			</script>
+			{include file="public/headtitle.html"}
+			<div class="main-content">
+				<div class="main-content-inner">
+					<div class="page-content">
+                        
+
+
+						<div class="row">
+							<div class="col-xs-12">
+								<table id="simple-table" class="table  table-bordered table-hover">
+									<thead>
+									<tr>
+										<th class="center" width="120px">
+											<label class="pos-rel">
+												<input type="checkbox"  class="ace check-all">
+												<span class="lbl"></span>
+											</label>
+										</th>
+                     
+										<th width="220px">标题</th>
+                                        <th class="hidden-480">简介</th>
+                           
+										<th width="160px">操作</th>
+									</tr>
+									</thead>
+
+									<tbody>
+                                    {foreach from=$data key=k item=val}
+									<tr>
+										<td class="center">
+											<label class="pos-rel">
+												<input type="checkbox" class="ace ids" name="ids[]" value="{$val.id}">
+												<span class="lbl"></span>
+											</label>
+										</td>
+
+										
+										<td>{$val.title}</td>
+			
+										<td>{$val['description']}</td>
+										<td>
+										
+											<a class="show_dialog" href="javascript:;" _url="{U('education/add',['id'=>$val['id']])}">编辑</a> | 
+                                            <a href="{U('education/info',['id'=>$val['id']])}">内容</a> | 
+                                            <a href="javascript:;" class="del" _url="{U('education/del',['id'=>$val.id])}">删除</a>
+										</td>
+									</tr>
+
+
+										{/foreach}
+									</tbody>
+								</table>
+                                <div class="pagin" >{$_page}</div>
+							</div>
+						</div>
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+
+
+		{include file="public/footer.html"}
+		</div><!-- /.main-container -->
+
+		{include file="public/footerJs.html" isdate=1}
+<script type="text/javascript">
+	///parent.document.getElementById('breadcrumbs').innerHTML = 'ssssss';
+    jQuery(function ($) {
+        $('#startime').datetimepicker({
+           format: 'yyyy-mm-dd',//'yyyy-mm-dd hh:ii:ss'
+            autoclose: true,
+			minView: 30,
+			language : 'zh-CN',
+			minuteStep:1,
+			todayBtn: true,
+			startView:2,
+			startDate: new Date()
+        });
+    });
+</script>
+</body>
+</html>

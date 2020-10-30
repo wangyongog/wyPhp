@@ -1,0 +1,23 @@
+{foreach from=$data key=k item=val}
+<tr>
+	<td class="center">
+		<label class="pos-rel">
+			<input type="checkbox" class="ace ids" name="ids[]" value="{$val.uid}">
+			<span class="lbl"></span>
+		</label>
+	</td>
+	<td>{$val['user']}</td>
+	<td>{$group[$val['groupid']]['title']}</td>
+	<td class="hidden-480">{if $val['lasttime']}{date('Y-m-d H:i',$val['lasttime'])} {/if}</td>
+	<td class="hidden-480">{if $val['status'] == 1}正常 {else} 锁定{/if}</td>
+	<td class="hidden-480">{date('Y-m-d H:i',$val['addtime'])}</td>
+	<td>
+		<a class="green show_dialog" href="javascript:;" data-url="{U('manager/add',['uid'=>$val['uid'],'token'=>creatToken($val['uid'])])}" data-title="编辑">
+			<i class="ace-icon fa fa-pencil bigger-130"></i>
+		</a>
+		<a class="red bootstrap_del" href="javascript:;" data-url="{U('manager/del',['ids'=>$val['uid'],'token'=>creatToken($val['uid'])])}" title="删除">
+			<i class="ace-icon fa fa-trash-o bigger-130"></i>
+		</a>
+	</td>
+</tr>
+{/foreach}

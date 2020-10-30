@@ -1,0 +1,76 @@
+<form class="form-horizontal " role="form" action="{U('works/add')}" enctype="multipart/form-data">
+<input type="hidden" value="{formhash()}" name="formhash"/>
+<input type="hidden" value="{G('id')}" name="id"/>
+    <div class="form-group">
+		<label class="col-sm-2 control-label">作品类别</label>
+		<div class="col-sm-4">
+			<select class="form-control" name="data[type]">
+			<option value="">请选择</option>
+			{foreach from=$pos key=k item=val}
+                <option {if $data['type'] eq $val['id']} selected {/if}value="{$val['id']}">{$val['name']}</option>
+            {/foreach}
+		</select>
+		</div>
+	</div>
+    <div class="form-group">
+		<label for="inputPassword" class="col-sm-2 control-label">图片</label>
+		<div class="col-sm-10">
+			<button id="fileup1" class="btn btn-info browse_button" data-upload-url="{U('upload/banner')}" data-extensions="jpg,png,gif,bmp" data-max-size="2MB" data-base-url="">请选择图片</button>
+            <div class="preview">
+            {if $data['img']}
+				{foreach from=$data['img'] key=k item=val}
+                <div class="file-item">
+                	<input type="hidden" value="{$val}" name="files[]"/>
+                    <img style="width:120px;height:100px" class="img-thumbnail" src="{picSize($val)}"/>
+                    <div class="close-upimg"></div>
+                </div>
+                {/foreach}
+            {/if}
+            </div>
+            <div class="process none">
+                <span class="filename"></span>
+                <span class="filesize"></span>
+                <span class="percent"></span>
+            </div>
+		</div>
+	</div>
+	
+    <div class="form-group">
+		<label for="inputPassword" class="col-sm-2 control-label">排序</label>
+		<div class="col-sm-4">
+			<input type="text" class="form-control" name="data[sort]" placeholder="越大越前" value="{$data['sort']}"/>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="inputPassword" class="col-sm-2 control-label">说明</label>
+		<div class="col-sm-6">
+			<input type="text" class="form-control" name="data[title]" id="url" value="{$data['title']}"/>
+		</div>
+	</div>
+
+</form>
+<style>
+.preview .file-item {
+    display: inline-block;
+	padding-top:10px;
+	margin-right:5px
+}
+ .close-upimg {
+	position: absolute;
+	top: 3px;
+	right: 3px;
+	background-image:url('{$assets}/aceAdmin/images/a7.png');
+	background-repeat:no-repeat;
+	/* display: none; */
+	z-index: 10;
+	width:30px; height:30px
+}
+.file-item{
+	position: relative;
+	}
+</style>
+
+<script type="text/javascript">
+uploaders.initUploaders();
+</script>
