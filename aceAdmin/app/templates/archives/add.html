@@ -35,20 +35,7 @@
 									</div>
                                     
                                     <div class="form-group">
-										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 自定义属性 </label>
 
-										<div class="col-sm-9">
-                                                <div class="checkbox">
-                                                {foreach from=$flag_arr key=k item=val}
-													<label>
-														<input name="flag[]" value="{$k}" {if in_array($k,  explode( ',',$data['flag']))} checked="checked" {/if} type="checkbox" class="ace">
-														<span class="lbl"> {$val}</span>
-													</label>
-                                                    {/foreach}
-												</div>
-                                                
-										</div>
-									</div>
                                     <div class="form-group">
 										<label class="col-sm-1 control-label no-padding-right" for="form-field-1-1"> 缩 略 图 </label>
 
@@ -57,7 +44,7 @@
                                             
 										</div>
                                         <span class="ace-file-container hide-placeholder selected">
-                                        <img src="{$data['thumb']}" style="max-width:135px; max-height:126px"/>
+                                        <img src="{$data['thumb']}" class="timg-thumbnail" style="max-width:135px; max-height:126px"/>
                                         </span>
 									</div>
                                     
@@ -66,18 +53,9 @@
 
 										<div class="col-sm-4">
 											<select class="form-control" id="form-field-select-1" name="data[typeid]">
-                                                {foreach from=$menus key=k item=val}
-                                                <option value="{$val['typeid']}" {if $typeid eq $val.typeid} selected="selected" {/if}>{$val['typename']}</option>
-                                                {if isset( $val.children)}  
-                                                	{foreach from=$val.children key=k item=v}
-                                                	<option value="{$v.typeid}" {if $typeid eq $v.typeid} selected="selected" {/if}>&nbsp;&nbsp;┗━{$v['typename']}</option>
-                                                      {if isset( $v.children)}
-                                                          {foreach from=$v.children key=k item=vo}
-                                                          <option value="{$vo.typeid}" {if $typeid eq $vo.typeid} selected="selected" {/if}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┗━{$vo['typename']}</option>
-                                                          {/foreach}
-                                                      {/if}
-                                                    {/foreach}
-                                                {/if}
+                                                {foreach from=$typeMenus key=k item=val}
+                                                <option value="{$k}" {if $typeid eq $k} selected="selected" {/if}>{$val}</option>
+
                                                 {/foreach}
                             
                                             </select>
@@ -101,7 +79,13 @@
 											<textarea class="form-control" name="data[description]" id="form-field-8" style="height:120px" placeholder="">{$data['description']}</textarea>
 										</div>
 									</div>
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 来源 </label>
+										<div class="col-sm-9">
+											<input data-rel="tooltip" type="text" value="{$data['source']}" name="data[source]" id="form-field-6" placeholder="" title="" >
 
+										</div>
+									</div>
 									<div class="form-group">
 										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 权重 </label>
 
@@ -121,6 +105,22 @@
 										</div>
 									</div>
                                     
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 是否发布 </label>
+                                        <div class="control-label no-padding-left col-sm-1">
+                                            <label>
+                                                <input name="data[hide]" id="hide" value="1" {if !$data.hide}checked="checked"{/if} class="ace ace-switch ace-switch-2" type="checkbox">
+                                                <span class="lbl"></span>
+                                            </label>
+                                        </div>
+                            		</div>
+									<div class="form-group">
+										<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 发布时间 </label>
+
+										<div class="col-sm-4">
+											<input type="text" readonly id="puttime" name="data[puttime]" {if $data['puttime']} value="{date('Y-m-d',$data['puttime'])}" {/if} placeholder="" class="col-xs-10 col-sm-6">
+										</div>
+									</div>
 									<div class="clearfix form-actions">
 										<div class="col-md-offset-3 col-md-9">
 											<button class="btn btn-info post_info" type="button">
@@ -147,41 +147,26 @@
 		{include file="public/footer.html"}
 		</div><!-- /.main-container -->
 
-		{include file="public/footerJs.html" ueditor=1}
+		{include file="public/footerJs.html" ueditor=1 isdate=1}
 <script type="text/javascript">
+    $('#puttime').datetimepicker({
+        format: 'yyyy-mm-dd',//'yyyy-mm-dd hh:ii:ss'
+        autoclose: true,
+        minView: 30,
+        language : 'zh-CN',
+        //minuteStep:1,
+        todayBtn: true,
+        //startView:2,
+        //startDate: new Date()
+    });
     var editor = UE.getEditor('contents',{ initialFrameHeight:650 } );
+
     var img_data = [];
 	///parent.document.getElementById('breadcrumbs').innerHTML = 'ssssss';
     jQuery(function ($) {
-		$('.workslistadd').on('click',function(){
-			var str = $(this).parent().parent().parent().prop("outerHTML");
-			$(this).parent().parent().parent().after($(this).parent().parent().parent().prop("outerHTML"));
-			var obj = $(this).parent().parent().parent().next();
-			obj.find('.workslistadd').remove();
-			obj.find("input[type='text']").val('');
-			obj.find("img").css('display', 'none');
-		});
-		$('#formx').on('change','#changfile',function(e){
-			$(this).parent().next().html($(this).val())
-		});
-		
-		$('#formx').on('click','.delworks',function(){
-			$(this).parent().parent().parent().remove();
-		});
-		
-		$('.add_but').on('click',function(){
-			var str = $(this).parent().parent().parent().prop("outerHTML");
-			$(this).parent().parent().parent().after($(this).parent().parent().parent().prop("outerHTML"));
-			var obj = $(this).parent().parent().parent().next();
-			obj.find('.add_but').remove();
-			obj.find("input[type='text']").val('');
-		});
-		$('#formx').on('click','.del_but',function(){
-			$(this).parent().parent().parent().remove();
-		});
-		
-		
-		
+
+
+
         $('.post_info').on('click',function () {
             var formData = new FormData($('#formx')[0]);
             for(i=0; i<img_data.length; i++){
@@ -197,16 +182,16 @@
                 data: formData,
                 success: function (data) {
 					if(data.status == 1){
-						adminJs.msg(data.msg);
-						setTimeout('adminJs.goUrl("'+data.url+'")',2000);
+                        parent.adminJs.showMsg(data.msg,1);
+						setTimeout('window.location.href = "'+data.url+'"',2000);
 					}else{
-						adminJs.showAlert(data.msg, 2);
+                        parent.adminJs.showAlert(data.msg, 2);
 					}
                 }, complete: function (XMLHttpRequest, textStatus) {
                 }, beforeSend: function () {
 
                 }, error: function () {
-                    adminJs.showAlert('服务器异常，请联系管理员', 2);
+                    parent.adminJs.showAlert('服务器异常，请联系管理员', 2);
                     return;
                 }
             });

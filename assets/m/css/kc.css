@@ -1,0 +1,199 @@
+.sd {
+  margin-top: 0.72rem;
+}
+
+.sd .title {
+  width: 2.88rem;
+  height: 0.8rem;
+  position: relative;
+  margin: 0 auto;
+  margin-bottom: 0.16rem;
+}
+
+.sd .title .top {
+  color: #F9F9F9;
+  font-size: 0.68rem;
+  position: absolute;
+  top: 0;
+  left: 0.11rem;
+}
+
+.sd .title .bottom {
+  font-size:0.48rem;
+  font-weight:500;
+  color:rgba(34,33,33,1);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.sd .subtitle {
+  width:6.12rem;
+  height:0.96rem;
+  font-size:0.36rem;
+  color:rgba(34,33,33,1);
+  line-height:0.48rem;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 0.64rem;
+}
+
+.sd .title1 {
+  font-size:0.34rem;
+  font-weight:500;
+  color:rgba(66,66,66,1);
+  margin: 0.32rem;
+  margin-top: 0;
+}
+
+.sd .itr1 {
+  width:6.86rem;
+  height:2.34rem;
+  font-size:0.3rem;
+  color:rgba(66,66,66,1);
+  line-height:0.52rem;
+  margin: 0 0 0.64rem 0.32rem;
+}
+
+.sd .img {
+  width:6.86rem;
+  height:2.39rem;
+  border-radius:0.02rem;
+  background: orange;
+  margin: 0 auto;
+  margin-bottom: 0.64rem;
+}
+
+.teacher {
+  width:100%;
+  height:17.36rem;
+  background:rgba(252,253,254,1);
+  padding-top: 0.64rem;
+  position: relative;
+  margin-bottom: 1.28rem;
+}
+
+.teacher .title {
+  position: relative;
+  height: 0.8rem;
+  width: 3.13rem;
+  margin-left: 0.32rem;
+  margin-bottom: 0.32rem;
+}
+
+.teacher .title .top {
+  color: #F9F9F9;
+  font-size: 0.68rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.teacher .title .bottom {
+  font-size:0.48rem;
+  font-weight:500;
+  color:rgba(34,33,33,1);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.teacher .subtitle {
+  width:6.08rem;
+  height:0.28rem;
+  font-size:0.32rem;
+  color:rgba(34,33,33,1);
+  margin: 0 0 0.64rem 0.32rem;
+}
+
+.teacher .itr {
+  width:6.86rem;
+  height:1.84rem;
+  font-size:0.3rem;
+  color:rgba(66,66,66,1);
+  line-height:0.52rem;
+  margin: 0 0 0.32rem 0.32rem;
+}
+
+.teacher .img {
+  width:6.86rem;
+  height:4.78rem;
+  background: orange;
+  margin: 0 0 0.64rem 0.32rem;
+}
+
+.teacher .img img {
+  width: 100%;
+  height: 100%;
+}
+
+.t1 {
+  width: 1.36rem;
+  height: 2.68rem;
+  background: url("../img/index/bg_spot_h0.png") no-repeat center center;
+  background-size: 100% 100%;
+  position: absolute;
+  top: 17.12rem;
+  right: 0.37rem;
+}
+
+.major .title {
+  position: relative;
+  height: 0.8rem;
+  width: 2.4rem;
+  margin-left: 0.32rem;
+  margin-bottom: 0.32rem;
+}
+
+.major .title .top {
+  color: #F9F9F9;
+  font-size: 0.68rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.major .title .bottom {
+  font-size:0.48rem;
+  font-weight:500;
+  color:rgba(34,33,33,1);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.major .subtitle {
+  width:6.08rem;
+  height:0.32rem;
+  font-size:0.32rem;
+  color:rgba(34,33,33,1);
+  margin: 0 0 0.64rem 0.32rem;
+}
+
+.major .img {
+  width: 6.86rem;
+  height: 5.49rem;
+  margin: 0 0 0.48rem 0.32rem;
+}
+
+.major .img img {
+  width: 100%;
+  height: 100%;
+}
+
+.major .subtitle1 {
+  width:6.86rem;
+  height:0.3rem;
+  font-size:0.34rem;
+  font-weight:500;
+  color:rgba(66,66,66,1);
+  margin: 0 0 0.32rem 0.32rem;
+}
+
+.major .itr {
+  width:6.86rem;
+  font-size:0.3rem;
+  color:rgba(66,66,66,1);
+  line-height:0.52rem;
+  margin: 0 0 0.88rem 0.32rem;
+}

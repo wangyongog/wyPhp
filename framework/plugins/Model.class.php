@@ -10,7 +10,7 @@ class Model {
     const VALUE_VALIDATE = 2;      // 表单值不为空则验证
 
     // 最近错误信息
-    protected $error = [];
+    public $error = [];
     protected $options = [];
     protected $_validate = [];  // 自动验证定义
     protected $table = '';  // 表名
@@ -58,10 +58,10 @@ class Model {
      * @return boolean
      */
     protected function _validationField($data,$val) {
-        if( isset($this->error[$val[0]]))
+        if( $this->getError())
             return false; //当前字段已经有规则验证没有通过
         if(false === $this->_validationFieldItem($data,$val)){
-            $this->error = $val[2];
+            $this->setError(-100, $val[2]);
             return false;
         }
         return true;
@@ -249,7 +249,7 @@ class Model {
      * @return string
      */
     public function getError(){
-        return $this->error['msg'];
+        return isset($this->error['msg']) ? $this->error['msg'] : '';
     }
     public function setError($code, $msg){
         $this->error['code'] = $code;

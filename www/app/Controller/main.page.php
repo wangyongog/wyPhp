@@ -4,6 +4,7 @@ use Common\Model\PaymentsModel;
 use WyPhp\Cache\Redis;
 use WyPhp\DB;
 use WyPhp\Filter;
+use WyPhp\Rabbitmq;
 
 class main extends baseController {
     public function actionIndex(){
@@ -133,24 +134,24 @@ class main extends baseController {
         print_r($data);*/
     }
     public function actionRabbitmqsend(){
-        /*require_once FWPATH . '/plugins/vendor/autoload.php';
         $X = new Rabbitmq();
-        $X->sendMessage('hello',date('Y-m-d H:i:s'));*/
-        $redis = new Redis();
-        $redis->rpush('hello', date('Y-m-d H:i:s'));
+        $X->sendMessage('hello',date('Y-m-d H:i:s'));
+        //$redis = new Redis();
+        //$redis->rpush('hello', date('Y-m-d H:i:s'));
     }
     public function actionRabbitmqget(){
-        $redis = new Redis();
-        $s = $redis->lpop('hello');
+        $X = new Rabbitmq();
+        $s = $X->getMessage('hello');
+        /*$redis = new Redis();
+        $s = $redis->lpop('hello');*/
         print_r($s);
     }
     public function actionAlipay(){
-        $paymentsModel =  new PaymentsModel();
+        $paymentsModel = new PaymentsModel();
         $data = $paymentsModel->alipay(1,2,3,4);
         if($data == false){
             print_r($paymentsModel->getError());
         }
         print_r($data);
     }
-
 }

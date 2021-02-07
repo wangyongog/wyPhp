@@ -1,0 +1,25 @@
+<form class="form-horizontal " role="form" action="{U('links/add')}">
+<input type="hidden" value="{formhash()}" name="formhash"/>
+
+<input type="hidden" value="{G('id','int',0)}" name="id"/>
+
+    <div class="form-group">
+		<label for="inputPassword" class="col-sm-2 control-label">名称</label>
+		<div class="col-sm-6">
+			<input type="text" class="form-control" name="data[title]" id="title" value="{$data['title']}"/>
+		</div>
+	</div>
+    
+    <div class="form-group">
+		<label for="inputPassword" class="col-sm-2 control-label">链接</label>
+		<div class="col-sm-6">
+			<input type="text" class="form-control" name="data[url]" id="url" value="{$data['url']}"/>
+		</div>
+	</div>
+    <div class="form-group">
+		<label for="inputPassword" class="col-sm-2 control-label">排序</label>
+		<div class="col-sm-4">
+			<input type="text" class="form-control" name="data[sort]" id="sort" value="{$data['sort']}" placeholder="越大越前"/>
+		</div>
+	</div>
+</form>

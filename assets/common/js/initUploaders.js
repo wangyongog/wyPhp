@@ -3,11 +3,13 @@ var uploaders = {
 		var uploaderArr = [];
 		$(".browse_button").each(function() {
             self = $(this);
+			//是否多图
+			var multi_type = self.data('upload-multi') || '';
             var browse_button_id = self.attr('id'),
-			base = self.attr('data-base-url'),
-			upload_url = self.attr('data-upload-url'),
-			max_size = self.attr('data-max-size'),
-			file_extensions = self.attr('data-extensions'),
+			base = self.data('base-url'),
+			upload_url = self.data('upload-url'),
+			max_size = self.data('max-size'),
+			file_extensions = self.data('extensions'),
 			
 			input = $('input[name="'+browse_button_id+'"]'),
 			process = self.siblings('.process'),
@@ -59,11 +61,34 @@ var uploaders = {
 						if (result.status == 200){
 							var responseJson = JSON.parse(result.response);
 							if(responseJson.status ==1){
-								input.val(responseJson.path);
-                        		preview.children('img').attr('src', responseJson.url);
+								if(multi_type == ''){
+									//input.val(responseJson.path);
+									var str = '<div class="file-item">'+
+												'<input name="files[]" type="hidden" value="'+responseJson.path+'">'+
+												'<img style="width:120px;height:100px" class="img-thumbnail" src="'+responseJson.url+'"/>'+
+											'</div>'
+									preview.html(str);
+								}else{
+									var str = '<div class="file-item">'+
+												'<input name="files[]" type="hidden" value="'+responseJson.path+'">'+
+												'<img style="width:120px;height:100px" class="img-thumbnail" src="'+responseJson.url+'"/>'+
+												'<a href="javascript:;" class="close-upimg"></a>'+
+											'</div>'
+									preview.append(str);
+								}
 							}
 						}
-                    }
+                    },
+					Error:function(up,errObject){
+					   var errcode=errObject.code;
+					   if(errcode==-600 ){
+						   adminJs.bootstrap_alert(errObject.file.name+"文件大小已超过"+max_size+",请重新选择上传");
+					   }else if( errcode==-601 ){
+						   adminJs.bootstrap_alert(errObject.file.name+"文件格式错误,请选择"+file_extensions+"格式的文件后重新上传");
+					   }else{
+						   adminJs.bootstrap_alert("服务器错误");
+					   }
+					}
                 }
             });
 

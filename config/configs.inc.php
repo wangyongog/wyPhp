@@ -1,10 +1,11 @@
 <?php
 return [
     'DEFAULT_DB' =>'hm_',//默认数据库,表前缀区分
-    'RW_SEPARATE' =>false, //true 开启,false读写分离是否开启
+    'RW_SEPARATE' =>false, //true 开启,false读写分离是否开启,如果开启需要设置slave配置
     'DOMAIN' =>[
-        'web' =>'http://www.web.local',//pc主域名
-        'admin' =>'http://admin.web.local',//后端
+        'web' =>'http://m.web.local',//pc主域名
+        'm' =>'http://wap.web.local',//pc主域名
+        'admin' =>'http://adminwebs.web.local',//后端
         'assets' =>'http://assets.web.local',//js+css
         'attach' =>[//上传文件域名,可多服务
             'img1' =>[
@@ -16,8 +17,7 @@ return [
         ]
     ],
     'IMG_SEVERS' =>'#img2',//默认图片服务标识
-    //'LOAD_CONFIG' =>'menu,task', //扩展配置文件
-    'SYSTEM_USERID' => [10000,2], //超级管理员
+    'SYSTEM_USERID' => [10000,10023], //超级管理员
     'AUTOKEY' =>'ksd%#5$8Yh4dj6JHo42&O)fh4ed9', //秘钥
     'ATTACHMENT_UPLOAD' => [
         'mimes'    => '', //允许上传的文件MiMe类型
@@ -34,7 +34,7 @@ return [
     'SESSION_CACHE'  => '', //dbsession,redis  SESSION缓存类型
     'SESSION_TABLE'  => 'session', //session数据表
     'LIFT_TIME'  => 24*3600, //session,Cookie有效时间
-    'COOKIE_DOMAIN' => '.wyphp.local', //session,Cookie作用域
+    'COOKIE_DOMAIN' => '.yunjunart.local', //session,Cookie作用域
     'COOKIE_HASH'  => false, //session,Cookie是否加密
     'SESSION_ID' =>'session_id',
 
@@ -43,12 +43,12 @@ return [
     'DATA_CACHE_TIME'  => 24*3600, //数据缓时间
     'CACHE_PATH'  => '/data/cachefile', //文件缓存目录
     'ERROR_PATH'  => '/data/logs', //日志目录
-    'ERROR_TYPE'  => 'file', //错误记录类型 file,db
-    'DEBUG' =>true, //发布后建议false
+    'ERROR_TYPE'  => 'db', //错误记录类型 file,db
+    'DEBUG' =>false, //发布后建议false
     'CACHING'  => false, //是否开启模版缓存,发布后建议开启
     'CACHE_HTML' =>'cache/html',
     'URL_HTML_FIX' =>'.html',
     //加密类型
-    'ENCRYPT' =>'hashMcrypt', //openssl,hashMcrypt,mcrypt
+    'ENCRYPT' =>'openssl',//openssl,mcrypt
     'URL_DENY_SUFFIX' =>'ico|png|gif|jpg', // URL禁止访问的后缀设置
 ];

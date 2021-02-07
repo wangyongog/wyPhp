@@ -1,8 +1,8 @@
 <div class="breadcrumbs ace-save-state" id="breadcrumbs">
     <ul class="breadcrumb">
-        {if $head_itle}
-            {foreach from=$head_itle key=k item=val}
-                <li class="active">{if $val.home} <i class="ace-icon fa fa-home home-icon"></i>{/if}<a href="{if $val['url']}{$val['url']} {else}javascript:; {/if}">{$val['name']}</a></li>
+        {if $head_title}
+            {foreach from=$head_title key=k item=val name=foo}
+                <li class="active">{if $smarty.foreach.foo.first} <i class="ace-icon fa fa-home home-icon"></i>{/if}<a href="{if $val['url'] && $smarty.foreach.foo.first && count($head_title)<3} {$val['url']}{elseif $val['url'] && !$smarty.foreach.foo.first && !$smarty.foreach.foo.last}{$val['url']} {else}javascript:; {/if}">{$val['name']}</a></li>
             {/foreach}
         {/if}
     </ul>

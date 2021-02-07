@@ -9,9 +9,7 @@ class ArchivesModel extends Model {
     public function getError(){
         return $this->error;
     }
-    public function get($field='*', $where=[], $order='',$limit=10){
-        $Banner = D('Common/Banner');
-    }
+
     public function add($data,$bdata){
         if (empty($data)){
             $this->error = '数据不能为空！';
@@ -32,7 +30,9 @@ class ArchivesModel extends Model {
             $this->error = '条件不能为空！';
             return false;
         }
-        if(DB::update($this->table, $data,$where) || DB::update('article',$bdata,$where)){
+        $ac = DB::update($this->table, $data,$where);
+        $at = DB::update('article',$bdata,$where);
+        if($ac || $at){
             return true;
         }
         return false;

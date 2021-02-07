@@ -1,0 +1,73 @@
+{include file="public/header.html"}
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+				try{
+					ace.settings.loadState('main-container')
+					}catch(e){
+				}
+			</script>
+			<div class="main-content">
+				<div class="main-content-inner">
+					<div class="page-content">
+						<div class="page-header">
+							{if showActionButton('logs/del')}
+						<button class="btn btn-white btn-danger btn-bold bootstrap_dels" data-url="{U('logs/del')}">
+							<i class="ace-icon fa fa-trash-o bigger-120 orange"></i>
+							删除
+						</button>
+							{/if}
+						</div><!-- /.page-header -->
+						<div class="row">
+							<div class="col-xs-12">
+								<table id="simple-table" class="table  table-bordered table-hover">
+									<thead>
+									<tr>
+										<th class="center" style="width:60px">
+											<label class="pos-rel">
+												<input type="checkbox"  class="ace check-all">
+												<span class="lbl"></span>
+											</label>
+										</th>
+										<th style="width:60px">类型</th>
+                                        <th>URL</th>
+                                        <th class="hidden-480">信息</th>
+										<th class="hidden-480">时间</th>
+
+									</tr>
+									</thead>
+
+									<tbody>
+                                    {foreach from=$data key=k item=val}
+									<tr>
+										<td class="center">
+											<label class="pos-rel">
+												<input type="checkbox" class="ace ids" name="ids[]" value="{$val.id}">
+												<span class="lbl"></span>
+											</label>
+										</td>
+										<td>{$val['ltype']}</td>
+										<td>{$val['url']}</td>
+										<td class="hidden-480">{$val.msg}</td>
+										<td class="hidden-480">{date('Y-m-d H:i',$val.addtime)}</td>
+
+									</tr>
+
+
+										{/foreach}
+									</tbody>
+								</table>
+                                <div class="pagin" >{$_page}</div>
+							</div>
+						</div>
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
+
+
+		{include file="public/footer.html"}
+		</div><!-- /.main-container -->
+
+		{include file="public/footerJs.html"}
+
+</body>
+</html>

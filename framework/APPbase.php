@@ -138,27 +138,46 @@ class APPbase{
         }
     }
     protected static function loadClass($class){
+        $phpClassSuffix = '.class.php';
         if(isset(self::$classes[$class])) {
             return include self::$classes[$class];
         }
-        $path = FWPATH.'/plugins';
-        if(false !== strpos($class, '\\')){
+        $fileName = '';
+        $namespace = '';
+        if (false !== ($lastNsPos = strripos($class, '\\'))) {
             $name = strstr($class, '\\', true);
-            if('App' === $name){
-                return self::require_cache(APP_PATH, $class);
+
+            $includePath = ROOT;
+            $namespace = substr($class, 0, $lastNsPos);
+            $className = substr($class, $lastNsPos + 1);
+            $fileName = str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
+
+            $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . $phpClassSuffix;
+            //echo $fileName.'<br>';
+            $fullFileName = $includePath . DIRECTORY_SEPARATOR . $fileName;
+            if(!in_array($name,['WyPhp','App'])){
+                if(!is_file($fullFileName)){
+                    $fullFileName = APP_PATH.strstr($fileName, '\\');
+                }
             }
-            if('Common' === $name){
-                return self::require_cache(ROOT.'/'.$name, $class);
+
+            if($name == 'WyPhp'){
+                //echo $className;exit;
+                $className = ltrim(strstr($class ,'\\'),'\\') . $phpClassSuffix;
+                $fullFileName = FWPATH.'/plugins/'.$className;
+                //echo $fullFileName.'<br>';
             }
-            if(!in_array($name,['Common','WyPhp']) && substr($class,-5) =='Model'){
-                return self::require_cache(APP_PATH, $class);
+            if('App' == $name){
+                $fullFileName = APP_PATH.DIRECTORY_SEPARATOR.'Controller'.DIRECTORY_SEPARATOR.$className.$phpClassSuffix;
             }
-            if(!in_array($name,['WyPhp'.'App']) && is_dir(FWPATH.'/plugins/'.$name)){
-                // plugins目录下面的命名空间自动定位
-                $path = FWPATH.'/plugins/'.$name;
-                return self::require_cache($path, $class);
+            $fullFileName = str_replace('\\', DIRECTORY_SEPARATOR, $fullFileName);
+            //echo $fullFileName.'<br>';
+            if (file_exists($fullFileName)) {
+                self::$classes[$class] = $fullFileName;
+                require_once $fullFileName;
+            } else {
+                WyPhp\Error::debug("file [$fullFileName] not exists");
             }
-            return self::require_cache($path, $class);
         }
         return false;
     }

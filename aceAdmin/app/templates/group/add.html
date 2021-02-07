@@ -13,93 +13,100 @@
 
 			<div class="main-content">
 				<div class="main-content-inner">
-					
-
 					<div class="page-content">
-					
-
-						<div class="page-header">
-                            
-						</div><!-- /.page-header -->
-
 						<div class="row">
 							<div class="col-xs-12">
 								
                                     
                                     <form class="form-horizontal" id="form" name="form" action="{U('group/add')}" method="post">
+                                    <input type="hidden" name="groupid" id="groupid" value="{$data.groupid}">
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 用户组名 </label>
                                             <div class="col-sm-9">
-                                                <input type="text" name="title" id="title" placeholder="用户组名" class="col-xs-10 col-sm-5" value="{$data.title}">
-                                                <input type="hidden" name="groupid" id="groupid" value="{$data.groupid}">
-                                                <span class="help-inline col-xs-12 col-sm-7">
-                                                            <span class="middle">用户组名称，不能为空。</span>
-                                                        </span>
+                                                <input type="text" value="{$data['title']}" name="title"  placeholder="" title="" >
+                                                <span class="middle"></span>
                                             </div>
                                         </div>
                                         
-                                        <div class="space-4"></div>
+            
                                         <div class="form-group">
-                                            <label class="col-sm-1 control-label no-padding-right" for="form-field-2"> 是否启用 </label>
-                                            <div class="control-label no-padding-left col-sm-1">
+                                        	<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 是否启用 </label>
+                                            <div class="col-sm-9">
                                                 <label>
-                                                    <input name="status" id="status"  {if $data.status eq 1} checked="checked"{/if} class="ace ace-switch ace-switch-2" type="checkbox">
-                                                    <span class="lbl"></span>
+                                                    <input  name="status" id="status" class="ace ace-switch ace-switch-2" {if $data.status eq 1} checked="checked"{/if}  type="checkbox">
+                                                    <span class="lbl">&nbsp;&nbsp;&nbsp;&nbsp;YES启用；NO禁用</span>
                                                 </label>
                                             </div>
-                                            <span class="help-inline col-xs-12 col-sm-7">
-                                                            <span class="middle">YES，启用；NO，禁用</span>
-                                                    </span>
+        
                                         </div>
                     
                                             
-                                         
-                                        <div class="space-4"></div>
+                    
             
                                             <div class="form-group">
-                                                <label class="col-sm-1 control-label no-padding-right" for="form-field-1">
-                                                    权限选择 </label>
-                                                <div class="col-sm-9">
-                                                    <div class="col-sm-10">
-                                                    {foreach from=$sidebarlist key=k item=val}
+                                                <label class="col-sm-1 control-label no-padding-right" for="form-field-1">权限选择 </label>
+                                                    <div class="col-sm-11">
                                                         <div class="row">
-                                                                <div class="widget-box">
-                                                                    <div class="widget-header">
-                                                                        <h4 class="widget-title">
-                                                                            <label>
-                                                                                <input name="rules[]" class="ace ace-checkbox-2 father" type="checkbox" value="{$val['id']}">
-                                                                                <span class="lbl"> {$val.title}</span>
-                                                                            </label>
-                                                                        </h4>
-                                                                       <div class="widget-toolbar">
-                                                                            {if !empty($val.children)}
+                                                        {foreach from=$ruleslist key=k item=val}
+                                                        		<div class="col-xs-12 col-sm-4">
+                                                                    <div class="widget-box">
+                                                                        <div class="widget-header">
+                                                                            <h4 class="widget-title">
+                                                                            	<label>
+                                                                                    <input name="rules[]" class="ace ace-checkbox-2 father" {if in_array($val['id'],$data['rules'])} checked="checked"{/if}  type="checkbox" value="{$val['id']}">
+                                                                                    <span class="lbl"> {$val.title}</span>
+                                                                                </label>
+                                                                            </h4>
+                        
+                                                                            <div class="widget-toolbar">
+                                                                            	{if !empty($val.children)}
                                                                                 <a href="#" data-action="collapse">
                                                                                     <i class="ace-icon fa fa-chevron-up"></i>
                                                                                 </a>
-                                                                            {/if}
-                                                                        </div>
-                                                                    </div>
-                                                                    {if !empty($val.children)}
-                                                                        <div class="widget-body">
-                                                                            <div class="widget-main row">
-                                                                                {foreach from=$val.children key=k item=vv}
-                                                                                    <label class="col-xs-2" style="width:160px;">
-                                                                                        <input name="rules[]" class="ace ace-checkbox-2 children"   type="checkbox" value="{$vv.id}">
-                                                                                        <span class="lbl">{$vv.title}</span>
-                                                                                    </label>
-                                                                                {/foreach}    
+                                                                                <a href="#" data-action="close">
+                                                                                    <i class="ace-icon fa fa-times"></i>
+                                                                                </a>
+                                                                                {/if}
                                                                             </div>
                                                                         </div>
-                                                                    {/if}
-                                                               </div>
+                        												{if !empty($val.children)}
+                                                                        <div class="widget-body" >
+                                                                            <div class="widget-main row">
+                                                                                {foreach from=$val.children key=k item=vv}
+                                                                                    <label class="col-xs-2  col-sm-4" style="margin-bottom:20px">
+                                                                                        <input name="rules[]" {if in_array($vv['id'],$data['rules'])} checked="checked"{/if} class="ace ace-checkbox-2 children" type="checkbox" value="{$vv.id}">
+                                                                                        <span class="lbl">{$vv.title}</span>
+                                                                                        {foreach from=$vv.children item=vvv}
+                                                                                        <div class="checkbox" style="padding-left: 10px;">
+                                                                                            <label>
+                                                                                                <input name="rules[]" {if in_array($vvv['id'],$data['rules'])} checked="checked"{/if} value="{$vvv.id}" type="checkbox" class="ace ace-checkbox-2 children">
+                                                                                                <span class="lbl">{$vvv.title}</span>
+                                                                                                    {foreach from=$vvv.children item=vvvv}
+                                                                                                    <div class="checkbox" >
+                                                                                                        <label>
+                                                                                                            <input name="rules[]" {if in_array($vvvv['id'],$data['rules'])} checked="checked"{/if} value="{$vvvv.id}" type="checkbox" class="ace ace-checkbox-2 children">
+                                                                                                            <span class="lbl">{$vvvv.title}</span>
+                                                                                                                
+                                                                                                        </label>
+                                                                                                    </div>
+                                                                                                    {/foreach} 
+                                                                                            </label>
+                                                                                        </div>
+                                                                                        {/foreach} 
+                                                                                    </label>
+                                                                                {/foreach}   
+                                                                            </div>
+                                                                        </div>
+                                                                        {/if}
+                                                                    </div>
+                                                                </div>
+                                                                {/foreach}
                                                             </div>
-                                                        {/foreach}    
-                                                            
                                                    </div>
                                                 </div>
-                                            </div>
+                                           
                                         
-            
+        
                                         <div class="col-md-offset-2 col-md-9">
                                             <button class="btn btn-info ajaxFrom" type="button">
                                                 <i class="icon-ok bigger-110"></i>
@@ -121,19 +128,38 @@
 			</div><!-- /.main-content -->
 
 
+
 		{include file="public/footer.html"}
 		</div><!-- /.main-container -->
 
 		{include file="public/footerJs.html"}
+
 <script type="text/javascript">
-    $(".children").click(function () {
-        $(this).parent().parent().parent().parent().find(".father").prop("checked", true);
-    })
-    $(".father").click(function () {
+    $(".children").on('click',function () {
+		var checked = false;
+		var obj = $(this).parent();
+		if($(this).is(':checked') == true){
+			obj.find('.children').prop("checked", true);
+		}else{
+			obj.find('.children').prop("checked", false);
+		}
+		$.each($(this).parents('.widget-body').find('.children'), function (index, value) {
+			if($(this).is(':checked') == true){
+				checked = true;
+			}
+		});
+		
+		if(checked){
+			$(this).parents('.widget-body').prev().find(".father").prop("checked", true);
+		}else{
+			$(this).parents('.widget-body').prev().find(".father").prop("checked", false);
+		}
+    });
+    $(".father").on('click',function () {
         if (this.checked) {
-            $(this).parent().parent().parent().parent().find(".children").prop("checked", true);
+			$(this).parents('.widget-header').next().find(".children").prop("checked", true);
         } else {
-            $(this).parent().parent().parent().parent().find(".children").prop("checked", false);
+            $(this).parents('.widget-header').next().find(".children").prop("checked", false);
         }
     })
 </script>

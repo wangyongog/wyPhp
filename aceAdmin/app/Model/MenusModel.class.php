@@ -6,22 +6,9 @@ use WyPhp\Model;
 class MenusModel extends Model {
     public $table = 'menus';
     protected $data = [];
-    public function getAll($where=[], $fields='*',$isweb=false){
-        $stype = isset($where['stype']) ? 1 : '';
-        if($isweb){
-            $stype = implode('',$where);
-        }
-        $cacheId = 'menus'.$stype;
-        $c_data = S($cacheId);
-        if($c_data){
-            return $c_data;
-        }
-
+    public function getAll($where=[], $fields='*'){
         $items = DB::fetch_all($this->table ,$fields,$where,'weight asc');
-        if($stype){
-            $items = getTree($items,'typeid');
-        }
-        S($cacheId ,$items);
+        $items = getTree($items,'typeid');
         return $items;
     }
 

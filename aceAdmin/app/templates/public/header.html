@@ -43,6 +43,10 @@
 		<![endif]-->
         <link rel="stylesheet" href="{$assets}/common/bootstrap/css/bootstrap-tab.css">
         <meta name="csrf-token" content="{formhash()}">
+        <script type="text/javascript">
+		var app ='{CONTROLLER}_{ACTION}_{CF("URL_HTML_FIX")}';
+		var $evt = parent.adminJs;
+		</script>
 	</head>
-
+	
 	<body class="no-skin">

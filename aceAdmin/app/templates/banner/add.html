@@ -1,6 +1,6 @@
 <form class="form-horizontal " role="form" action="{U('banner/add')}" enctype="multipart/form-data">
 <input type="hidden" value="{formhash()}" name="formhash"/>
-<input type="hidden" value="{$data['img']}" name="fileup1"/>
+
 <input type="hidden" value="{$id}" name="id"/>
 	<!--<div class="form-group">
 		<label class="col-sm-2 control-label">Email</label>
@@ -24,7 +24,8 @@
 		<div class="col-sm-4">
 			<button id="fileup1" class="btn btn-info browse_button" data-upload-url="{U('upload/banner')}" data-extensions="jpg,png,gif,bmp" data-max-size="5mb" data-base-url="">请选择图片</button>
             <div class="preview" style="padding-top:15px">
-				<img style="max-width:120px; max-height:120px" {if $data['img']} src="{picSize($data['img'])}" {/if}/>
+				{if $data['img']}<input name="files[]" type="hidden" value="{$data['img']}">{/if}
+				{if $data['img']}<img style="max-width:120px; max-height:120px"  src="{picSize($data['img'])}"/> {/if}
 			</div>
             <div class="process none">
                 <span class="filename"></span>
@@ -56,6 +57,12 @@
 		<label for="inputPassword" class="col-sm-2 control-label">链接</label>
 		<div class="col-sm-6">
 			<input type="text" class="form-control" name="data[url]" id="url" value="{$data['url']}"/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputPassword" class="col-sm-2 control-label">说明</label>
+		<div class="col-sm-6">
+			<input type="text" class="form-control" name="data[contens]" id="url" value="{$data['contens']}"/>
 		</div>
 	</div>
     <!--<div class="form-group">

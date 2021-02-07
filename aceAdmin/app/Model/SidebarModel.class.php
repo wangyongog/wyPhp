@@ -15,7 +15,7 @@ class SidebarModel extends Model {
         $data = [];
         $where['status'] = 1;
         if(!in_array($uid, CF('SYSTEM_USERID')) ) {
-            $group = D('Group');
+            $group = new GroupModel();
             $group_arr = $group->getGroups($uid);
             $rules = $group_arr['rules'];
             if(!$rules){
@@ -37,7 +37,7 @@ class SidebarModel extends Model {
      * @return array
      */
     public function getHeadTitle(){
-        $group = D('Group');
+        $group = D('aceAdmin/Group');
         $rule_id = $group->authRuleId(CONTROLLER.'/'.ACTION);
         $position= [];
         if($rule_id){

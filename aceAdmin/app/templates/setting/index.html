@@ -1,133 +1,124 @@
 {include file="public/header.html"}
 <div class="main-container ace-save-state" id="main-container">
-	<script type="text/javascript">
+    <script type="text/javascript">
         try{
             ace.settings.loadState('main-container')
         }catch(e){
         }
-	</script>
-	<div class="main-content">
-		<div class="main-content-inner">
-			<div class="page-content">
+    </script>
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="page-content">
 
 
-				<div class="row">
-					<div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12">
 
-						<div class="tabbable">
-							<ul class="nav nav-tabs" id="myTab">
-								
-								<li class="active">
+                        <div class="tabbable">
+                            <ul class="nav nav-tabs" id="myTab">
+
+                                <li class="active">
                                     <a data-toggle="tab" href="#home">
                                         <i class="green ace-icon fa fa-home bigger-120"></i>
-                                        {$web_name[0]}
+                                        网站设置
                                     </a>
                                 </li>
 
-								
-							</ul>
 
-							<div class="tab-content">
-								<div id="home" class="tab-pane fade in active">
+                            </ul>
+
+                            <div class="tab-content">
+                                <div id="home" class="tab-pane fade in active">
                                     <!-- PAGE CONTENT BEGINS -->
                                     <form enctype="multipart/form-data" class="form-horizontal" id="form" role="form" method="post" action="{U('setting/index')}">
-                                    <input type="hidden" name="formhash" id="formhash" class="form-control" value="{formhash()}">
-                                    <input name="stype" value="0" type="hidden" />
+                                        <input type="hidden" name="formhash" id="formhash" class="form-control" value="{formhash()}">
+                                        <input name="stype" value="0" type="hidden" />
                                         <div class="space-4"></div>
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label no-padding-right" for="form-field-1">
                                                 网站名称 </label>
                                             <div class="col-sm-9">
-                                                <input type="text" name="sitename" id="sitename" placeholder="网站SEO标题"
-                                                       class="col-xs-10 col-sm-5" value="{$data[0].sitename}">
+                                                <input type="text" name="data[sitename]" id="sitename" placeholder="网站SEO标题"
+                                                       class="col-xs-10 col-sm-5" value="{$data.sitename}">
                                                 <span class="help-inline col-xs-12 col-sm-7">
-                                                            
+
                                                         </span>
                                             </div>
                                         </div>
-                                       
-                                        
-                                        
+
+
+
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label no-padding-right" for="form-field-1">
                                                 网站关键字 </label>
                                             <div class="col-sm-9">
-                                                <textarea name="keywords" id="keywords" placeholder="请输入公告内容！" class="col-xs-5 col-sm-12" rows="4">{$data[0].keywords}</textarea>
+                                                <textarea name="data[keywords]" id="keywords" placeholder="请输入公告内容！" class="col-xs-5 col-sm-12" rows="4">{$data.keywords}</textarea>
                                                 <span class="help-inline col-xs-12 col-sm-7">
-                                                            
+
                                                         </span>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label no-padding-right" for="form-field-1">
                                                 网站说明 </label>
                                             <div class="col-sm-9">
-                                                <textarea name="description" id="description" placeholder="请输入公告内容！" class="col-xs-5 col-sm-12" rows="4">{$data[0].description}</textarea>
+                                                <textarea name="data[description]" id="description" placeholder="请输入公告内容！" class="col-xs-5 col-sm-12" rows="4">{$data.description}</textarea>
                                                 <span class="help-inline col-xs-12 col-sm-7">
-                                                            
+
                                                         </span>
                                             </div>
                                         </div>
 
-										<div class="form-group">
-											<label class="col-sm-1 control-label no-padding-right" for="form-field-1">
-												首页数字 </label>
-											<div class="col-sm-10">
-												<div class="col-sm-12">
-													<div class="row">
-														<table class="table table-bordered">
-															<tbody><tr>
-																<th width="7%">合格证</th>
-																<th>九大美院</th>
-                                                                <th>状元制造者</th>
-                                                                <th>中国美术学院</th>
-                                                                <th>高等美术学院</th>
-                                                                <th>合格证</th>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label no-padding-right" for="form-field-1">
+                                                电话 </label>
+                                            <div class="col-sm-10">
+                                                <input type="text" name="data[tell]" id="tell" placeholder="客服电话"
+                                                       class="col-xs-10 col-sm-5" value="{$data.tell}">
+                                                <span class="help-inline col-xs-12 col-sm-7"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label no-padding-right" for="form-field-1">
+                                                邮箱 </label>
+                                            <div class="col-sm-10">
+                                                <input type="text" name="data[email]" id="email" placeholder="邮箱"
+                                                       class="col-xs-10 col-sm-5" value="{$data.email}">
+                                                <span class="help-inline col-xs-12 col-sm-7"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label no-padding-right" for="form-field-1">
+                                                公司地址 </label>
+                                            <div class="col-sm-10">
+                                                <input type="text" name="data[address]" id="address" placeholder="公司地址"
+                                                       class="col-xs-10 col-sm-5" value="{$data.address}">
+                                                <span class="help-inline col-xs-12 col-sm-7"></span>
+                                            </div>
+                                        </div>
 
-															</tr>
-															<tr>
-																<td>张数</td>
-																<td>
-                                                                        <span class="input-icon input-icon-right">
-                                                                                    <input style="width:150px;border:#CCC solid 1px;width: 100%;height: 100%;" id="" type="text" name="nums[0]" value="{$data[0].nums[0]}">
-                                                                                    
-                                                                                    </span>
-																</td><td>
-                                                                        <span class="input-icon input-icon-right">
-                                                                                    <input style="width:150px;border:#CCC solid 1px;width: 100%;height: 100%;" id="" type="text" name="nums[1]" value="{$data[0].nums[1]}">
-                                                                                    
-                                                                                    </span>
-															</td><td>
-                                                                        <span class="input-icon input-icon-right">
-                                                                                    <input style="width:150px;border:#CCC solid 1px;width: 100%;height: 100%;" id="" type="text" name="nums[2]" value="{$data[0].nums[2]}">
-                                                                                    
-                                                                                    </span>
-															</td><td>
-                                                                        <span class="input-icon input-icon-right">
-                                                                                    <input style="width:150px;border:#CCC solid 1px;width: 100%;height: 100%;" id="" type="text" name="nums[3]" value="{$data[0].nums[3]}">
-                                                                                   
-                                                                                    </span>
-															</td>                                                                        <td>
-                                                                        <span class="input-icon input-icon-right">
-                                                                                    <input style="width:150px;border:#CCC solid 1px;width: 100%;height: 100%;" id="" type="text" name="nums[4]" value="{$data[0].nums[4]}">
 
-                                                                                    </span>
-															</td>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label no-padding-right" for="form-field-1">
+                                                版权 </label>
+                                            <div class="col-sm-10">
+                                                <input type="text" name="data[copyright]" id="copyright" placeholder="版权"
+                                                       class="col-xs-10 col-sm-10" value="{$data.copyright}">
+                                                <span class="help-inline col-xs-12 col-sm-7"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label no-padding-right" for="form-field-1">
+                                                备案号 </label>
+                                            <div class="col-sm-10">
+                                                <input type="text" name="data[icp]" id="icp" placeholder="备案号"
+                                                       class="col-xs-10 col-sm-10" value="{$data.icp}">
+                                                <span class="help-inline col-xs-12 col-sm-7"></span>
+                                            </div>
+                                        </div>
 
-															</tr>                                                                                                                                                                                             </tbody></table>
-													</div>
-												</div>
-											</div>
-										</div>
-                                        
-                                        
-                                        
-                                        
-                                       
-                                        
-                                  
-                                        
+
                                         <div class="col-md-offset-2 ">
                                             <button class="btn btn-info submit" type="submit">
                                                 <i class="icon-ok bigger-110"></i>
@@ -136,24 +127,24 @@
                                         </div>
                                     </form>
                                     <!-- PAGE CONTENT ENDS -->
-                                    
+
                                 </div>
 
-								
-							</div>
-						</div>
 
-					</div>
-				</div>
-			</div><!-- /.page-content -->
-		</div>
-	</div><!-- /.main-content -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
 
 
-	{include file="public/footer.html"}
+    {include file="public/footer.html"}
 </div><!-- /.main-container -->
 
-{include file="public/footerJs.html" isdate=1 isupfile=1}
+{include file="public/footerJs.html"}
 
 </body>
 </html>

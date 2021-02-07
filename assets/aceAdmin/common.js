@@ -1,127 +1,4 @@
-﻿var adminJs = {
-	dialog : null,
-	showIframe :function(title,url,w,h,noshade){
-		w =w?w+"px":'';h=h?h+"px":'';
-		if(!this.isPc()||((!w||w=='')&&(!h||h==''))){
-			w='90%';h='90%';
-		}
-		var index = layer.open({
-		  type: 2,
-		  title:title,
-		  area: [w,h],
-		  fixed: true, //不固定
-		  maxmin: false,
-		  content: url,
-		  closeBtn:1,
-		  moveOut:true,
-		  fix:false,
-		  scrollbar:true,
-		  maxmin: false,
-		  shadeClose: true,
-		  shade:noshade?0:[0.6,'#fff'],
-		  success: function(layero, index){
-			layer.setTop(layero);
-  		  },
-		  cancel: function(index, layero){ 
-			  layer.close(index);	//只有当点击confirm框的确定时，该层才会关闭
-			  return false; 
-			}    
-		});
-	},
-	ShowDailog:function(title,url,backFun) {
-        adminJs.dialog = BootstrapDialog.show({
-            title: title,
-            type: BootstrapDialog.TYPE_PRIMARY,
-            size: BootstrapDialog.SIZE_LARGE,
-            cssClass: "fade",
-            closeable: true,
-            message: function (dialog) {
-                var $message = $('<div></div>');
-                var pageToLoad = dialog.getData('pageToLoad');
-                $message.load(pageToLoad);
-                return $message;
-            },
-            onshow: function(dialogRef){
-            },
-            data: {
-                'pageToLoad': url,
-            },
-            buttons: [{
-                label: '<i class="fa fa-close"></i> 取消',
-                action: function (dialog) {
-                    dialog.close();
-                }
-            }, {
-                label: '<i class="fa fa-check"></i> 确定',
-                cssClass: 'btn btn-primary',
-                action: function (dialog) {
-                	var formObj = $('.modal-body').find('form');
-                	if(typeof backFun !='undefined'){
-						eval(backFun+'("'+formObj.attr('action')+'","'+formObj+'")');
-					}else{
-						dailogAjax.dailogPost(formObj.attr('action'),formObj);
-					}
-                    //dialog.close();
-                }
-            }]
-        });
-	}
-	,
-	closeThis:function (){
-        var indexBox = parent.layer.getFrameIndex(window.name);
-        parent.IframeCount--;
-        parent.layer.close(indexBox);
-    }
-	,
-	isPc:function(){
-		var userAgentInfo=navigator.userAgent;
-		var Agents=["Android","iPhone","SymbianOS","Windows Phone","iPad","iPod"];
-		var flag=true;
-		for(var v=0;v<Agents.length;v++){
-			if(userAgentInfo.indexOf(Agents[v])>0){
-				flag=false;break;
-			}
-		}
-		return flag;
-	},
-	showAlert:function(msg,icnum){
-		icnum = typeof icnum == 'undefined' ? 0 : icnum;
-		layer.alert(msg,{icon: icnum,scrollbar: false});
-		/*layer.open({
-				  content: '浏览器滚动条已锁',
-				  scrollbar: false
-				});*/
-	},
-	confirm_box:function(msg, confirmFUNC, cancelFUNC){
-		layer.confirm(msg, {
-		  btn: ['确定','取消'], //按钮
-		  icon: 0,
-		}, 
-		confirmFUNC, 
-		cancelFUNC
-		);
-	},
-	showMsg:function(html){
-		$('.page-content').html(html);
-	},
-	goUrl:function(url,obj){obj=obj?obj:self;obj.location=url;},
-	///tips层
-	tipsObj:function(msg,obj){layer.tips(msg,obj,{tips:3});},
-	//提示层
-	msg:function(msg){
-		layer.msg(msg);
-	},
-	closeAllf:function(){
-		layer.closeAll(); //疯狂模式，关闭所有层
-		/*layer.closeAll('dialog'); //关闭信息框
-		layer.closeAll('page'); //关闭所有页面层
-		layer.closeAll('iframe'); //关闭所有的iframe层
-		layer.closeAll('loading'); //关闭加载层
-		layer.closeAll('tips'); //关闭所有的tips层*/    
-	},
-};
-
-jQuery(function($) {
+﻿jQuery(function($) {
 	/*$('.check-all').on('click',function () {
 		$(".ids").prop("checked", this.checked);
 	});*/
@@ -139,74 +16,78 @@ jQuery(function($) {
 		});
 	});
 	$('tbody').on('click','.del',function(){
-		var url = $(this).attr('_url');
-		var msg = $(this).attr('_title') || '确定删除';
-		adminJs.confirm_box(msg,function(){
-			formAjax.ajaxPost(url);
+		var url = $(this).data('url');
+		var msg = $(this).data('title') || '确定删除?';
+		$evt.confirm_box(msg,function(){
+			formAjax.dynamicLoading(url);
 		}); 
 	});
-	$('tbody').on('click','.edit',function(){
+	$(document).on('click', '.close-upimg,.close_remove', function() {
+        $(this).parent().remove();
+		$('.percent').html('');
+    });
+
+	// $('body').on('click','.pass',function(){
+ //        var title = $(this).attr('_title') || '编辑';
+ //        var url = $(this).attr('_url');
+ //        var wh = $(this).attr('_wh') || '700,630';
+ //        var whArr = typeof wh !='undefined' ? wh.split(',') : '';
+
+ //        adminJs.ShowDailog(title, url);
+ //    });
+	$('.ajaxFrom').on('click',function(){
+		var formObj = $(this).parents('form');
+		var url = formObj.attr('action') || $(this).attr('_url');
+		formAjax.ajaxPost(url,formObj);
+	});
+	$('body').on('click','.edit',function(){
 		var title = $(this).attr('_title') || '编辑';
 		var url = $(this).attr('_url');
 		var wh = $(this).attr('_wh') || '700,630';
 		var whArr = typeof wh !='undefined' ? wh.split(',') : '';
-		
-		adminJs.showIframe(title, url,whArr[0],whArr[1]);
+		if(top.location ==self.location){  
+        	$evt = adminJs;
+    	}
+		$evt.showIframe(title, url,whArr[0],whArr[1]);
 	});
-	$('.page-content').on('click','.add',function(){
+	$('body').on('click','.addFrame',function(){
+		parent.addframes($(this).attr('_url'),'',$(this).attr('title'));
+	});
+	$('body').on('click','.add',function(){
 		var title = $(this).attr('_title') || '添加';
 		var url = $(this).attr('_url');
 		var wh = $(this).attr('_wh') || '700,630';
 		var whArr = typeof wh !='undefined' ? wh.split(',') : '';
-		adminJs.showIframe(title, url,whArr[0],whArr[1]);
+		if(top.location ==self.location){  
+        	$evt = adminJs;
+    	}
+		$evt.showIframe(title, url,whArr[0],whArr[1]);
 	});
-	$('.page-content').on('click','.show_dialog',function(){
-		var title = $(this).attr('_title') || '添加';
-		var url = $(this).attr('_url');
-		var backFun = $(this).attr('backFun');
-		adminJs.ShowDailog(title, url, backFun);
+	$('body').on('click','.show_dialog',function(){
+		var title = $(this).data('title') || '添加';
+		var url = $(this).data('url');
+		var backFun = $(this).data('backFun');
+		if(top.location ==self.location){  
+        	$evt = adminJs;
+    	}
+		$evt.ShowDailog(title, url, backFun);
 	});
 	
 	$('.searchForm').on('click',function(){
 		formAjax.tbodyLoading();
 	});
-	$('.tiphands').on('click',function(){
+	$('.JclearCache').on('click',function(){
 		var url = $(this).attr('_url');
 		var msg = $(this).attr('_msg');
-		var ex = url.indexOf('?') == -1 ? '?' : '&';
-		adminJs.confirm_box(msg,function(){
-			var layars=layer.load(0,{shade:[0.8,'#CCC']});
-			$.ajax({
-				type:'POST',
-				dataType:'json',
-				url:url+ex+'t='+(new Date().getTime()),
-				data:'',
-				success:function(data){
-					formAjax.runAjaxResSuccess(data);
-					setTimeout(function(){
-						formAjax.tbodyLoading();
-					},3000);
-					
-				},complete:function(XMLHttpRequest, textStatus){
-					layer.close(layars);
-				},beforeSend:function(){
-					
-				},error:function(){
-					adminJs.showAlert('服务器异常，请联系管理员',2);return ;
-				}
-			});
+		parent.adminJs.confirm_box(msg,function(){
+			formAjax.dynamicLoading(url);
 		},null);
-	});
-	$('[data-name="tbody_data"').on('change','.layui-textarea',function () {
-		$.post($(this).attr('_url') ,{remark:$(this).val()},function(data){
-			
-		});
 	});
 	$('tbody').on('click','.tipClose',function(){
 		var url = $(this).attr('_url');
-		var msg = $(this).attr('_msg')
+		var msg = $(this).attr('_title') || '确定删除';
 		var ex = url.indexOf('?') == -1 ? '?' : '&';
-		adminJs.confirm_box(msg,function(){
+		$evt.confirm_box(msg,function(){
 			var layars=layer.load(0,{shade:[0.8,'#CCC']});
 			$.ajax({
 				type:'POST',
@@ -224,28 +105,77 @@ jQuery(function($) {
 				},beforeSend:function(){
 					
 				},error:function(){
-					adminJs.showAlert('服务器异常，请联系管理员',2);return ;
+					$evt.showAlert('服务器异常，请联系管理员',2);return ;
 				}
 			});
 		},null);
 	});
 	$('.tbody_del').on("click",function(){
-		if($('.check-all:checked').length < 1){
-			adminJs.showAlert('请选择删除选项');
+		/*if($('.check-all:checked').length < 1){
+			$evt.showAlert(msg);
+			return false;
+		}*/
+		var data = [];
+		$(".ids").each(function (i) {
+			if (this.checked) {
+				data.push(this.value);
+			} 
+		});
+		
+		if(data.length<=0){
+			$evt.showAlert('请选择操作项');
 			return false;
 		}
-		var data = [];
-		$('.check-all:checked').each(function(){
-			data.push($(this).val()); 
-		});
+		
 		var btnObj = $(this);
-		var key = btnObj.attr("data-param");
-		var dataurl = btnObj.attr("_url");
-		var data_str = key+"="+data.join(',');
-		var url = createurl(dataurl);
-		adminJs.confirm_box('删除提示');        
+		var msg = $(this).data('title') || '确定删除？';
+		var url = btnObj.data("url");
+		var param = data.join(',');
+		if(top.location ==self.location){  
+        	$evt = adminJs;
+    	}
+		//var url = createurl(dataurl);
+		//var url = url.indexOf('?') == -1 ? url+'?' : url+'&'+data_str;
+		$evt.confirm_box(msg,function(){
+			formAjax.dynamicLoading(url,{ids:param});
+		});  
 	});
 	
+
+	$('body').on('click','.bootstrap_del',function(){
+		var url = $(this).data('url');
+		var msg = $(this).data('title') || '确定删除?';
+		if(top.location ==self.location){  
+        	$evt = adminJs;
+    	}
+		$evt.bootstrap_confirms(msg,function(){
+			formAjax.dynamicLoading(url);
+		}); 
+	});
+
+	$('body').on('click','.bootstrap_dels',function(){
+		var data = [];
+		$(".ids").each(function (i) {
+			if (this.checked) {
+				data.push(this.value);
+			} 
+		});
+		
+		if(data.length<=0){
+			$evt.bootstrap_alert('请选择操作项');
+			return false;
+		}
+		var msg = $(this).data('title') || '确定删除？';
+		var url = $(this).data('url');
+		var param = data.join(',');
+		if(top.location ==self.location){  
+        	$evt = adminJs;
+    	}
+		$evt.bootstrap_confirms(msg,function(){
+			formAjax.dynamicLoading(url,{ids:param});
+		}); 
+	});
+
 	$('.show-details-btn').on('click', function(e) {
 		e.preventDefault();
 		$(this).closest('tr').next().toggleClass('open');

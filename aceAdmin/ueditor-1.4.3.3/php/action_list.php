@@ -84,7 +84,7 @@ function getfiles($path, $allowFiles, &$files = array())
             } else {
                 if (preg_match("/\.(".$allowFiles.")$/i", $file)) {
                     $files[] = array(
-                        'url'=> $imageManagerUrlPrefix.str_replace('/../uploads','',substr($path2, strlen($_SERVER['DOCUMENT_ROOT']))) ,
+                        'url'=> str_replace('/../uploads','',substr($path2, strlen($_SERVER['DOCUMENT_ROOT']))) ,
                         'mtime'=> filemtime($path2)
                     );
                 }
