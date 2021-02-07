@@ -42,7 +42,7 @@ class Redis extends WyPhp\Cache{
             $this->redis = self::$redis_link[$this->_redis_id];
             $this->config['persistent'] ? $this->redis->pconnect($this->config['host'], $this->config['port'], $this->config['timeout']) : $this->redis->connect($this->config['host'], $this->config['port']);
             //连接通后的数据库选择和密码验证操作
-            //$this->redis->select($this->dbindex);
+            $this->redis->select($this->config['dbindex']);
             if($this->config['password']){
                 $this->redis->auth($this->config['password']);
             }
