@@ -2,7 +2,6 @@
 namespace WyPhp\Cache;
 use WyPhp;
 use WyPhp\CF;
-
 /**
  * 使用Redis作为Cache
  * Class Redis
