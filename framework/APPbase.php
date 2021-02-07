@@ -47,7 +47,7 @@ class APPbase{
         //启动
         self::_initApp();
     }
-    public static function _initApp(){
+    protected static function _initApp(){
         $url = parse_url($_SERVER['REQUEST_URI']);
         if(empty($url)){
             \WyPhp\Error::http_status();
@@ -157,7 +157,7 @@ class APPbase{
             $fullFileName = $includePath . DIRECTORY_SEPARATOR . $fileName;
             if(!in_array($name,['WyPhp','App'])){
                 if(!is_file($fullFileName)){
-                    $fullFileName = APP_PATH.strstr($fileName, '\\');
+                    $fullFileName = APP_PATH.strstr($fileName, DIRECTORY_SEPARATOR);
                 }
             }
 
@@ -174,7 +174,7 @@ class APPbase{
             //echo $fullFileName.'<br>';
             if (file_exists($fullFileName)) {
                 self::$classes[$class] = $fullFileName;
-                require_once $fullFileName;
+                include_once ($fullFileName);
             } else {
                 WyPhp\Error::debug("file [$fullFileName] not exists");
             }
