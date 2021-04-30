@@ -6,6 +6,7 @@ return [
         'timeout' =>'',
         'hostId' =>'master',
         'persistent' =>false,
-        'expire' =>7200
+        'expire' =>7200,
+        'password' =>'',
     ]
 ];
