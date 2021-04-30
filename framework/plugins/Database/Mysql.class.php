@@ -363,11 +363,11 @@ class Mysql extends Driver{
     protected function parseKey(&$key) {
         $key   =  trim($key);
         if(!is_numeric($key) && !preg_match('/[,\'\"\*\(\)`.\s]/',$key)) {
-           $key = '`'.$key.'`';
+            $key = '`'.$key.'`';
         }
         return $key;
     }
-     /**
+    /**
      * value分析
      * @access protected
      * @param mixed $value
